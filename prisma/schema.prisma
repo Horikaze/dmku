@@ -34,26 +34,34 @@ model Profile {
 }
 
 model Replay {
-  replayId      String   @id @default(cuid())
-  character     String
-  rank          String?
-  shottype      String?
-  stage         String?
-  player        String?
-  slow_rate     Int?
-  stage_score   Int
-  frame_count   Int?
-  game          Int?
-  date          String?
-  date_on_file  String?
-  z_keys        Int?
-  x_keys        Int?
-  c_keys        Int?
-  checksum      String?
-  shift         Int?
-  rpy_name      String?
+  replayId     String       @id @default(cuid())
+  character    String
+  rank         String?
+  shottype     String?
+  stage        String?
+  player       String?
+  slow_rate    Int?
+  stage_score  Int
+  frame_count  Int?
+  game         Int?
+  date         String?
+  date_on_file String?
+  z_keys       Int?
+  x_keys       Int?
+  c_keys       Int?
+  checksum     String?
+  shift        Int?
+  rpy_name     String?
+  status       ReplayStatus
+
   Profile       Profile? @relation(fields: [profileUserId], references: [userId])
   profileUserId String?
 
   @@index([profileUserId])
+}
+
+enum ReplayStatus {
+  NEW
+  VERIFIED
+  REJECTED
 }
