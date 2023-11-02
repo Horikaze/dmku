@@ -1,0 +1,59 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+datasource db {
+  provider     = "mysql"
+  url          = env("DATABASE_URL")
+  relationMode = "prisma"
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Profile {
+  userId           String   @unique
+  name             String
+  imageUrl         String?
+  email            String?
+  scoreRank        Int?
+  achievementsRank Int?
+  CC               Int?
+  admin            Boolean?
+  supporter        Boolean?
+  joindate         DateTime
+  discord          String?
+  youtube          String?
+  twitter          String?
+  favoriteGame     String?
+  bio              String?
+  totalPoints      Int?
+  totalScore       Int?
+  eventPoints      Int?
+  Replays          Replay[]
+}
+
+model Replay {
+  replayId      String   @id @default(cuid())
+  character     String
+  rank          String?
+  shottype      String?
+  stage         String?
+  player        String?
+  slow_rate     Int?
+  stage_score   Int
+  frame_count   Int?
+  game          Int?
+  date          String?
+  date_on_file  String?
+  z_keys        Int?
+  x_keys        Int?
+  c_keys        Int?
+  checksum      String?
+  shift         Int?
+  rpy_name      String?
+  Profile       Profile? @relation(fields: [profileUserId], references: [userId])
+  profileUserId String?
+
+  @@index([profileUserId])
+}
