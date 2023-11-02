@@ -18,14 +18,12 @@ model Profile {
   email            String?
   scoreRank        Int?
   achievementsRank Int?
-  CC               Int?
+  CCCount          Int?
   admin            Boolean?
   supporter        Boolean?
   joindate         DateTime
   discord          String?
-  youtube          String?
-  twitter          String?
-  favoriteGame     String?
+  favoriteGame     Games
   bio              String?
   totalPoints      Int?
   totalScore       Int?
@@ -35,15 +33,15 @@ model Profile {
 
 model Replay {
   replayId     String       @id @default(cuid())
-  character    String
+  player       String
+  character    String?
   rank         String?
   shottype     String?
   stage        String?
-  player       String?
   slow_rate    Int?
-  stage_score  Int
+  stage_score  Int?
   frame_count  Int?
-  game         Int?
+  game         Games
   date         String?
   date_on_file String?
   z_keys       Int?
@@ -52,6 +50,12 @@ model Replay {
   checksum     String?
   shift        Int?
   rpy_name     String?
+  points       Int?
+  scorePoints  Int?
+  acceptedBy   String
+  filePath     String?
+  comment      String?
+  achievement  Achievement
   status       ReplayStatus
 
   Profile       Profile? @relation(fields: [profileUserId], references: [userId])
@@ -64,4 +68,31 @@ enum ReplayStatus {
   NEW
   VERIFIED
   REJECTED
+}
+
+enum Achievement {
+  CC
+  NM
+  NB
+  NMNB
+  NNN
+  NNNN
+}
+
+enum Games {
+  EOSD
+  PCB
+  INA
+  INB
+  POFV
+  MOF
+  SA
+  UFO
+  GFW
+  TD
+  DDC
+  LOLK
+  HSIFS
+  WBAWC
+  UM
 }
