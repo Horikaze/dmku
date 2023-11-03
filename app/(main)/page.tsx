@@ -1,11 +1,10 @@
-"use client"
-
-import { signIn } from "next-auth/react";
+import Navbar from "../components/Navbar";
 
 export default function Home() {
   return (
     <div>
-      <button onClick={() => signIn()}>Zaloguj</button>
+      <Navbar />
+      aha
     </div>
   );
 }
