@@ -20,7 +20,7 @@ export default function RootLayout({
     <html lang="en">
       <AuthContext>
         <body className={`${inter.className} h-full flex flex-col`}>
-          <nav className=" bg-yellow-200 h-10">TODO NAV</nav>
+          <nav className=" bg-stone-700 text-center text-white h-10">TODO NAV</nav>
           <Sidebar>{children}</Sidebar>
         </body>
       </AuthContext>

@@ -4,7 +4,7 @@ import clsx from "clsx";
 import Link from "next/link";
 import { useMemo } from "react";
 
-type DesktopItemProps = {
+type MobileItemProps = {
   href: string;
   label: string;
   icon: any;
@@ -12,13 +12,13 @@ type DesktopItemProps = {
   onClick?: () => void;
 };
 
-export default function DesktopItem({
+export default function MobileItem({
   href,
   label,
   icon: Icon,
   active,
   onClick,
-}: DesktopItemProps) {
+}: MobileItemProps) {
   const textAndIconColor = useMemo(() => {
     const textAndIconColor = clsx(
       "font-medium text-sm group-hover:text-white",
@@ -33,19 +33,19 @@ export default function DesktopItem({
     }
   };
   return (
-    <li onClick={handleClick}>
+    <li onClick={handleClick} className="w-full">
       <Link
         href={href}
         className="
-          group relative flex gap-x-3 p-3 items-center bg-sidebarBgItem rounded-sm hover:brightness-125"
+          group relative flex flex-col py-2 gap-y-1 items-center bg-sidebarBgItem rounded-sm hover:brightness-125"
       >
         <Icon className={`h-5 w-5 ${textAndIconColor}`} />
-        <p className={textAndIconColor}>{label}</p>
         <div
           className={`${
             active ? "block" : "hidden"
-          } absolute h-full w-2 bg-orange-500 right-0`}
+          } absolute h-1 w-full bg-orange-500 top-0`}
         />
+        <p className={textAndIconColor}>{label}</p>
       </Link>
     </li>
   );
