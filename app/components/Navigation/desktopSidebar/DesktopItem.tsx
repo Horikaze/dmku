@@ -37,7 +37,7 @@ export default function DesktopItem({
       <Link
         href={href}
         className="
-          group relative flex gap-x-3 p-3 items-center bg-sidebarBgItem rounded-sm hover:brightness-125"
+          group relative flex gap-x-3 p-3 items-center bg-sidebarBgItem rounded-sm hover:brightness-125 transition"
       >
         <Icon className={`h-5 w-5 ${textAndIconColor}`} />
         <p className={textAndIconColor}>{label}</p>
