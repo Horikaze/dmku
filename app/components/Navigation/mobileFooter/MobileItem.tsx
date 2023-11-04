@@ -37,7 +37,7 @@ export default function MobileItem({
       <Link
         href={href}
         className="
-          group relative flex flex-col py-2 gap-y-1 items-center bg-sidebarBgItem rounded-sm hover:brightness-125"
+          group relative flex flex-col pb-2 pt-3 gap-y-1 items-center bg-sidebarBgItem rounded-sm hover:brightness-125"
       >
         <Icon className={`h-5 w-5 ${textAndIconColor}`} />
         <div
