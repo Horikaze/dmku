@@ -5,7 +5,7 @@ const Sidebar = async ({ children }: { children: React.ReactNode }) => {
   return (
     <div className="flex flex-col lg:flex-row h-full">
       <DesktopSidebar />
-      <main className="h-full">{children}</main>
+      <main className="h-full w-full">{children}</main>
       <MobileFooter />
     </div>
   );
