@@ -12,22 +12,23 @@ generator client {
 }
 
 model Profile {
-  userId           String   @unique
-  name             String
+  id               String   @id @default(uuid())
+  name             String?
+  email            String?  @unique
   imageUrl         String?
-  email            String?
   scoreRank        Int?
   achievementsRank Int?
   CCCount          Int?
   admin            Boolean?
   supporter        Boolean?
-  joindate         DateTime
+  joindate         DateTime @default(now())
   discord          String?
-  favoriteGame     Games
+  favoriteGame     Games?
   bio              String?
   totalPoints      Int?
   totalScore       Int?
   eventPoints      Int?
+  hashedPassword   String?
   Replays          Replay[]
 }
 
@@ -58,10 +59,10 @@ model Replay {
   achievement  Achievement
   status       ReplayStatus
 
-  Profile       Profile? @relation(fields: [profileUserId], references: [userId])
-  profileUserId String?
+  Profile   Profile? @relation(fields: [profileId], references: [id])
+  profileId String?
 
-  @@index([profileUserId])
+  @@index([profileId])
 }
 
 enum ReplayStatus {

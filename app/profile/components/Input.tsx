@@ -3,13 +3,14 @@ import clsx from "clsx";
 import { FieldValues, FieldErrors, UseFormRegister } from "react-hook-form";
 
 type formSchemaProps = {
-  nickname: string;
+  name: string;
   password: string;
   confirmPassword: string;
+  email: string;
 };
 interface InputProps {
   label: string;
-  id: "password" | "confirmPassword" | "nickname";
+  id: "password" | "confirmPassword" | "name" | "email";
   type?: string;
   required?: boolean;
   register: UseFormRegister<formSchemaProps>;
@@ -28,6 +29,7 @@ const Input = ({
   disabled,
   placeholder,
 }: InputProps) => {
+  console.log(errors)
   return (
     <div>
       <label

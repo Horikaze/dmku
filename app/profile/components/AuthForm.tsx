@@ -6,12 +6,16 @@ import { useForm } from "react-hook-form";
 import { FaDiscord, FaGithub, FaAngleRight } from "react-icons/fa6";
 import * as z from "zod";
 import AuthSocialButton from "./AuthSocialButton";
+import axios from "axios";
+import { signIn, signOut, useSession } from "next-auth/react";
+import router from "next/router";
 type Variant = "LOGIN" | "REGISER";
 
 const AuthForm = () => {
+  const user = useSession();
+  console.log(user);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [variant, setVariant] = useState<Variant>("LOGIN");
-
   const formSchema = useMemo(() => {
     return z
       .object({
@@ -22,10 +26,13 @@ const AuthForm = () => {
         confirmPassword: z
           .string()
           .max(15, { message: "The name must be less than 15 characters." }),
-        nickname: z
+        name: z
           .string()
           .min(3, { message: "The name must be at least 3 characters." })
-          .max(15, { message: "The name must be less than 15 characters." }),
+          .max(15, { message: "The name must be less than 15 characters." })
+          .optional()
+          .or(z.literal("")),
+        email: z.string().email(),
       })
       .superRefine((i, ctx) => {
         if (variant === "REGISER" && i.password !== i.confirmPassword) {
@@ -48,7 +55,8 @@ const AuthForm = () => {
     defaultValues: {
       password: "",
       confirmPassword: "",
-      nickname: "",
+      name: "",
+      email: "",
     },
   });
 
@@ -62,11 +70,45 @@ const AuthForm = () => {
   }, [setValue, variant]);
   const pocessForm = async (data: z.infer<typeof formSchema>) => {
     setIsLoading(true);
-    console.log(data);
+    if (variant === "LOGIN") {
+      signIn("credentials", {
+        ...data,
+        redirect: false,
+      })
+        .then((callback) => {
+          if (callback?.error) console.log("Invalid credencials");
+          if (callback?.ok && !callback.error) {
+            console.log("logged");
+            // router.push("/users");
+          }
+        })
+        .finally(() => setIsLoading(false));
+    }
+
+    if (variant === "REGISER") {
+      axios
+        .post("/api/register", data)
+        .then(() => {
+          signIn("credentials", data);
+        })
+        .catch((e) => {
+          console.log(e);
+        })
+        .finally(() => setIsLoading(false));
+    }
   };
 
   const socialAction = (action: string) => {
-    console.log(action);
+    setIsLoading(true);
+
+    signIn(action, {
+      redirect: false,
+    })
+      .then((callback) => {
+        if (callback?.error) console.log("Invalid credentials");
+        if (callback?.ok && !callback.error) console.log("Logged in!");
+      })
+      .finally(() => setIsLoading(false));
   };
 
   return (
@@ -74,14 +116,22 @@ const AuthForm = () => {
       onSubmit={handleSubmit(pocessForm)}
       className="flex w-full max-w-md flex-col gap-y-2 mt-6 rounded-md bg-[#2a303c] px-7 py-3 "
     >
+      {variant === "REGISER" ? (
+        <Input
+          label="Nickname"
+          register={register}
+          id="name"
+          errors={errors}
+          disabled={isLoading}
+        />
+      ) : null}
       <Input
-        label="Nickname"
+        label="Email"
         register={register}
-        id="nickname"
+        id="email"
         errors={errors}
         disabled={isLoading}
       />
-
       <Input
         errors={errors}
         register={register}
@@ -101,6 +151,15 @@ const AuthForm = () => {
         />
       ) : null}
       <div className="flex row-auto justify-end">
+        <button
+          type="button"
+          className={`bg-slate-100 hover:bg-slate-300 transition flex flex-row text-sm items-center py-2 px-4 rounded-lg mt-2
+          ${isLoading && "opacity-50"}
+          `}
+          onClick={() => signOut()}
+        >
+          Wyloguj
+        </button>
         <button
           type="submit"
           disabled={isLoading}
