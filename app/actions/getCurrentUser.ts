@@ -1,20 +1,17 @@
-import prisma from "@/app/libs/prismadb";
+import prisma from "@/app/lib/prismadb";
+import axios from "axios";
 import { getSession } from "next-auth/react";
 export const getCurrentUser = async () => {
+  const session = await getSession();
+  const { email } = session?.user!;
   try {
-    const session = await getSession();
-
-    if (!session?.user?.email) return null;
-
-    const currentUser = await prisma.profile.findUnique({
-      where: {
-        email: session.user.email,
-      },
+    const user = await axios.post("/api/getuser", {
+      email: email,
     });
-    if (!currentUser) return null;
-
-    return currentUser;
+    const user2 = await user.data;
+    console.log(user2);
   } catch (error) {
+    console.log(error);
     return null;
   }
 };

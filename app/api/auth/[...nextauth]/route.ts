@@ -2,7 +2,7 @@ import { AuthOptions } from "next-auth";
 import NextAuth from "next-auth/next";
 import CredentialsProvider from "next-auth/providers/credentials";
 import DiscordProvider from "next-auth/providers/discord";
-import prisma from "@/app/libs/prismadb";
+import prisma from "@/app/lib/prismadb";
 import bcrypt from "bcrypt";
 
 export const authOptions: AuthOptions = {
