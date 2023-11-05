@@ -4,11 +4,11 @@ export const getCurrentUser = async () => {
   try {
     const session = await getSession();
 
-    if (!session?.user?.name) return null;
+    if (!session?.user?.email) return null;
 
     const currentUser = await prisma.profile.findUnique({
       where: {
-        login: session?.user?.name as string,
+        email: session.user.email,
       },
     });
     if (!currentUser) return null;

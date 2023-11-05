@@ -13,7 +13,7 @@ generator client {
 
 model Profile {
   id               String   @id @default(uuid())
-  name             String?
+  nickname         String?
   email            String?  @unique
   imageUrl         String?
   scoreRank        Int?

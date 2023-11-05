@@ -1,14 +1,14 @@
 "use client";
 import Input from "@/app/profile/components/Input";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useCallback, useMemo, useState } from "react";
-import { useForm } from "react-hook-form";
-import { FaDiscord, FaGithub, FaAngleRight } from "react-icons/fa6";
-import * as z from "zod";
-import AuthSocialButton from "./AuthSocialButton";
 import axios from "axios";
 import { signIn, signOut, useSession } from "next-auth/react";
-import router from "next/router";
+import { useCallback, useMemo, useState } from "react";
+import { useForm } from "react-hook-form";
+import { FaAngleRight, FaDiscord } from "react-icons/fa6";
+import * as z from "zod";
+import AuthSocialButton from "./AuthSocialButton";
+import { getCurrentUser } from "@/app/actions/getCurrentUser";
 type Variant = "LOGIN" | "REGISER";
 
 const AuthForm = () => {
@@ -26,13 +26,10 @@ const AuthForm = () => {
         confirmPassword: z
           .string()
           .max(15, { message: "The name must be less than 15 characters." }),
-        name: z
+        nickname: z
           .string()
           .min(3, { message: "The name must be at least 3 characters." })
-          .max(15, { message: "The name must be less than 15 characters." })
-          .optional()
-          .or(z.literal("")),
-        email: z.string().email(),
+          .max(15, { message: "The name must be less than 15 characters." }),
       })
       .superRefine((i, ctx) => {
         if (variant === "REGISER" && i.password !== i.confirmPassword) {
@@ -55,8 +52,7 @@ const AuthForm = () => {
     defaultValues: {
       password: "",
       confirmPassword: "",
-      name: "",
-      email: "",
+      nickname: "",
     },
   });
 
@@ -70,6 +66,7 @@ const AuthForm = () => {
   }, [setValue, variant]);
   const pocessForm = async (data: z.infer<typeof formSchema>) => {
     setIsLoading(true);
+    console.log(data);
     if (variant === "LOGIN") {
       signIn("credentials", {
         ...data,
@@ -98,6 +95,11 @@ const AuthForm = () => {
     }
   };
 
+  const printUser = async () => {
+    const usr = await getCurrentUser();
+    console.log(usr);
+  };
+
   const socialAction = (action: string) => {
     setIsLoading(true);
 
@@ -116,19 +118,10 @@ const AuthForm = () => {
       onSubmit={handleSubmit(pocessForm)}
       className="flex w-full max-w-md flex-col gap-y-2 mt-6 rounded-md bg-[#2a303c] px-7 py-3 "
     >
-      {variant === "REGISER" ? (
-        <Input
-          label="Nickname"
-          register={register}
-          id="name"
-          errors={errors}
-          disabled={isLoading}
-        />
-      ) : null}
       <Input
-        label="Email"
+        label="Nickname"
         register={register}
-        id="email"
+        id="nickname"
         errors={errors}
         disabled={isLoading}
       />
@@ -151,6 +144,15 @@ const AuthForm = () => {
         />
       ) : null}
       <div className="flex row-auto justify-end">
+        <button
+          type="button"
+          className={`bg-slate-100 hover:bg-slate-300 transition flex flex-row text-sm items-center py-2 px-4 rounded-lg mt-2
+          ${isLoading && "opacity-50"}
+          `}
+          onClick={() => printUser()}
+        >
+          getUser
+        </button>
         <button
           type="button"
           className={`bg-slate-100 hover:bg-slate-300 transition flex flex-row text-sm items-center py-2 px-4 rounded-lg mt-2
@@ -186,10 +188,6 @@ const AuthForm = () => {
           <AuthSocialButton
             icon={FaDiscord}
             onClick={() => socialAction("discord")}
-          />
-          <AuthSocialButton
-            icon={FaGithub}
-            onClick={() => socialAction("github")}
           />
         </div>
         <div className="flex gap-2 justify-center text-sm mt-6 px-2 text-gray-400">

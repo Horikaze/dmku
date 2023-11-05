@@ -1,19 +1,12 @@
-import prisma from "@/app/libs/prismadb";
-import { PrismaAdapter } from "@next-auth/prisma-adapter";
-import bcrypt from "bcrypt";
 import { AuthOptions } from "next-auth";
 import NextAuth from "next-auth/next";
 import CredentialsProvider from "next-auth/providers/credentials";
 import DiscordProvider from "next-auth/providers/discord";
-import GithubProvider from "next-auth/providers/github";
+import prisma from "@/app/libs/prismadb";
+import bcrypt from "bcrypt";
 
 export const authOptions: AuthOptions = {
-  adapter: PrismaAdapter(prisma),
   providers: [
-    GithubProvider({
-      clientId: process.env.GITHUB_ID as string,
-      clientSecret: process.env.GITHUB_SECRET as string,
-    }),
     DiscordProvider({
       clientId: process.env.DISCORD_ID as string,
       clientSecret: process.env.DISCORD_SECRET as string,
@@ -21,18 +14,18 @@ export const authOptions: AuthOptions = {
     CredentialsProvider({
       name: `credentials`,
       credentials: {
-        email: { label: `email`, type: "text" },
+        nickname: { label: `nickname`, type: "text" },
         password: { label: "password", type: "password" },
       },
       async authorize(credentials) {
-        if (!credentials?.email || !credentials.password)
+        if (!credentials?.nickname || !credentials.password)
           throw new Error("Invalid credentials");
-
         const user = await prisma.profile.findUnique({
           where: {
-            email: credentials.email,
+            email: credentials?.nickname.replace(/\s/g, "_") + "@dmku.pl",
           },
         });
+
         if (!user || !user?.hashedPassword)
           throw new Error("Invalid credentials");
 
@@ -46,7 +39,29 @@ export const authOptions: AuthOptions = {
       },
     }),
   ],
-  debug: process.env.NODE_ENV === "development",
+  callbacks: {
+    async jwt({ token, user }) {
+      if (user) {
+        console.log(user.email);
+        const isUserExists = await prisma.profile.findUnique({
+          where: {
+            email: user.email!,
+          },
+        });
+        if (!isUserExists) {
+          await prisma.profile.create({
+            data: {
+              email: user.email,
+              nickname: user.name,
+            },
+          });
+        }
+      }
+
+      return token;
+    },
+  },
+  // debug: process.env.NODE_ENV === "development",
   session: {
     strategy: "jwt",
   },
