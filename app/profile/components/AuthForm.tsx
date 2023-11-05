@@ -32,7 +32,7 @@ const AuthForm = () => {
           ctx.addIssue({
             code: z.ZodIssueCode.custom,
             message: `Passwords are not the same.`,
-            path:["confirmPassword"]
+            path: ["confirmPassword"],
           });
         }
       });
@@ -61,6 +61,7 @@ const AuthForm = () => {
     }
   }, [setValue, variant]);
   const pocessForm = async (data: z.infer<typeof formSchema>) => {
+    setIsLoading(true);
     console.log(data);
   };
 
@@ -96,14 +97,16 @@ const AuthForm = () => {
           id="confirmPassword"
           type="password"
           disabled={isLoading}
-          required={false}
           label="Confirm Password"
         />
       ) : null}
       <div className="flex row-auto justify-end">
         <button
           type="submit"
-          className="bg-slate-100 hover:bg-slate-300 transition flex flex-row text-sm items-center py-2 px-4 rounded-lg mt-2"
+          disabled={isLoading}
+          className={`bg-slate-100 hover:bg-slate-300 transition flex flex-row text-sm items-center py-2 px-4 rounded-lg mt-2
+          ${isLoading && "opacity-50"}
+          `}
         >
           <p>continue</p>
           <FaAngleRight className="w-4 h-4" />
