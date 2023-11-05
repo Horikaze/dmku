@@ -1,6 +1,4 @@
-import React from "react";
 import AuthForm from "./components/AuthForm";
-
 const Profile = () => {
   return (
     <div className="flex flex-col justify-center items-center pt-4 lg:pt-8">

@@ -1,21 +1,27 @@
 "use client";
+import { getCurrentUser } from "@/app/actions/getCurrentUser";
 import Input from "@/app/profile/components/Input";
 import { zodResolver } from "@hookform/resolvers/zod";
 import axios from "axios";
 import { signIn, signOut, useSession } from "next-auth/react";
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
 import { FaAngleRight, FaDiscord } from "react-icons/fa6";
 import * as z from "zod";
 import AuthSocialButton from "./AuthSocialButton";
-import { getCurrentUser } from "@/app/actions/getCurrentUser";
+import { useRouter } from "next/navigation";
 type Variant = "LOGIN" | "REGISER";
 
 const AuthForm = () => {
-  const user = useSession();
-  console.log(user);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [variant, setVariant] = useState<Variant>("LOGIN");
+  const session = useSession();
+  const router = useRouter();
+  useEffect(() => {
+    if (session?.status === "authenticated" && session.data !== null) {
+      router.push(`/profile/${session.data.user?.name}`);
+    }
+  }, [router, session.data, session?.status]);
   const formSchema = useMemo(() => {
     return z
       .object({
@@ -95,11 +101,6 @@ const AuthForm = () => {
     }
   };
 
-  const printUser = async () => {
-    const usr = await getCurrentUser();
-    console.log(usr);
-  };
-
   const socialAction = (action: string) => {
     setIsLoading(true);
 
@@ -144,24 +145,6 @@ const AuthForm = () => {
         />
       ) : null}
       <div className="flex row-auto justify-end">
-        <button
-          type="button"
-          className={`bg-slate-100 hover:bg-slate-300 transition flex flex-row text-sm items-center py-2 px-4 rounded-lg mt-2
-          ${isLoading && "opacity-50"}
-          `}
-          onClick={() => printUser()}
-        >
-          getUser
-        </button>
-        <button
-          type="button"
-          className={`bg-slate-100 hover:bg-slate-300 transition flex flex-row text-sm items-center py-2 px-4 rounded-lg mt-2
-          ${isLoading && "opacity-50"}
-          `}
-          onClick={() => signOut()}
-        >
-          Wyloguj
-        </button>
         <button
           type="submit"
           disabled={isLoading}

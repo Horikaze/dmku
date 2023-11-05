@@ -17,6 +17,7 @@ export const POST = async (req: Request) => {
         email: nickname.replace(/\s/g, "_") + "@dmku.pl",
         hashedPassword,
         nickname,
+        name:nickname
       },
     });
 

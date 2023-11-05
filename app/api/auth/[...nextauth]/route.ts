@@ -53,6 +53,7 @@ export const authOptions: AuthOptions = {
             data: {
               email: user.email,
               nickname: user.name,
+              name: user.name,
             },
           });
         }
