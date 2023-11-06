@@ -36,7 +36,7 @@ const MobileFooter = () => {
             href={routes[routes.length - 1].href}
             label={routes[routes.length - 1].label}
             active={routes[routes.length - 1].active}
-            nav="desktop"
+            nav="mobile"
             nickname={session.data.user?.name!}
             src={session.data.user?.image!}
           />

@@ -12,7 +12,10 @@ export async function POST(req: Request) {
         email: email,
       },
     });
-    if (!currentUser) return null;
+    if (!currentUser) {
+      return new NextResponse("Internal error", { status: 500 });
+    }
+
     return NextResponse.json(currentUser);
   } catch (error) {
     console.log(error, "ERROR_MESSAGES");

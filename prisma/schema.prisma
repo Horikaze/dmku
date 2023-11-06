@@ -15,7 +15,7 @@ model Profile {
   id               String   @id @default(uuid())
   nickname         String?
   name             String?
-  email            String?  @unique
+  email            String   @unique
   imageUrl         String?
   scoreRank        Int?
   achievementsRank Int?

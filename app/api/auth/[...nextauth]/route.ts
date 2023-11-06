@@ -50,7 +50,7 @@ export const authOptions: AuthOptions = {
         if (!isUserExists) {
           await prisma.profile.create({
             data: {
-              email: user.email,
+              email: user.email!,
               nickname: user.name,
               name: user.name,
               imageUrl: user.image || null,

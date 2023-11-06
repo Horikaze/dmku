@@ -30,7 +30,7 @@ export default function DesktopItem({
       <Link
         href={href}
         className="
-          group relative flex gap-x-3 py-5 justify-center px-4 hover:brightness-125 transition"
+          group relative flex gap-x-3 py-5 justify-center bg-sidebarBg rounded-md px-4 hover:brightness-110 transition"
       >
         <Icon className={`h-5 w-5 ${textAndIconColor}`} />
         <p className={textAndIconColor}>{label}</p>
