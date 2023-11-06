@@ -45,7 +45,7 @@ export default function ProfileNav({
           }`}
         >
           <Image
-            src={src || "/images/placeholder"}
+            src={src || "/images/placeholder.jpg"}
             alt="PFP"
             width={35}
             height={35}

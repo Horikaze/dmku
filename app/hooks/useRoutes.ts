@@ -32,7 +32,7 @@ export const useRoutes = () => {
         active: pathName === "/info",
       },
       {
-        label: "Profile",
+        label: "Login",
         href: "/profile",
         icon: FaUser,
         active: pathName === "/profile",

@@ -12,7 +12,7 @@ const MobileFooter = () => {
     <div className="lg:hidden flex flex-row bg-sidebarBg">
       <div className="flex flex-row gap-x-4 justify-evenly w-full">
         {routes.map((item) => {
-          if (item.label === "Profile") return null;
+          if (item.label === "Login") return null;
           return (
             <MobileItem
               key={item.label}

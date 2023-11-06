@@ -13,7 +13,7 @@ const DesktopSidebar = () => {
       <div>
         <div className="flex flex-row gap-x-2">
           {routes.map((item) => {
-            if (item.label === "Profile") return null;
+            if (item.label === "Login") return null;
             return (
               <DesktopItem
                 key={item.label}
