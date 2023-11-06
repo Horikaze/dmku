@@ -54,6 +54,7 @@ export const authOptions: AuthOptions = {
               email: user.email,
               nickname: user.name,
               name: user.name,
+              imageUrl: user.image || null,
             },
           });
         }

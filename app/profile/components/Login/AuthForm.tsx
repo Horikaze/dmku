@@ -1,6 +1,5 @@
 "use client";
 import { getCurrentUser } from "@/app/actions/getCurrentUser";
-import Input from "@/app/profile/components/Input";
 import { zodResolver } from "@hookform/resolvers/zod";
 import axios from "axios";
 import { signIn, signOut, useSession } from "next-auth/react";
@@ -10,18 +9,12 @@ import { FaAngleRight, FaDiscord } from "react-icons/fa6";
 import * as z from "zod";
 import AuthSocialButton from "./AuthSocialButton";
 import { useRouter } from "next/navigation";
+import Input from "./Input";
 type Variant = "LOGIN" | "REGISER";
 
 const AuthForm = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [variant, setVariant] = useState<Variant>("LOGIN");
-  const session = useSession();
-  const router = useRouter();
-  useEffect(() => {
-    if (session?.status === "authenticated" && session.data !== null) {
-      router.push(`/profile/${session.data.user?.name}`);
-    }
-  }, [router, session.data, session?.status]);
   const formSchema = useMemo(() => {
     return z
       .object({

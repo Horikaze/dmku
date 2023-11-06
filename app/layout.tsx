@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import Sidebar from "./components/Navigation/Sidebar";
 import AuthContext from "./context/AuthContext";
 import "./globals.css";
+import { ReactQueryContext } from "./context/ReactQueryContext";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -19,10 +20,14 @@ export default function RootLayout({
   return (
     <html lang="en">
       <AuthContext>
-        <body className={`${inter.className} h-full flex flex-col`}>
-          <nav className=" bg-stone-700 text-center text-white h-10">TODO NAV</nav>
-          <Sidebar>{children}</Sidebar>
-        </body>
+        <ReactQueryContext>
+          <body className={`${inter.className} h-full flex flex-col`}>
+            <nav className=" bg-stone-700 text-center text-white h-10">
+              TODO NAV
+            </nav>
+            <Sidebar>{children}</Sidebar>
+          </body>
+        </ReactQueryContext>
       </AuthContext>
     </html>
   );

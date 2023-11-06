@@ -1,15 +1,15 @@
-import prisma from "@/app/lib/prismadb";
+import { Profile } from "@prisma/client";
 import axios from "axios";
 import { getSession } from "next-auth/react";
 export const getCurrentUser = async () => {
-  const session = await getSession();
-  const { email } = session?.user!;
   try {
-    const user = await axios.post("/api/getuser", {
-      email: email,
+    const session = await getSession();
+    console.log(session);
+    const data = await axios.post("/api/getuser", {
+      email: session?.user?.email!,
     });
-    const user2 = await user.data;
-    console.log(user2);
+    const currentUser = await data.data;
+    return currentUser as Profile;
   } catch (error) {
     console.log(error);
     return null;
