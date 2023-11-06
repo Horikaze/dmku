@@ -27,7 +27,7 @@ export default function MobileItem({
   }, [active]);
 
   return (
-    <li className="w-full">
+    <div className="w-full">
       <Link
         href={href}
         className="
@@ -41,6 +41,6 @@ export default function MobileItem({
         />
         <p className={textAndIconColor}>{label}</p>
       </Link>
-    </li>
+    </div>
   );
 }

@@ -26,7 +26,7 @@ export default function DesktopItem({
   }, [active]);
 
   return (
-    <li>
+    <div>
       <Link
         href={href}
         className="
@@ -40,6 +40,6 @@ export default function DesktopItem({
           } absolute w-full h-1 bg-orange-500/75 bottom-0`}
         />
       </Link>
-    </li>
+    </div>
   );
 }
