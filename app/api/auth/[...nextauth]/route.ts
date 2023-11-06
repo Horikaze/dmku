@@ -63,7 +63,7 @@ export const authOptions: AuthOptions = {
       return token;
     },
   },
-  // debug: process.env.NODE_ENV === "development",
+  debug: process.env.NODE_ENV === "development",
   session: {
     strategy: "jwt",
   },

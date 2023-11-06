@@ -15,6 +15,7 @@ type Variant = "LOGIN" | "REGISER";
 const AuthForm = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [variant, setVariant] = useState<Variant>("LOGIN");
+  const router = useRouter();
   const formSchema = useMemo(() => {
     return z
       .object({
@@ -75,7 +76,7 @@ const AuthForm = () => {
           if (callback?.error) console.log("Invalid credencials");
           if (callback?.ok && !callback.error) {
             console.log("logged");
-            // router.push("/users");
+            router.refresh()
           }
         })
         .finally(() => setIsLoading(false));
@@ -86,6 +87,7 @@ const AuthForm = () => {
         .post("/api/register", data)
         .then(() => {
           signIn("credentials", data);
+          router.refresh()
         })
         .catch((e) => {
           console.log(e);
