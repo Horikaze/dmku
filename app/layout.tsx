@@ -22,9 +22,6 @@ export default function RootLayout({
       <AuthContext>
         <ReactQueryContext>
           <body className={`${inter.className} h-full flex flex-col`}>
-            <nav className=" bg-stone-700 text-center text-white h-10">
-              TODO NAV
-            </nav>
             <Sidebar>{children}</Sidebar>
           </body>
         </ReactQueryContext>

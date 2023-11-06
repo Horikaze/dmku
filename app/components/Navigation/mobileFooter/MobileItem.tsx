@@ -17,7 +17,6 @@ export default function MobileItem({
   label,
   icon: Icon,
   active,
-  onClick,
 }: MobileItemProps) {
   const textAndIconColor = useMemo(() => {
     const textAndIconColor = clsx(
@@ -27,17 +26,12 @@ export default function MobileItem({
     return textAndIconColor;
   }, [active]);
 
-  const handleClick = () => {
-    if (onClick) {
-      return onClick();
-    }
-  };
   return (
-    <li onClick={handleClick} className="w-full">
+    <li className="w-full">
       <Link
         href={href}
         className="
-          group relative flex flex-col pb-2 pt-3 gap-y-1 items-center bg-sidebarBgItem rounded-sm hover:brightness-125 transition"
+          group relative flex flex-col p-3 items-center hover:brightness-125 transition"
       >
         <Icon className={`h-5 w-5 ${textAndIconColor}`} />
         <div

@@ -1,6 +1,6 @@
 import { usePathname } from "next/navigation";
 import { useMemo } from "react";
-import { FaHome, FaSearch,FaInfoCircle,FaUser } from "react-icons/fa";
+import { FaHome, FaSearch, FaInfoCircle, FaUser } from "react-icons/fa";
 import { FaRankingStar } from "react-icons/fa6";
 export const useRoutes = () => {
   const pathName = usePathname();

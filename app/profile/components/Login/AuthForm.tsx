@@ -1,14 +1,13 @@
 "use client";
-import { getCurrentUser } from "@/app/actions/getCurrentUser";
 import { zodResolver } from "@hookform/resolvers/zod";
 import axios from "axios";
-import { signIn, signOut, useSession } from "next-auth/react";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { signIn } from "next-auth/react";
+import { useRouter } from "next/navigation";
+import { useCallback, useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
 import { FaAngleRight, FaDiscord } from "react-icons/fa6";
 import * as z from "zod";
 import AuthSocialButton from "./AuthSocialButton";
-import { useRouter } from "next/navigation";
 import Input from "./Input";
 type Variant = "LOGIN" | "REGISER";
 
@@ -76,7 +75,7 @@ const AuthForm = () => {
           if (callback?.error) console.log("Invalid credencials");
           if (callback?.ok && !callback.error) {
             console.log("logged");
-            router.refresh()
+            router.refresh();
           }
         })
         .finally(() => setIsLoading(false));
@@ -87,7 +86,7 @@ const AuthForm = () => {
         .post("/api/register", data)
         .then(() => {
           signIn("credentials", data);
-          router.refresh()
+          router.refresh();
         })
         .catch((e) => {
           console.log(e);
