@@ -1,7 +1,14 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
-    domains: ["static.zerochan.net", "cdn.discordapp.com"],
+    remotePatterns: [
+      {
+        hostname: "cdn.discordapp.com",
+      },
+      {
+        hostname: "static.zerochan.net",
+      },
+    ],
   },
 };
 

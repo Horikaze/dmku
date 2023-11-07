@@ -73,7 +73,6 @@ const AuthForm = () => {
         .then((callback) => {
           if (callback?.error) console.log("Invalid credencials");
           if (callback?.ok && !callback.error) {
-            console.log("logged");
             router.refresh();
           }
         })

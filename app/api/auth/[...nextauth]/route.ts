@@ -11,6 +11,7 @@ export const authOptions: AuthOptions = {
     DiscordProvider({
       clientId: process.env.DISCORD_ID as string,
       clientSecret: process.env.DISCORD_SECRET as string,
+      authorization: { params: { scope: "identify" } },
     }),
     CredentialsProvider({
       name: `credentials`,
@@ -48,6 +49,14 @@ export const authOptions: AuthOptions = {
             email: user.email!,
           },
         });
+
+        if (isUserExists) {
+          token.picture = isUserExists?.imageUrl;
+          token.name = isUserExists?.nickname;
+          token.email = isUserExists?.email;
+          token.info = isUserExists!;
+        }
+
         if (!isUserExists) {
           const newUser = await prisma.profile.create({
             data: {
@@ -62,10 +71,6 @@ export const authOptions: AuthOptions = {
           token.email = newUser?.email;
           token.user = newUser!;
         }
-        token.picture = isUserExists?.imageUrl;
-        token.name = isUserExists?.nickname;
-        token.email = isUserExists?.email;
-        token.info = isUserExists!;
       }
       return token;
     },
