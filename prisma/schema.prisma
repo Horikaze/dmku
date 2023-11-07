@@ -30,6 +30,7 @@ model Profile {
   totalScore       Int?
   eventPoints      Int?
   hashedPassword   String?
+  profileBanner    String?
   Replays          Replay[]
 }
 

@@ -12,7 +12,7 @@ const DesktopNav = () => {
     <div className="hidden lg:flex lg:flex-row bg-sidebarBg px-4">
       <div>
         <div className="flex flex-row items-center gap-x-2">
-          <p className="text-3xl font-bold bg-gradient-to-r from-violet-200 to-pink-200 bg-clip-text text-transparent">
+          <p className="text-3xl px-3 font-bold bg-gradient-to-r from-violet-200 to-pink-200 bg-clip-text text-transparent">
             Dmku
           </p>
           {routes.map((item) => {

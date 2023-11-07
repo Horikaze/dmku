@@ -5,7 +5,6 @@ import ProfileMain from "./components/Profile/ProfileMain";
 
 export default async function Page() {
   const session = await getServerSession(authOptions);
-  console.log(session?.user);
   if (!session) return <Login />;
 
   return <ProfileMain />;
