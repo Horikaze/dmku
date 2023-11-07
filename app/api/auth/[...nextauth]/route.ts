@@ -1,4 +1,5 @@
 import prisma from "@/app/lib/prismadb";
+import { Profile } from "@prisma/client";
 import bcrypt from "bcrypt";
 import { AuthOptions } from "next-auth";
 import NextAuth from "next-auth/next";
@@ -48,7 +49,7 @@ export const authOptions: AuthOptions = {
           },
         });
         if (!isUserExists) {
-          await prisma.profile.create({
+          const newUser = await prisma.profile.create({
             data: {
               email: user.email!,
               nickname: user.name,
@@ -56,11 +57,23 @@ export const authOptions: AuthOptions = {
               imageUrl: user.image || null,
             },
           });
+          token.picture = newUser?.imageUrl;
+          token.name = newUser?.nickname;
+          token.email = newUser?.email;
+          token.user = newUser!;
         }
         token.picture = isUserExists?.imageUrl;
         token.name = isUserExists?.nickname;
+        token.email = isUserExists?.email;
+        token.info = isUserExists!;
       }
       return token;
+    },
+    session({ token, session }) {
+      if (token) {
+        session.user.info = token.info;
+      }
+      return session;
     },
   },
 

@@ -65,7 +65,6 @@ const AuthForm = () => {
   }, [setValue, variant]);
   const pocessForm = async (data: z.infer<typeof formSchema>) => {
     setIsLoading(true);
-    console.log(data);
     if (variant === "LOGIN") {
       signIn("credentials", {
         ...data,

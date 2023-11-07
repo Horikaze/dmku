@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import Sidebar from "./components/Navigation/Sidebar";
+import Navigation from "./components/Navigation/Navigation";
 import AuthContext from "./context/AuthContext";
-import "./globals.css";
 import { ReactQueryContext } from "./context/ReactQueryContext";
+import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -22,7 +22,7 @@ export default function RootLayout({
       <AuthContext>
         <ReactQueryContext>
           <body className={`${inter.className} h-full flex flex-col`}>
-            <Sidebar>{children}</Sidebar>
+            <Navigation>{children}</Navigation>
           </body>
         </ReactQueryContext>
       </AuthContext>

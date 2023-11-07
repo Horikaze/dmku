@@ -4,7 +4,7 @@ import { authOptions } from "../api/auth/[...nextauth]/route";
 export const getCurrentUserServer = async () => {
   const session = await getServerSession(authOptions);
   try {
-    const currentUser = await prisma.profile.findUnique({
+    const currentUser = await prisma.profile.findFirst({
       where: {
         email: session?.user?.email!,
       },

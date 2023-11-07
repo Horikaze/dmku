@@ -4,14 +4,17 @@ import { useSession } from "next-auth/react";
 import DesktopItem from "./DesktopItem";
 import ProfileNav from "../ProfileNav";
 
-const DesktopSidebar = () => {
+const DesktopNav = () => {
   const routes = useRoutes();
   const session = useSession();
   const isProfileVisible = session.status === "authenticated";
   return (
     <div className="hidden lg:flex lg:flex-row bg-sidebarBg px-4">
       <div>
-        <div className="flex flex-row gap-x-2">
+        <div className="flex flex-row items-center gap-x-2">
+          <p className="text-3xl font-bold bg-gradient-to-r from-violet-200 to-pink-200 bg-clip-text text-transparent">
+            Dmku
+          </p>
           {routes.map((item) => {
             if (item.label === "Login") return null;
             return (
@@ -50,4 +53,4 @@ const DesktopSidebar = () => {
   );
 };
 
-export default DesktopSidebar;
+export default DesktopNav;

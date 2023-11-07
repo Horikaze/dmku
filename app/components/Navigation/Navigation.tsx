@@ -1,7 +1,7 @@
-import DesktopSidebar from "./desktopSidebar/DesktopSidebar";
+import DesktopSidebar from "./desktopSidebar/DesktopNav";
 import MobileFooter from "./mobileFooter/MobileFooter";
 
-const Sidebar = async ({ children }: { children: React.ReactNode }) => {
+const Navigation = async ({ children }: { children: React.ReactNode }) => {
   return (
     <div className="flex flex-col h-full">
       <DesktopSidebar />
@@ -11,4 +11,4 @@ const Sidebar = async ({ children }: { children: React.ReactNode }) => {
   );
 };
 
-export default Sidebar;
+export default Navigation;
