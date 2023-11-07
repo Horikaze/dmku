@@ -8,7 +8,7 @@ import { ReactQueryContext } from "./context/ReactQueryContext";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "dmkku",
+  title: "dmku",
   description: "aha super",
 };
 

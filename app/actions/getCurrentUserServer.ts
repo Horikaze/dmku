@@ -1,9 +1,12 @@
 import prisma from "@/app/lib/prismadb";
-export const getCurrentUserServer = async (email: string) => {
+import { getServerSession } from "next-auth/next";
+import { authOptions } from "../api/auth/[...nextauth]/route";
+export const getCurrentUserServer = async () => {
+  const session = await getServerSession(authOptions);
   try {
     const currentUser = await prisma.profile.findUnique({
       where: {
-        email: email,
+        email: session?.user?.email!,
       },
     });
     return currentUser;
