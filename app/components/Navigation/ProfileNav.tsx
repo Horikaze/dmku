@@ -35,7 +35,7 @@ export default function ProfileNav({
       <Link
         href={href}
         className="
-          group relative flex h-full flex-col justify-center items-center hover:brightness-110 transition"
+          group relative flex h-full flex-col p-3 justify-center items-center hover:brightness-110 transition"
       >
         <div
           className={`flex ${

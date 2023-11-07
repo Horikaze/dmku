@@ -69,7 +69,7 @@ export const authOptions: AuthOptions = {
           token.picture = newUser?.imageUrl;
           token.name = newUser?.nickname;
           token.email = newUser?.email;
-          token.user = newUser!;
+          token.info = newUser!;
         }
       }
       return token;

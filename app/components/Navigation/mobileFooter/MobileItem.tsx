@@ -31,13 +31,13 @@ export default function MobileItem({
       <Link
         href={href}
         className="
-          group relative flex flex-col p-3 items-center  hover:brightness-125 transition"
+          group relative flex flex-col p-3 gap-y-1 items-center  hover:brightness-125 transition"
       >
         <Icon className={`h-5 w-5 ${textAndIconColor}`} />
         <div
           className={`${
             active ? "block" : "hidden"
-          } absolute h-1 w-full bg-orange-500 top-0`}
+          } absolute h-1 w-full bg-orange-500 top-0 left-0`}
         />
         <p className={textAndIconColor}>{label}</p>
       </Link>

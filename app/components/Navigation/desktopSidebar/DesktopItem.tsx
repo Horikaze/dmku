@@ -30,14 +30,14 @@ export default function DesktopItem({
       <Link
         href={href}
         className="
-          group relative flex gap-x-3 py-5 justify-center bg-sidebarBg rounded-md px-4 hover:brightness-110 transition"
+          group flex relative gap-x-3 py-5 center items-center bg-sidebarBg rounded-md px-4 hover:brightness-110 transition"
       >
         <Icon className={`h-5 w-5 ${textAndIconColor}`} />
         <p className={textAndIconColor}>{label}</p>
         <div
           className={`${
             active ? "block" : "hidden"
-          } absolute w-full h-1 bg-orange-500/75 bottom-0`}
+          } absolute w-full h-1 bg-orange-500/75 bottom-0 left-0`}
         />
       </Link>
     </div>
