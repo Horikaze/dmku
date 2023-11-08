@@ -35,7 +35,6 @@
 
     --radius: 0.5rem;
   }
-
 }
 
 @layer base {
@@ -49,6 +48,6 @@
 
 html,
 body {
-  background: #333c4d;
+  background: --secondary;
   height: 100%;
 }

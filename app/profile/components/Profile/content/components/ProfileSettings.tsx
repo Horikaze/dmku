@@ -175,7 +175,7 @@ export default function ProfileSettings() {
                     <FormControl>
                       <Textarea
                         placeholder={session.data?.user.info.bio || "Bio"}
-                        className="resize-none"
+                        className="resize-none [&::-webkit-scrollbar]:hidden [-ms-overflow-style:'none'] [scrollbar-width:'none']"
                         {...field}
                       />
                     </FormControl>
