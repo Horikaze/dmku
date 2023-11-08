@@ -1,12 +1,15 @@
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
-import { getServerSession } from "next-auth";
+import { Session } from "next-auth";
 import Image from "next/image";
-import { FaImage, FaPen } from "react-icons/fa";
+import { FaDiscord } from "react-icons/fa";
+import { IoSettingsSharp } from "react-icons/io5";
 
-export default async function ProfileBanner() {
-  const session = await getServerSession(authOptions);
+type ProfileBannerProps = {
+  session: Session;
+};
+
+export default async function ProfileBanner({ session }: ProfileBannerProps) {
   return (
-    <div className="w-full h-80 flex  relative">
+    <div className="w-full h-72 flex relative">
       <Image
         src={
           session?.user.info.profileBanner ||
@@ -14,31 +17,38 @@ export default async function ProfileBanner() {
         }
         alt="banner"
         fill
-        className="opacity-5 object-cover"
+        className="opacity-30 object-cover"
       />
-      <FaImage
-        size={35}
-        className="absolute right-1 bottom-1 text-white/10 hover:text-white/100 transition cursor-pointer"
-      />
-      <div className="absolute bottom-0 p-2 flex flex-row items-end gap-x-4">
-        <div className="relative group flex items-center justify-center cursor-pointer">
-          <Image
-            src={session?.user.info.imageUrl || "/images/placeholder.jpg"}
-            alt="PFP"
-            width={125}
-            height={125}
-            className="rounded-full object-cover"
-          />
-          <FaImage
-            size={35}
-            className="absolute opacity-0 text-white cursor-pointer group-hover:opacity-50"
-          />
+      <div className="flex flex-row p-2 w-full justify-between">
+        <div className="flex flex-col justify-between gap-x-4">
+          {session.user.info.bio && (
+            <div className="w-1/3">
+              <p className="text-white leading-5 text-xs md:text-base ">
+                {session.user.info.bio}
+              </p>
+            </div>
+          )}
+          <div className="relative group flex items-end gap-x-3 cursor-pointer">
+            <Image
+              src={session?.user.info.imageUrl || "/images/placeholder.jpg"}
+              alt="PFP"
+              width={110}
+              height={110}
+              className="rounded-full object-cover"
+            />
+            <p className="text-3xl font-semibold text-white drop-shadow-[2px_2px_var(--tw-shadow-color)] shadow-black">
+              {session?.user.info.nickname}
+            </p>
+          </div>
         </div>
-        <div className="flex flex-row gap-x-1">
-          <p className="text-3xl font-bold text-gray-200">
-            {session?.user.info.nickname}
-          </p>
-          <FaPen className="text-gray-400 top-0 cursor-pointer hover:text-gray-100 transition" size={10} />
+        <div className="flex flex-col justify-between items-end text-white opacity-30 mix-blend-plus-lighter">
+          <IoSettingsSharp size={24} className="hover:cursor-pointer" />
+          {session.user.info.discord && (
+            <div className="flex flex-row gap-x-2 items-center ">
+              <FaDiscord size={24} />
+              <p>{session.user.info.discord}</p>
+            </div>
+          )}
         </div>
       </div>
     </div>

@@ -9,7 +9,7 @@ const MobileFooter = () => {
   const session = useSession();
   const isProfileVisible = session.status === "authenticated";
   return (
-    <div className="lg:hidden flex flex-row bg-sidebarBg">
+    <div className="lg:hidden flex flex-row bg-primary">
       <div className="flex flex-row gap-x-4 justify-evenly w-full">
         {routes.map((item) => {
           if (item.label === "Login") return null;

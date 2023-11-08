@@ -5,48 +5,52 @@ import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useCallback, useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
+import toast from "react-hot-toast";
 import { FaAngleRight, FaDiscord } from "react-icons/fa6";
 import * as z from "zod";
 import AuthSocialButton from "./AuthSocialButton";
-import Input from "./Input";
+import { Button } from "@/components/ui/button";
+import {
+  Form,
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
+import { Separator } from "@/components/ui/separator";
+import { Input } from "@/components/ui/input";
 type Variant = "LOGIN" | "REGISER";
 
 const AuthForm = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [variant, setVariant] = useState<Variant>("LOGIN");
   const router = useRouter();
-  const formSchema = useMemo(() => {
-    return z
-      .object({
-        password: z
-          .string()
-          .min(3, { message: "The password must be at least 3 characters." })
-          .max(15, { message: "The name must be less than 15 characters." }),
-        confirmPassword: z
-          .string()
-          .max(15, { message: "The name must be less than 15 characters." }),
-        nickname: z
-          .string()
-          .min(3, { message: "The name must be at least 3 characters." })
-          .max(15, { message: "The name must be less than 15 characters." }),
-      })
-      .superRefine((i, ctx) => {
-        if (variant === "REGISER" && i.password !== i.confirmPassword) {
-          ctx.addIssue({
-            code: z.ZodIssueCode.custom,
-            message: `Passwords are not the same.`,
-            path: ["confirmPassword"],
-          });
-        }
-      });
-  }, [variant]);
-  const {
-    register,
-    handleSubmit,
-    reset,
-    setValue,
-    formState: { errors },
-  } = useForm({
+  const formSchema = z
+    .object({
+      password: z
+        .string()
+        .min(3, { message: "The password must be at least 3 characters." })
+        .max(15, { message: "The name must be less than 15 characters." }),
+      confirmPassword: z
+        .string()
+        .max(15, { message: "The name must be less than 15 characters." }),
+      nickname: z
+        .string()
+        .min(3, { message: "The name must be at least 3 characters." })
+        .max(15, { message: "The name must be less than 15 characters." }),
+    })
+    .superRefine((i, ctx) => {
+      if (variant === "REGISER" && i.password !== i.confirmPassword) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          message: `Passwords are not the same.`,
+          path: ["confirmPassword"],
+        });
+      }
+    });
+  const form = useForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
       password: "",
@@ -60,10 +64,9 @@ const AuthForm = () => {
       setVariant("REGISER");
     } else if (variant === "REGISER") {
       setVariant("LOGIN");
-      setValue("confirmPassword", "");
     }
-  }, [setValue, variant]);
-  const pocessForm = async (data: z.infer<typeof formSchema>) => {
+  }, [variant]);
+  const onSubmit = async (data: z.infer<typeof formSchema>) => {
     setIsLoading(true);
     if (variant === "LOGIN") {
       signIn("credentials", {
@@ -71,7 +74,10 @@ const AuthForm = () => {
         redirect: false,
       })
         .then((callback) => {
-          if (callback?.error) console.log("Invalid credencials");
+          if (callback?.error) {
+            console.log("Invalid credencials");
+            toast.error("Invalid credencials");
+          }
           if (callback?.ok && !callback.error) {
             router.refresh();
           }
@@ -105,61 +111,69 @@ const AuthForm = () => {
       })
       .finally(() => setIsLoading(false));
   };
-
   return (
-    <form
-      onSubmit={handleSubmit(pocessForm)}
-      className="flex w-full max-w-md flex-col gap-y-2 mt-6 rounded-md bg-[#2a303c] px-7 py-3 "
-    >
-      <Input
-        label="Nickname"
-        register={register}
-        id="nickname"
-        errors={errors}
-        disabled={isLoading}
-      />
-      <Input
-        errors={errors}
-        register={register}
-        id="password"
-        type="password"
-        disabled={isLoading}
-        label="Password"
-      />
-      {variant === "REGISER" ? (
-        <Input
-          errors={errors}
-          register={register}
-          id="confirmPassword"
-          type="password"
-          disabled={isLoading}
-          label="Confirm Password"
+    <Form {...form}>
+      <form
+        onSubmit={form.handleSubmit(onSubmit)}
+        className="space-y-2 flex w-full max-w-md flex-col text-gray-200 rounded-md bg-[#2a303c] px-7 py-3"
+      >
+        <FormField
+          control={form.control}
+          name="nickname"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Nickname</FormLabel>
+              <FormControl>
+                <Input placeholder="Nickname" {...field} />
+              </FormControl>
+              <FormDescription>
+                This is your nickname and login.
+              </FormDescription>
+              <FormMessage />
+            </FormItem>
+          )}
         />
-      ) : null}
-      <div className="flex row-auto justify-end">
-        <button
-          type="submit"
-          disabled={isLoading}
-          className={`bg-slate-100 hover:bg-slate-300 transition flex flex-row text-sm items-center py-2 px-4 rounded-lg mt-2
-          ${isLoading && "opacity-50"}
-          `}
-        >
-          <p>continue</p>
-          <FaAngleRight className="w-4 h-4" />
-        </button>
-      </div>
-      <div className="mt-2 ">
-        <div className="relative">
-          <div className="absolute inset-0 flex items-center">
-            <div className="w-full border-t border bg-gray-300" />
-          </div>
-          <div className="relative flex justify-center text-sm">
-            <span className="bg-[#2a303c] px-2 text-slate-100">
-              Or continue with
-            </span>
-          </div>
+        <FormField
+          control={form.control}
+          name="password"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Username</FormLabel>
+              <FormControl>
+                <Input placeholder="Password" {...field} />
+              </FormControl>
+              <FormDescription>
+                This is your nickname and login.
+              </FormDescription>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        {variant === "REGISER" && (
+          <FormField
+            control={form.control}
+            name="confirmPassword"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Username</FormLabel>
+                <FormControl>
+                  <Input placeholder="Confirm password" {...field} />
+                </FormControl>
+                <FormDescription>
+                  This is your nickname and login.
+                </FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        )}
+        <Button type="submit">Submit</Button>
+        <div className="relative flex justify-center items-center py-2">
+          <Separator className="absolute" />
+          <div className="absolute w-32 h-2 bg-[#2a303c]"></div>
+          <p className="absolute text-sm text-slate-300">or continue with</p>
         </div>
-        <div className="mt-6 flex gap-2">
+        <div className="flex">
           <AuthSocialButton
             icon={FaDiscord}
             onClick={() => socialAction("discord")}
@@ -173,8 +187,8 @@ const AuthForm = () => {
             {variant === "LOGIN" ? "Create a account" : "Login"}
           </div>
         </div>
-      </div>
-    </form>
+      </form>
+    </Form>
   );
 };
 

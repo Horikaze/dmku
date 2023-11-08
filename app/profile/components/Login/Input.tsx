@@ -1,6 +1,8 @@
 "use client";
 import clsx from "clsx";
+import { useCallback } from "react";
 import { FieldValues, FieldErrors, UseFormRegister } from "react-hook-form";
+import toast from "react-hot-toast";
 
 type formSchemaProps = {
   nickname: string;
