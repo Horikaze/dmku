@@ -1,14 +1,4 @@
 "use client";
-import { zodResolver } from "@hookform/resolvers/zod";
-import axios from "axios";
-import { signIn } from "next-auth/react";
-import { useRouter } from "next/navigation";
-import { useCallback, useMemo, useState } from "react";
-import { useForm } from "react-hook-form";
-import toast from "react-hot-toast";
-import { FaAngleRight, FaDiscord } from "react-icons/fa6";
-import * as z from "zod";
-import AuthSocialButton from "./AuthSocialButton";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -19,12 +9,19 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { Separator } from "@/components/ui/separator";
 import { Input } from "@/components/ui/input";
+import { Separator } from "@/components/ui/separator";
+import { zodResolver } from "@hookform/resolvers/zod";
+import axios from "axios";
+import { signIn } from "next-auth/react";
+import { useRouter } from "next/navigation";
+import { useCallback, useState } from "react";
+import { useForm } from "react-hook-form";
+import { FaDiscord } from "react-icons/fa6";
+import * as z from "zod";
 type Variant = "LOGIN" | "REGISER";
 
 const AuthForm = () => {
-  const [isLoading, setIsLoading] = useState<boolean>(false);
   const [variant, setVariant] = useState<Variant>("LOGIN");
   const router = useRouter();
   const formSchema = z
@@ -35,7 +32,9 @@ const AuthForm = () => {
         .max(15, { message: "The name must be less than 15 characters." }),
       confirmPassword: z
         .string()
-        .max(15, { message: "The name must be less than 15 characters." }),
+        .max(15, { message: "The name must be less than 15 characters." })
+        .optional()
+        .or(z.literal("")),
       nickname: z
         .string()
         .min(3, { message: "The name must be at least 3 characters." })
@@ -67,22 +66,18 @@ const AuthForm = () => {
     }
   }, [variant]);
   const onSubmit = async (data: z.infer<typeof formSchema>) => {
-    setIsLoading(true);
     if (variant === "LOGIN") {
       signIn("credentials", {
         ...data,
         redirect: false,
-      })
-        .then((callback) => {
-          if (callback?.error) {
-            console.log("Invalid credencials");
-            toast.error("Invalid credencials");
-          }
-          if (callback?.ok && !callback.error) {
-            router.refresh();
-          }
-        })
-        .finally(() => setIsLoading(false));
+      }).then((callback) => {
+        if (callback?.error) {
+          console.log("Invalid credencials");
+        }
+        if (callback?.ok && !callback.error) {
+          router.refresh();
+        }
+      });
     }
 
     if (variant === "REGISER") {
@@ -94,28 +89,24 @@ const AuthForm = () => {
         })
         .catch((e) => {
           console.log(e);
-        })
-        .finally(() => setIsLoading(false));
+        });
     }
   };
 
   const socialAction = (action: string) => {
-    setIsLoading(true);
-
+    console.log("asas");
     signIn(action, {
       redirect: false,
-    })
-      .then((callback) => {
-        if (callback?.error) console.log("Invalid credentials");
-        if (callback?.ok && !callback.error) console.log("Logged in!");
-      })
-      .finally(() => setIsLoading(false));
+    }).then((callback) => {
+      if (callback?.error) console.log("Invalid credentials");
+      if (callback?.ok && !callback.error) console.log("Logged in!");
+    });
   };
   return (
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="space-y-2 flex w-full max-w-md flex-col text-gray-200 rounded-md bg-[#2a303c] px-7 py-3"
+        className="space-y-2 flex w-full max-w-md flex-col text-gray-200 rounded-md bg-secondary px-7 py-3"
       >
         <FormField
           control={form.control}
@@ -169,15 +160,21 @@ const AuthForm = () => {
         )}
         <Button type="submit">Submit</Button>
         <div className="relative flex justify-center items-center py-2">
-          <Separator className="absolute" />
-          <div className="absolute w-32 h-2 bg-[#2a303c]"></div>
+          <Separator className="absolute bg-primary" />
+          <div className="absolute w-32 h-2 bg-secondary"></div>
           <p className="absolute text-sm text-slate-300">or continue with</p>
         </div>
         <div className="flex">
-          <AuthSocialButton
-            icon={FaDiscord}
-            onClick={() => socialAction("discord")}
-          />
+          <Button
+            onClick={() => {
+              socialAction("discord");
+            }}
+            type="button"
+            variant={"default"}
+            className="w-full"
+          >
+            <FaDiscord size={18} />
+          </Button>
         </div>
         <div className="flex gap-2 justify-center text-sm mt-6 px-2 text-gray-400">
           <div>

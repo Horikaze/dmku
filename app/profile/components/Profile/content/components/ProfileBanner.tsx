@@ -1,7 +1,7 @@
 import { Session } from "next-auth";
 import Image from "next/image";
 import { FaDiscord } from "react-icons/fa";
-import { IoSettingsSharp } from "react-icons/io5";
+import ProfileSettings from "./ProfileSettings";
 
 type ProfileBannerProps = {
   session: Session;
@@ -42,7 +42,7 @@ export default async function ProfileBanner({ session }: ProfileBannerProps) {
           </div>
         </div>
         <div className="flex flex-col justify-between items-end text-white opacity-30 mix-blend-plus-lighter">
-          <IoSettingsSharp size={24} className="hover:cursor-pointer" />
+          <ProfileSettings />
           {session.user.info.discord && (
             <div className="flex flex-row gap-x-2 items-center ">
               <FaDiscord size={24} />
