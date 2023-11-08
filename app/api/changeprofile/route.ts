@@ -7,7 +7,7 @@ export const POST = async (req: Request) => {
   try {
     const session = await getServerSession(authOptions);
     const body = await req.json();
-    const { nickname, password, discord, game } = body;
+    const { nickname, password, discord, game, bio } = body;
     // PROFESIONAL CODE XDDDDDDDDDDDDDDDD
     if (password !== "") {
       const hashedPassword = await bcrypt.hash(password, 12);
@@ -47,6 +47,16 @@ export const POST = async (req: Request) => {
         },
         data: {
           favoriteGame: game,
+        },
+      });
+    }
+    if (bio !== "") {
+      await prisma.profile.update({
+        where: {
+          email: session?.user.info.email,
+        },
+        data: {
+          bio,
         },
       });
     }

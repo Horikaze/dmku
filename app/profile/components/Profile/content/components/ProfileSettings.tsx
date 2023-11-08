@@ -34,12 +34,14 @@ import { Input } from "@/components/ui/input";
 import { gamesString } from "@/app/constants/games";
 import { useSession } from "next-auth/react";
 import axios from "axios";
+import { Textarea } from "@/components/ui/textarea";
 export default function ProfileSettings() {
   const formSchema = z.object({
     nickname: z.string().min(3).max(15).optional().or(z.literal("")),
     password: z.string().min(3).max(15).optional().or(z.literal("")),
     discord: z.string().min(3).max(15).optional().or(z.literal("")),
     game: z.string().min(2).max(15).optional().or(z.literal("")),
+    bio: z.string().min(2).max(150).optional().or(z.literal("")),
   });
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -48,6 +50,7 @@ export default function ProfileSettings() {
       password: "",
       discord: "",
       game: "",
+      bio: "",
     },
   });
 
@@ -159,6 +162,26 @@ export default function ProfileSettings() {
                       </SelectContent>
                     </Select>
                     <FormDescription>Change your favorite game</FormDescription>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="bio"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Bio</FormLabel>
+                    <FormControl>
+                      <Textarea
+                        placeholder={session.data?.user.info.bio || "Bio"}
+                        className="resize-none"
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormDescription>
+                      I don&apos;t know, write something here.
+                    </FormDescription>
                     <FormMessage />
                   </FormItem>
                 )}
