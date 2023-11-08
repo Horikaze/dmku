@@ -71,7 +71,7 @@ export default function ProfileSettings() {
     <>
       <Dialog>
         <DialogTrigger asChild>
-          <IoSettingsSharp size={24} className="hover:cursor-pointer" />
+          <IoSettingsSharp size={24} className="hover:cursor-pointer opacity-30 mix-blend-plus-lighter hover:opacity-70" />
         </DialogTrigger>
         <DialogContent className="sm:max-w-md">
           <DialogHeader>

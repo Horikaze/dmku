@@ -2,6 +2,13 @@ import { Session } from "next-auth";
 import Image from "next/image";
 import { FaDiscord } from "react-icons/fa";
 import ProfileSettings from "./ProfileSettings";
+import LogoutButton from "./LogoutButton";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 type ProfileBannerProps = {
   session: Session;
@@ -23,12 +30,12 @@ export default async function ProfileBanner({ session }: ProfileBannerProps) {
         <div className="flex flex-col justify-between gap-x-4">
           <div className="w-2/5">
             {session.user.info.bio && (
-              <p className="text-white leading-5 text-xs md:text-base break-words">
+              <p className="text-white leading-5 text-xs md:text-base break-words opacity-60">
                 {session.user.info.bio}
               </p>
             )}
           </div>
-          <div className="relative group flex items-end gap-x-3 cursor-pointer">
+          <div className="relative group flex items-end gap-x-3">
             <Image
               src={session?.user.info.imageUrl || "/images/placeholder.jpg"}
               alt="PFP"
@@ -41,10 +48,31 @@ export default async function ProfileBanner({ session }: ProfileBannerProps) {
             </p>
           </div>
         </div>
-        <div className="flex flex-col justify-between items-end text-white opacity-30 mix-blend-plus-lighter">
-          <ProfileSettings />
+        <div className="flex flex-col justify-between items-end text-white">
+          <div className="flex flex-col gap-y-2">
+            <TooltipProvider delayDuration={0}>
+              <Tooltip>
+                <TooltipTrigger>
+                  <ProfileSettings />
+                </TooltipTrigger>
+                <TooltipContent side="left">
+                  <p>Settings</p>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
+            <TooltipProvider delayDuration={0}>
+              <Tooltip>
+                <TooltipTrigger>
+                  <LogoutButton />
+                </TooltipTrigger>
+                <TooltipContent side="left">
+                  <p>Logout</p>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
+          </div>
           {session.user.info.discord && (
-            <div className="flex flex-row gap-x-2 items-center ">
+            <div className="flex flex-row gap-x-2 items-center opacity-30 mix-blend-plus-lighter ">
               <FaDiscord size={24} />
               <p>{session.user.info.discord}</p>
             </div>
