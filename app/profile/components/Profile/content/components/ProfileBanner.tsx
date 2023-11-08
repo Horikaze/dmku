@@ -21,13 +21,13 @@ export default async function ProfileBanner({ session }: ProfileBannerProps) {
       />
       <div className="flex flex-row p-2 w-full justify-between">
         <div className="flex flex-col justify-between gap-x-4">
-          {session.user.info.bio && (
-            <div className="w-1/3">
-              <p className="text-white leading-5 text-xs md:text-base ">
+          <div className="w-2/5">
+            {session.user.info.bio && (
+              <p className="text-white leading-5 text-xs md:text-base break-words">
                 {session.user.info.bio}
               </p>
-            </div>
-          )}
+            )}
+          </div>
           <div className="relative group flex items-end gap-x-3 cursor-pointer">
             <Image
               src={session?.user.info.imageUrl || "/images/placeholder.jpg"}

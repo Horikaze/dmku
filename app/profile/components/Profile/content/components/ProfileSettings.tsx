@@ -41,7 +41,7 @@ export default function ProfileSettings() {
     password: z.string().min(3).max(15).optional().or(z.literal("")),
     discord: z.string().min(3).max(15).optional().or(z.literal("")),
     game: z.string().min(2).max(15).optional().or(z.literal("")),
-    bio: z.string().min(2).max(150).optional().or(z.literal("")),
+    bio: z.string().min(2).max(250).optional().or(z.literal("")),
   });
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),

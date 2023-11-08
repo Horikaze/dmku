@@ -25,7 +25,7 @@ model Profile {
   joindate         DateTime @default(now())
   discord          String?
   favoriteGame     Games?
-  bio              String?
+  bio              String?  @db.VarChar(250)
   totalPoints      Int?
   totalScore       Int?
   eventPoints      Int?
