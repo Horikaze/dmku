@@ -54,9 +54,14 @@ export default function ProfileSettings() {
   function onSubmit(values: z.infer<typeof formSchema>) {
     console.log(values);
 
-    axios.post("/api/changeprofile", values).catch((e) => {
-      console.log(e);
-    });
+    axios
+      .post("/api/changeprofile", values)
+      .catch((e) => {
+        console.log(e);
+      })
+      .then(() => {
+        console.log("okejcia");
+      });
   }
   const session = useSession();
   return (
@@ -116,7 +121,7 @@ export default function ProfileSettings() {
                     <FormControl>
                       <Input
                         placeholder={
-                          session.data?.user.info.nickname || "Discord"
+                          session.data?.user.info.discord || "Discord"
                         }
                         {...field}
                       />

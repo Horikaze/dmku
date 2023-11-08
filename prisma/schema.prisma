@@ -85,6 +85,7 @@ enum Achievement {
 enum Games {
   EOSD
   PCB
+  IN
   INA
   INB
   POFV
@@ -98,4 +99,5 @@ enum Games {
   HSIFS
   WBAWC
   UM
+  UDoALG
 }
