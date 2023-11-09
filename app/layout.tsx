@@ -4,6 +4,7 @@ import Navigation from "./components/Navigation/Navigation";
 import AuthContext from "./context/AuthContext";
 import { ReactQueryContext } from "./context/ReactQueryContext";
 import "./globals.css";
+import { Toaster } from "@/components/ui/toaster";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -23,6 +24,7 @@ export default function RootLayout({
         <ReactQueryContext>
           <body className={`${inter.className} h-full flex flex-col`}>
             <Navigation>{children}</Navigation>
+            <Toaster />
           </body>
         </ReactQueryContext>
       </AuthContext>

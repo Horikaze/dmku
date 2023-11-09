@@ -1,13 +1,11 @@
 "use client";
-import * as z from "zod";
-import { useForm } from "react-hook-form";
+import { gamesString } from "@/app/constants/games";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogClose,
   DialogContent,
   DialogDescription,
-  DialogFooter,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
@@ -21,6 +19,7 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
 import {
   Select,
   SelectContent,
@@ -28,14 +27,19 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { IoSettingsSharp } from "react-icons/io5";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { Input } from "@/components/ui/input";
-import { gamesString } from "@/app/constants/games";
-import { useSession } from "next-auth/react";
-import axios from "axios";
 import { Textarea } from "@/components/ui/textarea";
+import { zodResolver } from "@hookform/resolvers/zod";
+import axios from "axios";
+import { useSession } from "next-auth/react";
+import { useForm } from "react-hook-form";
+import { IoSettingsSharp } from "react-icons/io5";
+import * as z from "zod";
+import { useToast } from "@/components/ui/use-toast";
 export default function ProfileSettings() {
+  const ACCEPTED_MIME_TYPES = ["image/gif", "image/jpeg", "image/png"];
+  const MB_BYTES = 2000000; // Number of bytes in a megabyte.
+
+  const { toast } = useToast();
   const formSchema = z.object({
     nickname: z.string().min(3).max(15).optional().or(z.literal("")),
     password: z.string().min(3).max(15).optional().or(z.literal("")),
@@ -55,23 +59,27 @@ export default function ProfileSettings() {
   });
 
   function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
-
     axios
       .post("/api/changeprofile", values)
       .catch((e) => {
         console.log(e);
       })
       .then(() => {
-        console.log("okejcia");
+        toast({
+          description: "Login again to see the changes",
+        });
       });
   }
+
   const session = useSession();
   return (
     <>
       <Dialog>
-        <DialogTrigger asChild>
-          <IoSettingsSharp size={24} className="hover:cursor-pointer opacity-30 mix-blend-plus-lighter hover:opacity-70" />
+        <DialogTrigger>
+          <IoSettingsSharp
+            size={24}
+            className="hover:cursor-pointer opacity-30 mix-blend-plus-lighter hover:opacity-70"
+          />
         </DialogTrigger>
         <DialogContent className="sm:max-w-md">
           <DialogHeader>
@@ -180,7 +188,7 @@ export default function ProfileSettings() {
                       />
                     </FormControl>
                     <FormDescription>
-                      I don&apos;t know, write something here.
+                      I don&apos;t know, type something here.
                     </FormDescription>
                     <FormMessage />
                   </FormItem>

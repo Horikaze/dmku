@@ -1,14 +1,15 @@
-import { Session } from "next-auth";
-import Image from "next/image";
-import { FaDiscord } from "react-icons/fa";
-import ProfileSettings from "./ProfileSettings";
-import LogoutButton from "./LogoutButton";
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { Session } from "next-auth";
+import Image from "next/image";
+import { FaDiscord } from "react-icons/fa";
+import LogoutButton from "./LogoutButton";
+import ProfileSettings from "./ProfileSettings";
+import ProfileImageSettings from "./ProfileImageSettings";
 
 type ProfileBannerProps = {
   session: Session;
@@ -52,21 +53,37 @@ export default async function ProfileBanner({ session }: ProfileBannerProps) {
           <div className="flex flex-col gap-y-2">
             <TooltipProvider delayDuration={0}>
               <Tooltip>
-                <TooltipTrigger>
-                  <ProfileSettings />
+                <TooltipTrigger asChild>
+                  <div>
+                    <ProfileSettings />
+                  </div>
                 </TooltipTrigger>
                 <TooltipContent side="left">
-                  <p>Settings</p>
+                  <p>Add to library</p>
                 </TooltipContent>
               </Tooltip>
             </TooltipProvider>
             <TooltipProvider delayDuration={0}>
               <Tooltip>
-                <TooltipTrigger>
-                  <LogoutButton />
+                <TooltipTrigger asChild>
+                  <div>
+                    <ProfileImageSettings />
+                  </div>
                 </TooltipTrigger>
                 <TooltipContent side="left">
-                  <p>Logout</p>
+                  <p>Add to library</p>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
+            <TooltipProvider delayDuration={0}>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <div>
+                    <LogoutButton />
+                  </div>
+                </TooltipTrigger>
+                <TooltipContent side="left">
+                  <p>Add to library</p>
                 </TooltipContent>
               </Tooltip>
             </TooltipProvider>
