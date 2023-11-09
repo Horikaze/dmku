@@ -16,7 +16,7 @@ import {
   FormField,
   FormItem,
   FormLabel,
-  FormMessage
+  FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import {
@@ -67,7 +67,8 @@ export default function ProfileSettings() {
       })
       .catch((e) => {
         toast({
-          description: `Error : ${e}`,
+          title: "Error",
+          description: `${e}`,
         });
       });
   }

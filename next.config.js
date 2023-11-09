@@ -8,6 +8,9 @@ const nextConfig = {
       {
         hostname: "static.zerochan.net",
       },
+      {
+        hostname: "utfs.io",
+      },
     ],
   },
 };

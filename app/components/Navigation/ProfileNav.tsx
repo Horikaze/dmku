@@ -1,5 +1,6 @@
 "use client";
 
+import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import clsx from "clsx";
 import Image from "next/image";
 import Link from "next/link";
@@ -35,7 +36,7 @@ export default function ProfileNav({
       <Link
         href={href}
         className="
-          group relative flex h-full flex-col p-3 justify-center items-center hover:brightness-110 transition"
+          group relative flex h-full flex-col  justify-center items-center hover:brightness-110 transition"
       >
         <div
           className={`flex ${
@@ -44,19 +45,16 @@ export default function ProfileNav({
               : "flex-col"
           }`}
         >
-          <Image
-            src={src || "/images/placeholder.jpg"}
-            alt="PFP"
-            width={35}
-            height={35}
-            className="rounded-full object-cover"
-          />
+          <Avatar className="w-[35px] h-[35px]">
+            <AvatarImage src={src || "/images/placeholder.jpg"} />
+          </Avatar>
+
           {nav === "desktop" && <p className={textAndIconColor}>{nickname}</p>}
         </div>
         <div
           className={`${
             active ? "block" : "hidden"
-          } absolute h-1 w-full bg-orange-500  ${
+          } h-1 w-full bg-orange-500 absolute ${
             nav === "desktop" ? "bottom-0" : "top-0"
           }`}
         />

@@ -1,3 +1,4 @@
+import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import {
   Tooltip,
   TooltipContent,
@@ -8,14 +9,15 @@ import { Session } from "next-auth";
 import Image from "next/image";
 import { FaDiscord } from "react-icons/fa";
 import LogoutButton from "./LogoutButton";
-import ProfileSettings from "./ProfileSettings";
 import ProfileImageSettings from "./ProfileImageSettings";
+import ProfileSettings from "./ProfileSettings";
 
 type ProfileBannerProps = {
   session: Session;
 };
 
 export default async function ProfileBanner({ session }: ProfileBannerProps) {
+
   return (
     <div className="w-full h-72 flex relative">
       <Image
@@ -29,21 +31,19 @@ export default async function ProfileBanner({ session }: ProfileBannerProps) {
       />
       <div className="flex flex-row p-2 w-full justify-between">
         <div className="flex flex-col justify-between gap-x-4">
-          <div className="w-2/5">
+          <div className="w-3/5">
             {session.user.info.bio && (
               <p className="text-white leading-5 text-xs md:text-base break-words opacity-60">
                 {session.user.info.bio}
               </p>
             )}
           </div>
-          <div className="relative group flex items-end gap-x-3">
-            <Image
-              src={session?.user.info.imageUrl || "/images/placeholder.jpg"}
-              alt="PFP"
-              width={110}
-              height={110}
-              className="rounded-full object-cover"
-            />
+          <div className="group flex items-end gap-x-4">
+            <Avatar className="w-28 h-28">
+              <AvatarImage
+                src={session?.user.info.imageUrl || "/images/placeholder.jpg"}
+              />
+            </Avatar>
             <p className="text-3xl font-semibold text-white drop-shadow-[2px_2px_var(--tw-shadow-color)] shadow-black">
               {session?.user.info.nickname}
             </p>
