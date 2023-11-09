@@ -13,11 +13,10 @@ import {
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
-  FormMessage,
+  FormMessage
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import {
@@ -28,13 +27,13 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
+import { useToast } from "@/components/ui/use-toast";
 import { zodResolver } from "@hookform/resolvers/zod";
 import axios from "axios";
 import { useSession } from "next-auth/react";
 import { useForm } from "react-hook-form";
 import { IoSettingsSharp } from "react-icons/io5";
 import * as z from "zod";
-import { useToast } from "@/components/ui/use-toast";
 export default function ProfileSettings() {
   const ACCEPTED_MIME_TYPES = ["image/gif", "image/jpeg", "image/png"];
   const MB_BYTES = 2000000; // Number of bytes in a megabyte.
@@ -61,12 +60,14 @@ export default function ProfileSettings() {
   function onSubmit(values: z.infer<typeof formSchema>) {
     axios
       .post("/api/changeprofile", values)
-      .catch((e) => {
-        console.log(e);
-      })
       .then(() => {
         toast({
           description: "Login again to see the changes",
+        });
+      })
+      .catch((e) => {
+        toast({
+          description: `Error : ${e}`,
         });
       });
   }
@@ -102,9 +103,6 @@ export default function ProfileSettings() {
                         {...field}
                       />
                     </FormControl>
-                    <FormDescription>
-                      This is your public nickname.
-                    </FormDescription>
                     <FormMessage />
                   </FormItem>
                 )}
@@ -118,7 +116,6 @@ export default function ProfileSettings() {
                     <FormControl>
                       <Input placeholder="Password" {...field} />
                     </FormControl>
-                    <FormDescription>Change your password.</FormDescription>
                     <FormMessage />
                   </FormItem>
                 )}
@@ -137,7 +134,6 @@ export default function ProfileSettings() {
                         {...field}
                       />
                     </FormControl>
-                    <FormDescription>Change your discord.</FormDescription>
                     <FormMessage />
                   </FormItem>
                 )}
@@ -169,7 +165,6 @@ export default function ProfileSettings() {
                         ))}
                       </SelectContent>
                     </Select>
-                    <FormDescription>Change your favorite game</FormDescription>
                     <FormMessage />
                   </FormItem>
                 )}
@@ -187,9 +182,7 @@ export default function ProfileSettings() {
                         {...field}
                       />
                     </FormControl>
-                    <FormDescription>
-                      I don&apos;t know, type something here.
-                    </FormDescription>
+
                     <FormMessage />
                   </FormItem>
                 )}

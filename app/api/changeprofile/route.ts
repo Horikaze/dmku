@@ -6,6 +6,11 @@ import { authOptions } from "../auth/[...nextauth]/route";
 export const POST = async (req: Request) => {
   try {
     const session = await getServerSession(authOptions);
+
+    if (!session) {
+      return new NextResponse("Unauthorized", { status: 401 });
+    }
+
     const body = await req.json();
     const { nickname, password, discord, game, bio } = body;
     // PROFESIONAL CODE XDDDDDDDDDDDDDDDD
@@ -63,7 +68,7 @@ export const POST = async (req: Request) => {
 
     return new NextResponse("Updated", { status: 200 });
   } catch (error) {
-    console.log(error, "REGISTERATION ERROR");
+    console.log(error, "CHANGE PROFILE ERROR");
     return new NextResponse("Internal error", { status: 500 });
   }
 };

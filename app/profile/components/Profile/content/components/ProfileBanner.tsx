@@ -59,7 +59,7 @@ export default async function ProfileBanner({ session }: ProfileBannerProps) {
                   </div>
                 </TooltipTrigger>
                 <TooltipContent side="left">
-                  <p>Add to library</p>
+                  <p>Settings</p>
                 </TooltipContent>
               </Tooltip>
             </TooltipProvider>
@@ -71,7 +71,7 @@ export default async function ProfileBanner({ session }: ProfileBannerProps) {
                   </div>
                 </TooltipTrigger>
                 <TooltipContent side="left">
-                  <p>Add to library</p>
+                  <p>Profile Images Settings</p>
                 </TooltipContent>
               </Tooltip>
             </TooltipProvider>
@@ -83,7 +83,7 @@ export default async function ProfileBanner({ session }: ProfileBannerProps) {
                   </div>
                 </TooltipTrigger>
                 <TooltipContent side="left">
-                  <p>Add to library</p>
+                  <p>Logout</p>
                 </TooltipContent>
               </Tooltip>
             </TooltipProvider>

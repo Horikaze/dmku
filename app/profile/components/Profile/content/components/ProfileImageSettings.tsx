@@ -16,66 +16,62 @@ import {
   FormField,
   FormItem,
   FormLabel,
-  FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/components/ui/use-toast";
-import { zodResolver } from "@hookform/resolvers/zod";
+import axios from "axios";
+import { FormEvent } from "react";
 import { useForm } from "react-hook-form";
 import { FaImage } from "react-icons/fa";
-import * as z from "zod";
 export default function ProfileImageSettings() {
-  const ACCEPTED_MIME_TYPES = ["image/gif", "image/jpeg", "image/png"];
-  const MB_BYTES = 2000000; // Number of bytes in a megabyte.
-
   const { toast } = useToast();
-  const formSchema = z.object({
-    imageUrl: z
-      .instanceof(Blob)
-      .optional()
-      .or(z.literal(undefined))
-      .superRefine((f, ctx) => {
-        if (f === undefined) {
-          return false;
-        }
-        if (!ACCEPTED_MIME_TYPES.includes(f.type)) {
-          ctx.addIssue({
-            code: z.ZodIssueCode.custom,
-            message: `File must be one of [${ACCEPTED_MIME_TYPES.join(
-              ", "
-            )}] but was ${f.type}`,
-          });
-          if (f.size > 3 * MB_BYTES) {
-            ctx.addIssue({
-              code: z.ZodIssueCode.too_big,
-              type: "array",
-              message: `The file must not be larger than ${
-                3 * MB_BYTES
-              } bytes: ${f.size}`,
-              maximum: 3 * MB_BYTES,
-              inclusive: true,
-            });
-          }
-        }
-      }),
-  });
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
-    defaultValues: {
-      imageUrl: undefined,
-    },
-  });
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
+  const form = useForm();
+
+  function onSubmit(e: FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    const data = new FormData(e.currentTarget);
+    const imageUrl = data.get("imageUrl") as File;
+    const profileBanner = data.get("profileBanner") as File;
+    if (imageUrl.name === "" && profileBanner.name === "") {
+      toast({
+        title: "Error",
+        description: `No images are selected`,
+      });
+      return;
+    }
+
+    if (imageUrl.name !== "") {
+      if (imageUrl.size > 2048) {
+        const sizeInMB = (imageUrl.size / 1024 ** 2).toFixed(2);
+        toast({
+          title: "Error",
+          description: `File size is ${sizeInMB} MB`,
+        });
+      }
+      return;
+    }
+    if (profileBanner.name !== "") {
+      if (imageUrl.size > 2048) {
+        const sizeInMB = (imageUrl.size / 1024 ** 2).toFixed(2);
+        toast({
+          title: "Error",
+          description: `File size is ${sizeInMB} MB`,
+        });
+      }
+      return;
+    }
+
     // axios
-    //   .post("/api/changeprofile", values)
-    //   .catch((e) => {
-    //     console.log(e);
-    //   })
+    //   .post("/api/changeprofileimages", data)
     //   .then(() => {
     //     toast({
     //       description: "Login again to see the changes",
+    //     });
+    //   })
+    //   .catch((e) => {
+    //     toast({
+    //       description: `Error : ${e}`,
     //     });
     //   });
   }
@@ -96,13 +92,13 @@ export default function ProfileImageSettings() {
             </DialogDescription>
           </DialogHeader>
           <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-2">
+            <form onSubmit={onSubmit} className="space-y-2">
               <FormField
                 control={form.control}
                 name="imageUrl"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Nickname</FormLabel>
+                    <FormLabel>Profile image</FormLabel>
                     <FormControl>
                       <Input
                         type="file"
@@ -110,15 +106,39 @@ export default function ProfileImageSettings() {
                         onChange={field.onChange}
                         onBlur={field.onBlur}
                         disabled={field.disabled}
+                        multiple={false}
+                        ref={field.ref}
+                        accept=".png .jpg .gif"
                       />
                     </FormControl>
-                    <FormDescription>
-                      This is your public nickname.
-                    </FormDescription>
-                    <FormMessage />
                   </FormItem>
                 )}
               />
+              <FormField
+                control={form.control}
+                name="profileBanner"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Profile Banner</FormLabel>
+                    <FormControl>
+                      <Input
+                        type="file"
+                        name={field.name}
+                        onChange={field.onChange}
+                        onBlur={field.onBlur}
+                        disabled={field.disabled}
+                        multiple={false}
+                        ref={field.ref}
+                        accept=".png .jpg .gif"
+                      />
+                    </FormControl>
+                    <FormDescription>
+                      Maximum file size is 2MB. Only png, jpg, gif
+                    </FormDescription>
+                  </FormItem>
+                )}
+              />
+
               <div className="flex flex-row justify-between">
                 <DialogClose asChild>
                   <Button type="button" variant="secondary">
