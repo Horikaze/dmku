@@ -62,6 +62,7 @@ export default function ProfileSettings() {
       .post("/api/changeprofile", values)
       .then(() => {
         toast({
+          title: "Updated",
           description: "Login again to see the changes",
         });
       })

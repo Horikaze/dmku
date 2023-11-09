@@ -36,7 +36,8 @@ export default function ProfileImageSettings() {
                 endpoint="profileImage"
                 onClientUploadComplete={(res) => {
                   toast({
-                    description: "Updated",
+                    title: "Updated",
+                    description: "Login again to see the changes",
                   });
                 }}
                 onUploadError={(error: Error) => {
