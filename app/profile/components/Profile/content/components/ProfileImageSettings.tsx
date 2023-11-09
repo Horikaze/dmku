@@ -1,5 +1,6 @@
 "use client";
 import { UploadButton } from "@/app/ulils/uploadthing";
+import { buttonVariants } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
@@ -10,6 +11,7 @@ import {
 } from "@/components/ui/dialog";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/components/ui/use-toast";
+import clsx from "clsx";
 import { FaImage } from "react-icons/fa";
 export default function ProfileImageSettings() {
   const { toast } = useToast();

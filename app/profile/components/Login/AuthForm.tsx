@@ -11,6 +11,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
+import { useToast } from "@/components/ui/use-toast";
 import { zodResolver } from "@hookform/resolvers/zod";
 import axios from "axios";
 import { signIn } from "next-auth/react";
@@ -22,6 +23,7 @@ import * as z from "zod";
 type Variant = "LOGIN" | "REGISER";
 
 const AuthForm = () => {
+  const { toast } = useToast();
   const [variant, setVariant] = useState<Variant>("LOGIN");
   const router = useRouter();
   const formSchema = z
@@ -94,19 +96,25 @@ const AuthForm = () => {
   };
 
   const socialAction = (action: string) => {
-    console.log("asas");
     signIn(action, {
       redirect: false,
     }).then((callback) => {
-      if (callback?.error) console.log("Invalid credentials");
-      if (callback?.ok && !callback.error) console.log("Logged in!");
+      if (callback?.error) {
+        toast({
+          title: "Error",
+          description: "Invalid credentials",
+        });
+      }
+      if (callback?.ok && !callback.error) {
+        console.log("Logged");
+      }
     });
   };
   return (
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="space-y-2 flex w-full max-w-md flex-col text-gray-200 rounded-md bg-secondary px-7 py-3"
+        className="space-y-2 flex w-full max-w-md flex-col text-gray-200 rounded-md border bg-card px-7 py-3"
       >
         <FormField
           control={form.control}
@@ -161,7 +169,7 @@ const AuthForm = () => {
         <Button type="submit">Submit</Button>
         <div className="relative flex justify-center items-center py-2">
           <Separator className="absolute bg-primary" />
-          <div className="absolute w-32 h-2 bg-secondary"></div>
+          <div className="absolute w-32 h-2 bg-card"></div>
           <p className="absolute text-sm text-slate-300">or continue with</p>
         </div>
         <div className="flex">

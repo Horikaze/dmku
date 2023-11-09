@@ -6,9 +6,6 @@ const nextConfig = {
         hostname: "cdn.discordapp.com",
       },
       {
-        hostname: "static.zerochan.net",
-      },
-      {
         hostname: "utfs.io",
       },
     ],
