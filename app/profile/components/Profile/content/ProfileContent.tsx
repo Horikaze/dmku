@@ -1,9 +1,19 @@
 "use client";
 import { useState } from "react";
-import { FaGamepad, FaTableCells, FaUser,FaPlus } from "react-icons/fa6";
+import {
+  FaGamepad,
+  FaGear,
+  FaPlus,
+  FaTableCells,
+  FaUser,
+} from "react-icons/fa6";
+import AddReplay from "./components/profileComponents/AddReplay";
+import { ProfileInfo } from "./components/profileComponents/ProfileInfo";
+import Replays from "./components/profileComponents/Replays";
 import { Settings } from "./components/profileComponents/Settings";
+import Table from "./components/profileComponents/Table";
 
-type tabsType = "Profile" | "Table" | "Replays" | "Settings";
+type tabsType = "Profile" | "Table" | "Replays" | "Settings" | "Add";
 
 const tabs = [
   {
@@ -24,31 +34,46 @@ const tabs = [
   },
   {
     label: "Settings",
-    href: "/profile/settings",
-    icon: FaTableCells,
+    icon: FaGear,
   },
 ];
+
+const getTabComponent = (tabOpen: tabsType) => {
+  switch (tabOpen) {
+    case "Settings":
+      return <Settings />;
+    case "Profile":
+      return <ProfileInfo />;
+    case "Replays":
+      return <Replays />;
+    case "Add":
+      return <AddReplay />;
+    case "Table":
+      return <Table />;
+    default:
+      return <ProfileInfo />;
+  }
+};
 
 export default function ProfileContent() {
   const [tabOpen, setTabOpen] = useState<tabsType>("Profile");
   return (
     <div className="flex w-full flex-col p-3">
       <div className="flex flex-row justify-around border">
-        {tabs.map((tab) => (
+        {tabs.map(({ icon: Icon, label }) => (
           <button
             onClick={() => {
-              setTabOpen(tab.label as tabsType);
+              setTabOpen(label as tabsType);
             }}
-            key={tab.label}
-            className="py-3 px-5 md:px-10 cursor-pointer hover:bg-secondary rounded"
+            key={label}
+            className="py-3 px-2 flex flex-row gap-x-1 items-center md:px-10 cursor-pointer hover:bg-secondary rounded"
           >
-            {tab.label}
+            <Icon />
+            <p>{label}</p>
           </button>
         ))}
       </div>
-      <div className="flex justify-center p-3">
-        {tabOpen === "Settings" ? <Settings /> : null}
-      </div>
+      <div className="flex justify-center p-3">{getTabComponent(tabOpen)}</div>
     </div>
   );
 }
