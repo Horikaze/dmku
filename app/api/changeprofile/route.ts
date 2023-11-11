@@ -13,58 +13,31 @@ export const POST = async (req: Request) => {
 
     const body = await req.json();
     const { nickname, password, discord, game, bio } = body;
-    // PROFESIONAL CODE XDDDDDDDDDDDDDDDD
+
+    const fieldsToChange: Record<string, any> = {};
+
     if (password !== "") {
       const hashedPassword = await bcrypt.hash(password, 12);
-      await prisma.profile.update({
-        where: {
-          email: session?.user.info.email,
-        },
-        data: {
-          hashedPassword,
-        },
-      });
+      fieldsToChange["hashedPassword"] = hashedPassword;
     }
     if (nickname !== "") {
-      await prisma.profile.update({
-        where: {
-          email: session?.user.info.email,
-        },
-        data: {
-          nickname,
-        },
-      });
+      fieldsToChange["nickname"] = nickname;
     }
     if (discord !== "") {
-      await prisma.profile.update({
-        where: {
-          email: session?.user.info.email,
-        },
-        data: {
-          discord,
-        },
-      });
+      fieldsToChange["discord"] = discord;
     }
     if (game !== "") {
-      await prisma.profile.update({
-        where: {
-          email: session?.user.info.email,
-        },
-        data: {
-          favoriteGame: game,
-        },
-      });
+      fieldsToChange["favoriteGame"] = game;
     }
     if (bio !== "") {
-      await prisma.profile.update({
-        where: {
-          email: session?.user.info.email,
-        },
-        data: {
-          bio,
-        },
-      });
+      fieldsToChange["bio"] = bio;
     }
+    await prisma.profile.update({
+      where: {
+        email: session?.user.info.email,
+      },
+      data: fieldsToChange,
+    });
 
     return new NextResponse("Updated", { status: 200 });
   } catch (error) {

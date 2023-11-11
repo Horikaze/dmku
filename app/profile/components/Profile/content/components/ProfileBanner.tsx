@@ -9,8 +9,6 @@ import { Session } from "next-auth";
 import Image from "next/image";
 import { FaDiscord } from "react-icons/fa";
 import LogoutButton from "./LogoutButton";
-import ProfileImageSettings from "./ProfileImageSettings";
-import ProfileSettings from "./ProfileSettings";
 
 type ProfileBannerProps = {
   session: Session;
@@ -51,10 +49,8 @@ export default async function ProfileBanner({ session }: ProfileBannerProps) {
         <div className="flex flex-col justify-between items-end text-white">
           <TooltipProvider delayDuration={0}>
             <Tooltip>
-              <TooltipTrigger asChild>
-                <div>
-                  <LogoutButton />
-                </div>
+              <TooltipTrigger>
+                <LogoutButton />
               </TooltipTrigger>
               <TooltipContent side="left">
                 <p>Logout</p>
