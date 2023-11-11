@@ -1,14 +1,10 @@
-import { Button } from "@/components/ui/button";
 import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
+    Card,
+    CardContent,
+    CardDescription,
+    CardHeader,
+    CardTitle
 } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import AccountSettings from "./AccountSettings";
 import ImagesSettings from "./ImagesSettings";
@@ -38,7 +34,7 @@ export function Settings() {
           <CardHeader>
             <CardTitle>Images</CardTitle>
             <CardDescription>
-            Make changes to your account here. Click save when you&apos;re done.
+            Make changes to your account images here.
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-2">
