@@ -22,7 +22,7 @@ export default function RootLayout({
     <html lang="en">
       <AuthContext>
         <ReactQueryContext>
-          <body className={`${inter.className} h-full flex flex-col`}>
+          <body className={`${inter.className}`}>
             <Navigation>{children}</Navigation>
             <Toaster />
           </body>

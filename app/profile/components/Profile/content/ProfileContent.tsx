@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-import { FaGamepad, FaTableCells, FaUser } from "react-icons/fa6";
+import { FaGamepad, FaTableCells, FaUser,FaPlus } from "react-icons/fa6";
 import { Settings } from "./components/profileComponents/Settings";
 
 type tabsType = "Profile" | "Table" | "Replays" | "Settings";
@@ -9,6 +9,10 @@ const tabs = [
   {
     label: "Profile",
     icon: FaUser,
+  },
+  {
+    label: "Add",
+    icon: FaPlus,
   },
   {
     label: "Replays",
