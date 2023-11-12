@@ -32,6 +32,7 @@ model Profile {
   hashedPassword   String?
   profileBanner    String?
   Replays          Replay[]
+  pointsRank       Ranking?
 }
 
 model Replay {
@@ -61,15 +62,39 @@ model Replay {
   achievement  Achievement
   status       ReplayStatus
 
-  Profile   Profile? @relation(fields: [profileId], references: [id])
-  profileId String?
+  Profile Profile? @relation(fields: [userId], references: [id])
+  userId  String?
 
-  @@index([profileId])
+  @@index([userId])
+}
+
+// example:  "EASY/9999.9999.9999/123+NORMAL/9999.9999.9999/345+HARD/9999.9999.9999/677+LUNATIC/9999.9999.9999/444";
+// use parseScoreString function to get ScoreObject type
+model Ranking {
+  EOSD    String
+  PCB     String
+  IN      String
+  INA     String
+  INB     String
+  POFV    String
+  MOF     String
+  SA      String
+  UFO     String
+  GFW     String
+  TD      String
+  DDC     String
+  LOLK    String
+  HSIFS   String
+  WBAWC   String
+  UM      String
+  UDoALG  String
+  userId  String  @unique
+  profile Profile @relation(fields: [userId], references: [id])
 }
 
 model RnakingScore {
-  user  String @unique
-  
+  user String @unique
+
   score Int
 }
 
