@@ -32,6 +32,9 @@ model Profile {
   hashedPassword   String?
   profileBanner    String?
   Replays          Replay[]
+  PointsRank       Ranking  @relation(fields: [id], references: [user])
+
+  @@index([id])
 }
 
 model Replay {
@@ -65,6 +68,30 @@ model Replay {
   profileId String?
 
   @@index([profileId])
+}
+
+//example:  EASY-9999.9999.9999-ID/NORMAL-9999.9999.9999-ID/HARD-9999.9999.9999-ID/LUNATIC-9999.9999.9999-ID
+model Ranking {
+  user    String    @id
+  score   Int?
+  EOSD    String?   @db.Text
+  PCB     String?   @db.Text
+  IN      String?   @db.Text
+  INA     String?   @db.Text
+  INB     String?   @db.Text
+  POFV    String?   @db.Text
+  MOF     String?   @db.Text
+  SA      String?   @db.Text
+  UFO     String?   @db.Text
+  GFW     String?   @db.Text
+  TD      String?   @db.Text
+  DDC     String?   @db.Text
+  LOLK    String?   @db.Text
+  HSIFS   String?   @db.Text
+  WBAWC   String?   @db.Text
+  UM      String?   @db.Text
+  UDoALG  String?   @db.Text
+  Profile Profile[]
 }
 
 enum ReplayStatus {

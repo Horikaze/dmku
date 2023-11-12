@@ -22,7 +22,12 @@ export default function RootLayout({
     <html lang="en">
       <AuthContext>
         <ReactQueryContext>
-          <body className={`${inter.className}`}>
+          <body
+            className={`${inter.className} 
+            // bg-cover bg-center
+            `}
+            // style={{ backgroundImage: "url(images/bg.jpg)" }}
+          >
             <Navigation>{children}</Navigation>
             <Toaster />
           </body>

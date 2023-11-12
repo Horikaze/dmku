@@ -5,9 +5,8 @@ import ProfileContent from "./content/ProfileContent";
 
 export default async function ProfileMain() {
   const session = await getServerSession(authOptions);
-
   return (
-    <div className="flex flex-col h-full mx-2 md:mx-4 lg:mx-20 2xl:mx-32 pb-20">
+    <div className="flex flex-col h-full mx-2 md:mx-4 lg:mx-32 xl:mx-48 2xl:mx-64 pb-20">
       <ProfileBanner session={session!} />
       <ProfileContent />
     </div>
