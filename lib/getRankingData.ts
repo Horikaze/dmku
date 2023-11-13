@@ -2,7 +2,7 @@ export type ScoreObject = {
   difficulty: string;
   score: number;
   id: number;
-}
+};
 
 export const parseScoreString = (scoreString: string): ScoreObject[] => {
   const scoreParts = scoreString.split("+");
@@ -10,7 +10,7 @@ export const parseScoreString = (scoreString: string): ScoreObject[] => {
   const scoreObjects = scoreParts.map((part) => {
     const [difficulty, scoreStr, idStr] = part
       .split("/")
-      .map((item) => (isNaN(item as any) ? item : item.trim()));
+      .map((item) => (isNaN(Number(item)) ? item : item.trim()));
 
     // Use parseFloat to convert the string to a number
     const score = parseFloat(scoreStr);
