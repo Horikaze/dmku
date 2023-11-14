@@ -1,3 +1,5 @@
+import { format, fromUnixTime } from "date-fns";
+
 export type ScoreObject = {
   difficulty: string;
   score: number;
@@ -20,4 +22,25 @@ export const parseScoreString = (scoreString: string): ScoreObject[] => {
   });
 
   return scoreObjects;
+};
+
+export const getCharacterFromData = (
+  characters: string | string[],
+  shotType: string
+) => {
+  if (!characters) {
+    return "";
+  }
+  if (characters instanceof Array) {
+    return characters[0];
+  }
+
+  return `${characters} ${shotType}`;
+};
+
+export const convertUnixDate = (date: number) => {
+  if (!date) {
+    return "";
+  }
+  return format(fromUnixTime(date / 1000), "dd-MM-yyyy");
 };
