@@ -9,13 +9,11 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/components/ui/use-toast";
-import { convertUnixDate, getCharacterFromData } from "@/lib/getRankingData";
+import { getCharacterFromData } from "@/lib/getRankingData";
 import axios from "axios";
-import { format, fromUnixTime } from "date-fns";
 import { useState } from "react";
 import PulseLoader from "react-spinners/PulseLoader";
 
@@ -24,11 +22,18 @@ const AddReplay = () => {
   const [replay, setReplay] = useState<File | null>(null);
   const [loading, setLoading] = useState(false);
   const [replayData, setReplayData] = useState<ReplayInfo | null>(null);
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    console.log(e);
     const formData = new FormData(e.currentTarget);
-    const data = Object.fromEntries(formData);
-    console.log(data);
+    const data = await axios.post("/api/uploadreplay", formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+      params: replayData,
+    });
+    console.log(data.data);
   };
 
   const readReplayData = async () => {
@@ -52,7 +57,6 @@ const AddReplay = () => {
       });
     }
   };
-
   return (
     <Card className="w-full">
       <CardHeader>
