@@ -24,9 +24,11 @@ const AddReplay = () => {
   const [replay, setReplay] = useState<File | null>(null);
   const [loading, setLoading] = useState(false);
   const [replayData, setReplayData] = useState<ReplayInfo | null>(null);
-  const [isCustom, setIsCustom] = useState(false);
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    console.log(e);
+    e.preventDefault();
+    const formData = new FormData(e.currentTarget);
+    const data = Object.fromEntries(formData);
+    console.log(data);
   };
 
   const readReplayData = async () => {
@@ -38,9 +40,9 @@ const AddReplay = () => {
       const formData = new FormData();
       formData.append("replay", replay);
       const res = await axios.post("/api/threp", formData);
-      setReplayData(res.data);
+      const data = res.data as ReplayInfo;
+      setReplayData(data);
       setLoading(false);
-      console.log(res.data);
     } catch (error) {
       setLoading(false);
       console.log(error);
@@ -76,6 +78,7 @@ const AddReplay = () => {
                 className="hidden"
                 id="selectReplay"
                 accept=".rpy"
+                name="selectReplay"
               />
               {replay && (
                 <Button
@@ -96,71 +99,86 @@ const AddReplay = () => {
                   <Label htmlFor="player">Player</Label>
                   <Input
                     id="player"
-                    disabled
+                    name="player"
+                    readOnly
                     value={replayData?.player || ""}
                   />
-                  <div className="flex flex-row justify-between">
-                    <Label htmlFor="score">Score</Label>
-                    <div className="flex items-center space-x-2 cursor-pointer">
-                      <label
-                        htmlFor="custom"
-                        className="text-xs cursor-pointer"
-                      >
-                        Threp score is wrong?
-                      </label>
-                      <Checkbox
-                        id="custom"
-                        onCheckedChange={() => setIsCustom((prev) => !prev)}
-                      />
-                    </div>
-                  </div>
+
+                  <Label htmlFor="score">Score</Label>
+
                   <Input
                     id="score"
-                    disabled={!isCustom}
+                    name="score"
+                    readOnly
                     value={
                       replayData?.stage_score[
                         replayData?.stage_score.length - 1
-                      ].toLocaleString() || ""
+                      ] || ""
                     }
                   />
                   <Label htmlFor="rank">Rank</Label>
-                  <Input id="rank" disabled value={replayData?.rank || ""} />
+                  <Input
+                    id="rank"
+                    readOnly
+                    value={replayData?.rank || ""}
+                    name="rank"
+                  />
                   <Label htmlFor="date">Date</Label>
-                  <Input id="date" disabled value={replayData?.date || ""} />
+                  <Input
+                    id="date"
+                    readOnly
+                    value={replayData?.date || ""}
+                    name="date"
+                  />
                 </div>
                 <div className="flex flex-col w-full space-y-3">
                   <Label htmlFor="player">Player</Label>
                   <Input
                     id="player"
-                    disabled
+                    name="player"
+                    readOnly
                     value={replayData?.player || ""}
                   />
                   <Label htmlFor="shotType">Shot-type</Label>
                   <Input
                     id="shotType"
-                    disabled
+                    name="shotType"
+                    readOnly
                     value={getCharacterFromData(
                       replayData?.character!,
                       replayData?.shottype!
                     )}
                   />
                   <Label htmlFor="stage">Stage</Label>
-                  <Input id="stage" disabled value={replayData?.stage || ""} />
+                  <Input
+                    id="stage"
+                    readOnly
+                    value={replayData?.stage || ""}
+                    name="stage"
+                  />
                   <Label htmlFor="slowRate">Slow rate</Label>
                   <Input
                     id="slowRate"
-                    disabled
-                    value={replayData?.slow_rate || 0}
+                    name="slowRate"
+                    readOnly
+                    value={replayData?.slow_rate || ""}
                   />
                 </div>
               </div>
             </div>
           </div>
           <div className="flex justify-between mt-4">
-            <Button variant="outline" type="reset">
-              Cancel
+            <Button
+              variant="outline"
+              onClick={() => {
+                setReplayData(null);
+              }}
+            >
+              Reset
             </Button>
-            <Button type="submit">Upload</Button>
+            <Button type="submit" disabled={replayData === null}>
+              Upload
+            </Button>
           </div>
         </form>
       </CardContent>
