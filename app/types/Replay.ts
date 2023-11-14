@@ -13,4 +13,5 @@ export type ReplayInfo = {
   x_keys: number;
   z_keys: number;
   c_keys: number;
+  url?: string;
 };

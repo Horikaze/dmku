@@ -25,15 +25,32 @@ const AddReplay = () => {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log(e);
-    const formData = new FormData(e.currentTarget);
-    const data = await axios.post("/api/uploadreplay", formData, {
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
-      params: replayData,
-    });
-    console.log(data.data);
+    try {
+      if (!replayData) {
+        throw new Error("No replay data");
+      }
+      if (!replay) {
+        throw new Error("FIle error");
+      }
+      const formData = new FormData(e.currentTarget);
+      const fileInfo = await axios.post("/api/uploadreplayfile", formData);
+      if (fileInfo.data.error) {
+        throw new Error(fileInfo.data.data.error);
+      }
+      const fileUrl: string = fileInfo.data.data.url;
+      console.log(fileUrl);
+
+      axios.post("/api/uploadreplay", {
+        ...replayData,
+        url: fileUrl,
+      });
+    } catch (error) {
+      console.log(error);
+      toast({
+        title: "Error",
+        description: `${error}`,
+      });
+    }
   };
 
   const readReplayData = async () => {
@@ -97,7 +114,7 @@ const AddReplay = () => {
             </div>
 
             <div className="flex flex-col w-full items-center gap-y-3">
-              <Label>Replay Info</Label>
+              <Label>{replay?.name || "Replay Info"}</Label>
               <div className="flex flex-row gap-x-4 w-full">
                 <div className="flex flex-col w-full space-y-3">
                   <Label htmlFor="player">Player</Label>

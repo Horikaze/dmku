@@ -44,3 +44,16 @@ export const convertUnixDate = (date: number) => {
   }
   return format(fromUnixTime(date / 1000), "dd-MM-yyyy");
 };
+
+export const getCharacterFromDataWithoutTypeshot = (
+  characters: string | string[]
+) => {
+  if (!characters) {
+    return "";
+  }
+  if (characters instanceof Array) {
+    return characters[0];
+  }
+
+  return characters;
+};

@@ -36,8 +36,8 @@ model Profile {
 }
 
 model Replay {
-  replayId     String       @id @default(cuid())
-  player       String
+  replayId     String        @id @default(cuid())
+  player       String?
   character    String?
   rank         String?
   shottype     String?
@@ -45,7 +45,7 @@ model Replay {
   slow_rate    Int?
   stage_score  Int?
   frame_count  Int?
-  game         Games
+  game         Games?
   date         String?
   date_on_file String?
   z_keys       Int?
@@ -59,8 +59,8 @@ model Replay {
   acceptedBy   String
   filePath     String?
   comment      String?
-  achievement  Achievement
-  status       ReplayStatus
+  achievement  Achievement?
+  status       ReplayStatus?
 
   Profile Profile? @relation(fields: [userId], references: [id])
   userId  String?
