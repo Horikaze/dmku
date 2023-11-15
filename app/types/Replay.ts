@@ -1,3 +1,5 @@
+import { Achievement } from "@prisma/client";
+
 export type ReplayInfo = {
   character: string | string[];
   date: string;
@@ -13,5 +15,19 @@ export type ReplayInfo = {
   x_keys: number;
   z_keys: number;
   c_keys: number;
-  url?: string;
+};
+
+export type ReplayFormData = {
+  CC?: Achievement;
+  comment?: string;
+  character?: string;
+  date?: string;
+  player?: string;
+  rank?: string;
+  selectReplay?: File;
+  slowRate?: string;
+  type?: string;
+  stage?: string;
+  score?: string;
+  hash?: string;
 };

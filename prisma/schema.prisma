@@ -42,23 +42,17 @@ model Replay {
   rank         String?
   shottype     String?
   stage        String?
-  slow_rate    Int?
-  stage_score  Int?
-  frame_count  Int?
-  game         Games?
+  stage_score  String?
+  game         Int?
   date         String?
-  date_on_file String?
-  z_keys       Int?
-  x_keys       Int?
-  c_keys       Int?
-  checksum     String?
-  shift        Int?
   rpy_name     String?
   points       Int?
   scorePoints  Int?
-  acceptedBy   String
+  acceptedBy   String?
   filePath     String?
   comment      String?
+  hash         String?
+  uploadedDate DateTime?     @default(now())
   achievement  Achievement?
   status       ReplayStatus?
 
@@ -87,7 +81,7 @@ model Ranking {
   HSIFS   String
   WBAWC   String
   UM      String
-  UDoALG  String
+  UDOALG  String
   userId  String  @unique
   profile Profile @relation(fields: [userId], references: [id])
 }
@@ -130,5 +124,5 @@ enum Games {
   HSIFS
   WBAWC
   UM
-  UDoALG
+  UDOALG
 }

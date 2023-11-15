@@ -10,13 +10,17 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/components/ui/use-toast";
-import { getCharacterFromData } from "@/lib/getRankingData";
+import { hashFromFile } from "@/lib/fileHash";
+import {
+  getCharacterFromData,
+  getCharacterFromDataWithoutType,
+} from "@/lib/getRankingData";
+import { Achievement } from "@prisma/client";
 import axios from "axios";
 import { useState } from "react";
 import PulseLoader from "react-spinners/PulseLoader";
@@ -26,8 +30,11 @@ const AddReplay = () => {
   const [replay, setReplay] = useState<File | null>(null);
   const [loading, setLoading] = useState(false);
   const [replayData, setReplayData] = useState<ReplayInfo | null>(null);
+  const [ccInfo, setCcInfo] = useState<Achievement>("CC");
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    setLoading(true);
     e.preventDefault();
+
     try {
       if (!replayData) {
         throw new Error("No replay data");
@@ -37,23 +44,33 @@ const AddReplay = () => {
       }
 
       const formData = new FormData(e.currentTarget);
-      const values = Object.fromEntries(formData.entries());
-      console.log(values);
-
-      // const fileInfo = await axios.post("/api/uploadreplayfile", formData);
-      // if (fileInfo.data.error) {
-      //   throw new Error(fileInfo.data.data.error);
-      // }
-      // const fileUrl: string = fileInfo.data.data.url;
-      // console.log(fileUrl);
-
-      // axios.post("/api/uploadreplay", {
-      //   ...replayData,
-      //   url: fileUrl,
-      //   bio: formData.get("bio"),
-      // });
+      formData.append("CC", ccInfo);
+      formData.append("score", replayData.stage_score.join("+"));
+      formData.append("stage", replayData.stage);
+      formData.append(
+        "character",
+        getCharacterFromDataWithoutType(replayData.character)
+      );
+      formData.append("type", replayData.shottype);
+      const hash = await hashFromFile(replay);
+      formData.append("hash", hash);
+      const fileInfo = await axios
+        .post("/api/uploadreplay", formData)
+        .then(() => {
+          toast({
+            description: "Sended",
+          });
+        })
+        .catch((e) => {
+          toast({
+            title: "Error",
+            description: `${e.response.data}`,
+          });
+        });
+      setReplay(null);
+      setReplayData(null);
+      setLoading(false);
     } catch (error) {
-      console.log(error);
       toast({
         title: "Error",
         description: `${error}`,
@@ -92,8 +109,8 @@ const AddReplay = () => {
         <div className="pr-6 pt-6 w-1/2">
           <Textarea
             form="form"
-            name="bio"
-            placeholder="Write something if there are problems with it, there is desync, or you need additional tools to be able to open it correctly. "
+            name="comment"
+            placeholder="Write something if there are problems with replay, there is desync, or you need additional tools to be able to open it correctly. "
             maxLength={250}
             className="h-2 resize-none"
           ></Textarea>
@@ -132,35 +149,28 @@ const AddReplay = () => {
                   </Button>
                 )}
               </div>
-              {/* <div className="gap-x-2 flex flex-row items-center">
-                {achievements.map((achiv) => (
-                  // <div
-                  //   className="space-x-1 flex flex-row items-center"
-                  //   key={achiv}
-                  // >
-                  //   <Label htmlFor={achiv}>{achiv}</Label>
-                  //   <Checkbox name={achiv} form="form" id={achiv} />
-                  // </div>
-                  <RadioGroup key={achiv} defaultValue={achievements[0]}>
-                    <div className="flex items-center space-x-2">
-                      <div className="">
-                        <RadioGroupItem value={achiv} id={achiv} />
-                        <Label htmlFor={achiv}>{achiv}</Label>
-                      </div>
-                    </div>
-                  </RadioGroup>
-                ))}
-              </div> */}
               <RadioGroup
                 defaultValue={achievements[0]}
                 className="gap-x-2 flex flex-row items-center"
+                onValueChange={(e) => {
+                  setCcInfo(e as Achievement);
+                }}
               >
-                {achievements.map((achiv) => (
-                  <div key={achiv} className="space-x-1 flex items-center">
-                    <RadioGroupItem value={achiv} id={achiv} />
-                    <Label htmlFor={achiv}>{achiv}</Label>
-                  </div>
-                ))}
+                {achievements.map((achiv) => {
+                  if (
+                    achiv === "NNNN" &&
+                    ccInfo !== "NNN" &&
+                    ccInfo !== "NNNN"
+                  ) {
+                    return null;
+                  }
+                  return (
+                    <div key={achiv} className="space-x-1 flex items-center">
+                      <RadioGroupItem value={achiv} id={achiv} />
+                      <Label htmlFor={achiv}>{achiv}</Label>
+                    </div>
+                  );
+                })}
               </RadioGroup>
             </div>
 
@@ -180,7 +190,6 @@ const AddReplay = () => {
 
                   <Input
                     id="score"
-                    name="score"
                     readOnly
                     value={
                       replayData?.stage_score[
@@ -195,38 +204,16 @@ const AddReplay = () => {
                     value={replayData?.rank || ""}
                     name="rank"
                   />
-                  <Label htmlFor="date">Date</Label>
-                  <Input
-                    id="date"
-                    readOnly
-                    value={replayData?.date || ""}
-                    name="date"
-                  />
                 </div>
                 <div className="flex flex-col w-full space-y-3">
-                  <Label htmlFor="player">Player</Label>
-                  <Input
-                    id="player"
-                    name="player"
-                    readOnly
-                    value={replayData?.player || ""}
-                  />
                   <Label htmlFor="shotType">Shot-type</Label>
                   <Input
                     id="shotType"
-                    name="shotType"
                     readOnly
                     value={getCharacterFromData(
                       replayData?.character!,
                       replayData?.shottype!
                     )}
-                  />
-                  <Label htmlFor="stage">Stage</Label>
-                  <Input
-                    id="stage"
-                    readOnly
-                    value={replayData?.stage || ""}
-                    name="stage"
                   />
                   <Label htmlFor="slowRate">Slow rate</Label>
                   <Input
@@ -234,6 +221,13 @@ const AddReplay = () => {
                     name="slowRate"
                     readOnly
                     value={replayData?.slow_rate || ""}
+                  />
+                  <Label htmlFor="date">Date</Label>
+                  <Input
+                    id="date"
+                    readOnly
+                    value={replayData?.date || ""}
+                    name="date"
                   />
                 </div>
               </div>
@@ -248,7 +242,8 @@ const AddReplay = () => {
             >
               Reset
             </Button>
-            <Button type="submit" disabled={replayData === null}>
+            <Button type="submit" disabled={replayData === null || loading}>
+              <PulseLoader size={6} loading={loading} />
               Upload
             </Button>
           </div>
