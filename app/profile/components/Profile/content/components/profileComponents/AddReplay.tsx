@@ -1,5 +1,6 @@
 "use client";
 
+import { achievements } from "@/app/constants/games";
 import { ReplayInfo } from "@/app/types/Replay";
 import { Button, buttonVariants } from "@/components/ui/button";
 import {
@@ -9,8 +10,11 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/components/ui/use-toast";
 import { getCharacterFromData } from "@/lib/getRankingData";
 import axios from "axios";
@@ -22,7 +26,6 @@ const AddReplay = () => {
   const [replay, setReplay] = useState<File | null>(null);
   const [loading, setLoading] = useState(false);
   const [replayData, setReplayData] = useState<ReplayInfo | null>(null);
-
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
@@ -32,18 +35,23 @@ const AddReplay = () => {
       if (!replay) {
         throw new Error("FIle error");
       }
-      const formData = new FormData(e.currentTarget);
-      const fileInfo = await axios.post("/api/uploadreplayfile", formData);
-      if (fileInfo.data.error) {
-        throw new Error(fileInfo.data.data.error);
-      }
-      const fileUrl: string = fileInfo.data.data.url;
-      console.log(fileUrl);
 
-      axios.post("/api/uploadreplay", {
-        ...replayData,
-        url: fileUrl,
-      });
+      const formData = new FormData(e.currentTarget);
+      const values = Object.fromEntries(formData.entries());
+      console.log(values);
+
+      // const fileInfo = await axios.post("/api/uploadreplayfile", formData);
+      // if (fileInfo.data.error) {
+      //   throw new Error(fileInfo.data.data.error);
+      // }
+      // const fileUrl: string = fileInfo.data.data.url;
+      // console.log(fileUrl);
+
+      // axios.post("/api/uploadreplay", {
+      //   ...replayData,
+      //   url: fileUrl,
+      //   bio: formData.get("bio"),
+      // });
     } catch (error) {
       console.log(error);
       toast({
@@ -76,41 +84,84 @@ const AddReplay = () => {
   };
   return (
     <Card className="w-full">
-      <CardHeader>
-        <CardTitle>Add a replay</CardTitle>
-        <CardDescription>Deploy your new project in one-click.</CardDescription>
-      </CardHeader>
+      <div className="flex flex-row justify-between">
+        <CardHeader>
+          <CardTitle>Add a replay</CardTitle>
+          <CardDescription>Upload your replay here!</CardDescription>
+        </CardHeader>
+        <div className="pr-6 pt-6 w-1/2">
+          <Textarea
+            form="form"
+            name="bio"
+            placeholder="Write something if there are problems with it, there is desync, or you need additional tools to be able to open it correctly. "
+            maxLength={250}
+            className="h-2 resize-none"
+          ></Textarea>
+        </div>
+      </div>
       <CardContent>
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} id="form">
           <div className="grid w-full items-center gap-4">
-            <div className="flex flex-row space-x-3">
-              <Label
-                className={`${buttonVariants({
-                  variant: "default",
-                })} cursor-pointer`}
-                htmlFor="selectReplay"
-              >
-                Select a replay file
-              </Label>
-              <input
-                type="file"
-                onChange={(e) => setReplay(e.target.files![0])}
-                multiple={false}
-                className="hidden"
-                id="selectReplay"
-                accept=".rpy"
-                name="selectReplay"
-              />
-              {replay && (
-                <Button
-                  type="button"
-                  onClick={readReplayData}
-                  className="space-x-2"
+            <div className="flex flex-row justify-between">
+              <div className="flex flex-row space-x-3">
+                <Label
+                  className={`${buttonVariants({
+                    variant: "default",
+                  })} cursor-pointer`}
+                  htmlFor="selectReplay"
                 >
-                  <PulseLoader size={6} loading={loading} />
-                  <p>Read file</p>
-                </Button>
-              )}
+                  Select a replay file
+                </Label>
+                <input
+                  type="file"
+                  onChange={(e) => setReplay(e.target.files![0])}
+                  multiple={false}
+                  className="hidden"
+                  id="selectReplay"
+                  accept=".rpy"
+                  name="selectReplay"
+                />
+                {replay && (
+                  <Button
+                    type="button"
+                    onClick={readReplayData}
+                    className="space-x-2"
+                  >
+                    <PulseLoader size={6} loading={loading} />
+                    <p>Read file</p>
+                  </Button>
+                )}
+              </div>
+              {/* <div className="gap-x-2 flex flex-row items-center">
+                {achievements.map((achiv) => (
+                  // <div
+                  //   className="space-x-1 flex flex-row items-center"
+                  //   key={achiv}
+                  // >
+                  //   <Label htmlFor={achiv}>{achiv}</Label>
+                  //   <Checkbox name={achiv} form="form" id={achiv} />
+                  // </div>
+                  <RadioGroup key={achiv} defaultValue={achievements[0]}>
+                    <div className="flex items-center space-x-2">
+                      <div className="">
+                        <RadioGroupItem value={achiv} id={achiv} />
+                        <Label htmlFor={achiv}>{achiv}</Label>
+                      </div>
+                    </div>
+                  </RadioGroup>
+                ))}
+              </div> */}
+              <RadioGroup
+                defaultValue={achievements[0]}
+                className="gap-x-2 flex flex-row items-center"
+              >
+                {achievements.map((achiv) => (
+                  <div key={achiv} className="space-x-1 flex items-center">
+                    <RadioGroupItem value={achiv} id={achiv} />
+                    <Label htmlFor={achiv}>{achiv}</Label>
+                  </div>
+                ))}
+              </RadioGroup>
             </div>
 
             <div className="flex flex-col w-full items-center gap-y-3">

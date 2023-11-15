@@ -20,3 +20,4 @@ export const gamesString = [
   "UM",
   "UDoALG",
 ];
+export const achievements = ["CC", "NM", "NB", "NMNB", "NNN", "NNNN"];

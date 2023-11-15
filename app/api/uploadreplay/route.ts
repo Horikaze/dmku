@@ -13,11 +13,12 @@ export async function POST(request: NextRequest, response: NextResponse) {
     }
     const replayData = (await request.json()) as ReplayInfo;
 
-    // const replay = await prisma.replay.create({
-    //   data: {
-    //     character: getCharacterFromDataWithoutTypeshot(replayData.character),
-    //   },
-    // });
+    const replay = await prisma.replay.create({
+      data: {
+        character: getCharacterFromDataWithoutTypeshot(replayData.character),
+        
+      },
+    });
     return NextResponse.json(replayData);
   } catch (error) {
     console.log(error);
