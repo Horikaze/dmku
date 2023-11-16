@@ -49,6 +49,7 @@ export async function POST(request: NextRequest, response: NextResponse) {
         hash: values.hash,
       },
     });
+    console.log(newReplay);
     if (!newReplay) {
       return new NextResponse("Problem with database", { status: 500 });
     }
