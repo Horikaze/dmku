@@ -15,13 +15,12 @@ export async function POST(request: NextRequest, response: NextResponse) {
     const formData = await request.formData();
     const values = Object.fromEntries(formData.entries()) as ReplayFormData;
     const replayFile = formData.get("selectReplay") as File;
-    console.log(values);
-
-    const fileExist = await prisma.replay.findMany({
+    const fileExist = await prisma.replay.findFirst({
       where: {
         hash: values.hash,
       },
     });
+
     if (fileExist) {
       return new NextResponse("Replay already exists", { status: 500 });
     }
@@ -47,6 +46,7 @@ export async function POST(request: NextRequest, response: NextResponse) {
         shottype: values.type,
         status: "NEW",
         stage_score: values.score,
+        hash: values.hash,
       },
     });
     if (!newReplay) {

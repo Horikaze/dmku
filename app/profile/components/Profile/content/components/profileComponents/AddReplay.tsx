@@ -70,11 +70,35 @@ const AddReplay = () => {
       setReplay(null);
       setReplayData(null);
       setLoading(false);
+      setReplay(null);
     } catch (error) {
       toast({
         title: "Error",
         description: `${error}`,
       });
+    }
+  };
+
+  const checkExisting = async () => {
+    try {
+      setLoading(true);
+      if (!replay) {
+        throw new Error("File error");
+      }
+      const hash = await hashFromFile(replay);
+      const ifExist = await axios.post("/api/replayexists", { hash: hash });
+      toast({
+        title: "Info",
+        description: `${ifExist.data}`,
+      });
+      setLoading(false);
+    } catch (error) {
+      console.log(error);
+      toast({
+        title: "Error",
+        description: `${error}`,
+      });
+      setLoading(false);
     }
   };
 
@@ -120,7 +144,7 @@ const AddReplay = () => {
         <form onSubmit={handleSubmit} id="form">
           <div className="grid w-full items-center gap-4">
             <div className="flex flex-row justify-between">
-              <div className="flex flex-row space-x-3">
+              <div className="flex flex-col xl:items-center xl:flex-row xl:space-x-3 space-y-2 xl:space-y-0">
                 <Label
                   className={`${buttonVariants({
                     variant: "default",
@@ -131,7 +155,10 @@ const AddReplay = () => {
                 </Label>
                 <input
                   type="file"
-                  onChange={(e) => setReplay(e.target.files![0])}
+                  onChange={(e) => {
+                    setReplayData(null);
+                    setReplay(e.target.files![0]);
+                  }}
                   multiple={false}
                   className="hidden"
                   id="selectReplay"
@@ -141,11 +168,21 @@ const AddReplay = () => {
                 {replay && (
                   <Button
                     type="button"
+                    disabled={loading}
                     onClick={readReplayData}
-                    className="space-x-2"
                   >
                     <PulseLoader size={6} loading={loading} />
                     <p>Read file</p>
+                  </Button>
+                )}
+                {replayData && (
+                  <Button
+                    type="button"
+                    onClick={checkExisting}
+                    disabled={loading}
+                  >
+                    <PulseLoader size={6} loading={loading} />
+                    <p> Check if replay exists</p>
                   </Button>
                 )}
               </div>
@@ -165,7 +202,10 @@ const AddReplay = () => {
                     return null;
                   }
                   return (
-                    <div key={achiv} className="space-x-1 flex items-center">
+                    <div
+                      key={achiv}
+                      className="space-x-1 flex items-center justify-center"
+                    >
                       <RadioGroupItem value={achiv} id={achiv} />
                       <Label htmlFor={achiv}>{achiv}</Label>
                     </div>
@@ -175,7 +215,9 @@ const AddReplay = () => {
             </div>
 
             <div className="flex flex-col w-full items-center gap-y-3">
-              <Label>{replay?.name || "Replay Info"}</Label>
+              <Label className="text-lg">
+                {replay?.name || "No file selected"}
+              </Label>
               <div className="flex flex-row gap-x-4 w-full">
                 <div className="flex flex-col w-full space-y-3">
                   <Label htmlFor="player">Player</Label>
@@ -236,6 +278,7 @@ const AddReplay = () => {
           <div className="flex justify-between mt-4">
             <Button
               variant="outline"
+              type="button"
               onClick={() => {
                 setReplayData(null);
               }}
