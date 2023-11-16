@@ -1,15 +1,15 @@
 import {
-    Card,
-    CardContent,
-    CardDescription,
-    CardHeader,
-    CardTitle
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
 } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import AccountSettings from "./AccountSettings";
-import ImagesSettings from "./ImagesSettings";
+import AccountSettings from "../components/Profile/components/AccountSettings";
+import ImagesSettings from "../components/Profile/components/ImagesSettings";
 
-export function Settings() {
+export default function Settings() {
   return (
     <Tabs defaultValue="account" className="w-[1000px]">
       <TabsList className="grid w-full grid-cols-2">
@@ -21,7 +21,8 @@ export function Settings() {
           <CardHeader>
             <CardTitle>Account</CardTitle>
             <CardDescription>
-            Make changes to your account here. Click save when you&apos;re done.
+              Make changes to your account here. Click save when you&apos;re
+              done.
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-2">
@@ -34,7 +35,7 @@ export function Settings() {
           <CardHeader>
             <CardTitle>Images</CardTitle>
             <CardDescription>
-            Make changes to your account images here.
+              Make changes to your account images here.
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-2">

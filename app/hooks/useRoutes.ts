@@ -1,11 +1,6 @@
 import { usePathname } from "next/navigation";
 import { useMemo } from "react";
-import {
-  FaHome,
-  FaInfoCircle,
-  FaSearch,
-  FaSignInAlt
-} from "react-icons/fa";
+import { FaHome, FaInfoCircle, FaSearch, FaSignInAlt } from "react-icons/fa";
 import { FaRankingStar } from "react-icons/fa6";
 export const useRoutes = () => {
   const pathName = usePathname();
@@ -40,7 +35,7 @@ export const useRoutes = () => {
         label: "Login",
         href: "/profile",
         icon: FaSignInAlt,
-        active: pathName === "/profile",
+        active: pathName.startsWith("/profile"),
       },
     ],
     [pathName]
