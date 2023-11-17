@@ -9,6 +9,9 @@ export default async function page() {
     where: {
       userId: session?.user.info.id,
     },
+    orderBy:{
+      uploadedDate: "desc"
+    }
   });
   
   return (

@@ -1,6 +1,7 @@
 import prisma from "@/app/lib/prismadb";
 import { ReplayFormData } from "@/app/types/Replay";
 import {
+  AchievementRank,
   ScoreObject,
   getGameCode,
   getGameNumber,
@@ -29,6 +30,7 @@ export async function POST(request: NextRequest, response: NextResponse) {
     const replayFile = formData.get("selectReplay") as File;
     const gameNumber = getGameNumber(replayFile.name);
     const gameString = getGameCode(gameNumber).toUpperCase();
+    const fileDate = new Date(Number(values.fileDate));
     const fileExist = await prisma.replay.findFirst({
       where: {
         hash: values.hash,
@@ -43,7 +45,7 @@ export async function POST(request: NextRequest, response: NextResponse) {
     if (res.error) {
       return new NextResponse("Problem with file upload", { status: 500 });
     }
-  
+
     const newReplay = await prisma.replay.create({
       data: {
         achievement: values.CC,
@@ -61,7 +63,7 @@ export async function POST(request: NextRequest, response: NextResponse) {
         status: "NEW",
         stage_score: values.score,
         hash: values.hash,
-        fileDate: values.fileDate,
+        fileDate,
       },
     });
     let currenntRanking;
@@ -88,16 +90,21 @@ export async function POST(request: NextRequest, response: NextResponse) {
     const valueToUpdate =
       rankingObject[values.rank!.toUpperCase() as keyof ScoreObject];
 
-    if (valueToUpdate!.score! <= totalScore) {
+    if (
+      valueToUpdate!.score! <= totalScore ||
+      AchievementRank[valueToUpdate?.CC!] <= AchievementRank[values.CC!]
+    ) {
       const newScoreObj: ScoreObject = {
         ...rankingObject,
         [values.rank!.toUpperCase() as keyof ScoreObject]: {
           score: totalScore,
           id: newReplay.replayId,
+          CC: values.CC,
         },
       };
 
       const newScoreObjString = stringifyRanking(newScoreObj);
+      console.log(newScoreObjString);
       await prisma.ranking.update({
         where: {
           userIdRankingPoints: session.user.info.id,

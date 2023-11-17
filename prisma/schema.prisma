@@ -35,23 +35,24 @@ model Profile {
 
 // example:  "EASY/9999.9999.9999/123+NORMAL/9999.9999.9999/345+HARD/9999.9999.9999/677+LUNATIC/9999.9999.9999/444";
 // use parseScoreString function to get ScoreObject type
+// DIFF/SCORE/ID/CC
 model Ranking {
   total               Int?
-  EOSD                String?  @default("EASY/0/0+NORMAL/0/0+HARD/0/0+LUNATIC/0/0+EXTRA/0/0")
-  PCB                 String?  @default("EASY/0/0+NORMAL/0/0+HARD/0/0+LUNATIC/0/0+EXTRA/0/0")
-  IN                  String?  @default("EASY/0/0+NORMAL/0/0+HARD/0/0+LUNATIC/0/0+EXTRA/0/0")
-  POFV                String?  @default("EASY/0/0+NORMAL/0/0+HARD/0/0+LUNATIC/0/0+EXTRA/0/0")
-  MOF                 String?  @default("EASY/0/0+NORMAL/0/0+HARD/0/0+LUNATIC/0/0+EXTRA/0/0")
-  SA                  String?  @default("EASY/0/0+NORMAL/0/0+HARD/0/0+LUNATIC/0/0+EXTRA/0/0")
-  UFO                 String?  @default("EASY/0/0+NORMAL/0/0+HARD/0/0+LUNATIC/0/0+EXTRA/0/0")
-  GFW                 String?  @default("EASY/0/0+NORMAL/0/0+HARD/0/0+LUNATIC/0/0+EXTRA/0/0")
-  TD                  String?  @default("EASY/0/0+NORMAL/0/0+HARD/0/0+LUNATIC/0/0+EXTRA/0/0")
-  DDC                 String?  @default("EASY/0/0+NORMAL/0/0+HARD/0/0+LUNATIC/0/0+EXTRA/0/0")
-  LOLK                String?  @default("EASY/0/0+NORMAL/0/0+HARD/0/0+LUNATIC/0/0+EXTRA/0/0")
-  HSIFS               String?  @default("EASY/0/0+NORMAL/0/0+HARD/0/0+LUNATIC/0/0+EXTRA/0/0")
-  WBAWC               String?  @default("EASY/0/0+NORMAL/0/0+HARD/0/0+LUNATIC/0/0+EXTRA/0/0")
-  UM                  String?  @default("EASY/0/0+NORMAL/0/0+HARD/0/0+LUNATIC/0/0+EXTRA/0/0")
-  UDOALG              String?  @default("EASY/0/0+NORMAL/0/0+HARD/0/0+LUNATIC/0/0+EXTRA/0/0")
+  EOSD                String?  @default("EASY/0/0/CC+NORMAL/0/0/CC+HARD/0/0/CC+LUNATIC/0/0/CC+EXTRA/0/0/CC+PHANTASM/0/0/CC+OVERDRIVE/0/0/CC")
+  PCB                 String?  @default("EASY/0/0/CC+NORMAL/0/0/CC+HARD/0/0/CC+LUNATIC/0/0/CC+EXTRA/0/0/CC+PHANTASM/0/0/CC+OVERDRIVE/0/0/CC")
+  IN                  String?  @default("EASY/0/0/CC+NORMAL/0/0/CC+HARD/0/0/CC+LUNATIC/0/0/CC+EXTRA/0/0/CC+PHANTASM/0/0/CC+OVERDRIVE/0/0/CC")
+  POFV                String?  @default("EASY/0/0/CC+NORMAL/0/0/CC+HARD/0/0/CC+LUNATIC/0/0/CC+EXTRA/0/0/CC+PHANTASM/0/0/CC+OVERDRIVE/0/0/CC")
+  MOF                 String?  @default("EASY/0/0/CC+NORMAL/0/0/CC+HARD/0/0/CC+LUNATIC/0/0/CC+EXTRA/0/0/CC+PHANTASM/0/0/CC+OVERDRIVE/0/0/CC")
+  SA                  String?  @default("EASY/0/0/CC+NORMAL/0/0/CC+HARD/0/0/CC+LUNATIC/0/0/CC+EXTRA/0/0/CC+PHANTASM/0/0/CC+OVERDRIVE/0/0/CC")
+  UFO                 String?  @default("EASY/0/0/CC+NORMAL/0/0/CC+HARD/0/0/CC+LUNATIC/0/0/CC+EXTRA/0/0/CC+PHANTASM/0/0/CC+OVERDRIVE/0/0/CC")
+  GFW                 String?  @default("EASY/0/0/CC+NORMAL/0/0/CC+HARD/0/0/CC+LUNATIC/0/0/CC+EXTRA/0/0/CC+PHANTASM/0/0/CC+OVERDRIVE/0/0/CC")
+  TD                  String?  @default("EASY/0/0/CC+NORMAL/0/0/CC+HARD/0/0/CC+LUNATIC/0/0/CC+EXTRA/0/0/CC+PHANTASM/0/0/CC+OVERDRIVE/0/0/CC")
+  DDC                 String?  @default("EASY/0/0/CC+NORMAL/0/0/CC+HARD/0/0/CC+LUNATIC/0/0/CC+EXTRA/0/0/CC+PHANTASM/0/0/CC+OVERDRIVE/0/0/CC")
+  LOLK                String?  @default("EASY/0/0/CC+NORMAL/0/0/CC+HARD/0/0/CC+LUNATIC/0/0/CC+EXTRA/0/0/CC+PHANTASM/0/0/CC+OVERDRIVE/0/0/CC")
+  HSIFS               String?  @default("EASY/0/0/CC+NORMAL/0/0/CC+HARD/0/0/CC+LUNATIC/0/0/CC+EXTRA/0/0/CC+PHANTASM/0/0/CC+OVERDRIVE/0/0/CC")
+  WBAWC               String?  @default("EASY/0/0/CC+NORMAL/0/0/CC+HARD/0/0/CC+LUNATIC/0/0/CC+EXTRA/0/0/CC+PHANTASM/0/0/CC+OVERDRIVE/0/0/CC")
+  UM                  String?  @default("EASY/0/0/CC+NORMAL/0/0/CC+HARD/0/0/CC+LUNATIC/0/0/CC+EXTRA/0/0/CC+PHANTASM/0/0/CC+OVERDRIVE/0/0/CC")
+  UDOALG              String?  @default("EASY/0/0/CC+NORMAL/0/0/CC+HARD/0/0/CC+LUNATIC/0/0/CC+EXTRA/0/0/CC+PHANTASM/0/0/CC+OVERDRIVE/0/0/CC")
   userIdRankingPoints String   @unique
   Profile             Profile? @relation(fields: [userIdRankingPoints], references: [id])
 }
@@ -73,7 +74,7 @@ model Replay {
   comment      String?
   hash         String?       @unique
   uploadedDate DateTime?     @default(now())
-  fileDate     String?
+  fileDate     DateTime?
   achievement  Achievement?
   status       ReplayStatus?
 

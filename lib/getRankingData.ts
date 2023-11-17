@@ -1,11 +1,13 @@
 import { format, fromUnixTime } from "date-fns";
 
 export type ScoreObject = {
-  EASY?: { score?: number; id?: string };
-  NORMAL?: { score?: number; id?: string };
-  HARD?: { score?: number; id?: string };
-  LUNATIC?: { score?: number; id?: string };
-  EXTRA?: { score?: number; id?: string };
+  EASY: { score?: number; id?: string; CC?: string };
+  NORMAL: { score?: number; id?: string; CC?: string };
+  HARD: { score?: number; id?: string; CC?: string };
+  LUNATIC: { score?: number; id?: string; CC?: string };
+  EXTRA: { score?: number; id?: string; CC?: string };
+  PHANTASM?: { score?: number; id?: string; CC?: string };
+  OVERDRIVE?: { score?: number; id?: string; CC?: string };
 };
 
 export const parseRankingString = (scoreString: string): ScoreObject => {
@@ -14,19 +16,22 @@ export const parseRankingString = (scoreString: string): ScoreObject => {
     NORMAL: {},
     HARD: {},
     LUNATIC: {},
+    EXTRA: {},
+    PHANTASM: {},
+    OVERDRIVE: {},
   };
 
   const scoreParts = scoreString.split("+");
 
   scoreParts.forEach((part) => {
-    const [difficulty, scoreStr, idStr] = part
+    const [difficulty, scoreStr, idStr, CC] = part
       .split("/")
       .map((item) => (isNaN(Number(item)) ? item.trim() : item));
 
     const score = parseFloat(scoreStr);
     const id = idStr.trim();
     if (difficulty && !isNaN(score)) {
-      scoreObject[difficulty as keyof ScoreObject] = { score, id };
+      scoreObject[difficulty as keyof ScoreObject] = { score, id, CC };
     }
   });
 
@@ -38,11 +43,10 @@ export const stringifyRanking = (scoreObject: ScoreObject): string => {
 
   for (const difficulty in scoreObject) {
     if (scoreObject.hasOwnProperty(difficulty)) {
-      const { score, id } = scoreObject[difficulty as keyof ScoreObject]!;
-      scoreStrings.push(`${difficulty}/${score}/${id}`);
+      const { score, id, CC } = scoreObject[difficulty as keyof ScoreObject]!;
+      scoreStrings.push(`${difficulty}/${score}/${id}/${CC}`);
     }
   }
-
   return scoreStrings.join("+");
 };
 
@@ -103,75 +107,47 @@ export const games = [
   "UDOALG",
 ];
 
+interface AchievementValuesType {
+  CC: number;
+  NM: number;
+  NB: number;
+  NMNB: number;
+  NNN: number;
+  NNNN: number;
+  [key: string]: number; // General index signature
+}
+
+export const AchievementRank: AchievementValuesType = {
+  CC: 1,
+  NM: 2,
+  NB: 3,
+  NMNB: 4,
+  NNN: 5,
+  NNNN: 6
+};
+export const gameCodeRecord: Record<string, number> = {
+  EOSD: 6,
+  PCB: 7,
+  IN: 8,
+  POFV: 9,
+  MOF: 10,
+  SA: 11,
+  UFO: 12,
+  GFW: 128,
+  TD: 13,
+  DDC: 14,
+  LOLK: 15,
+  HSIFS: 16,
+  WBAWC: 17,
+  UM: 18,
+  UDOALG: 19,
+};
 export const getGameString = (gameCode: string) => {
-  switch (gameCode) {
-    case "EOSD":
-      return 6;
-    case "PCB":
-      return 7;
-    case "IN":
-      return 8;
-    case "POFV":
-      return 9;
-    case "MOF":
-      return 10;
-    case "SA":
-      return 11;
-    case "UFO":
-      return 12;
-    case "GFW":
-      return 128;
-    case "TD":
-      return 13;
-    case "DDC":
-      return 14;
-    case "LOLK":
-      return 15;
-    case "HSIFS":
-      return 16;
-    case "WBAWC":
-      return 17;
-    case "UM":
-      return 18;
-    case "UDOALG":
-      return 19;
-    default:
-      return 6;
-  }
+  return gameCodeRecord[gameCode] || 6;
 };
 export const getGameCode = (gameNumber: number) => {
-  switch (gameNumber) {
-    case 6:
-      return "EOSD";
-    case 7:
-      return "PCB";
-    case 8:
-      return "IN";
-    case 9:
-      return "POFV";
-    case 10:
-      return "MOF";
-    case 11:
-      return "SA";
-    case 12:
-      return "UFO";
-    case 128:
-      return "GFW";
-    case 13:
-      return "TD";
-    case 14:
-      return "DDC";
-    case 15:
-      return "LOLK";
-    case 16:
-      return "HSIFS";
-    case 17:
-      return "WBAWC";
-    case 18:
-      return "UM";
-    case 19:
-      return "UDOALG";
-    default:
-      return "EOSD";
-  }
+  const gameCode = Object.keys(gameCodeRecord).find(
+    (key) => gameCodeRecord[key] === gameNumber
+  );
+  return gameCode || "EOSD";
 };

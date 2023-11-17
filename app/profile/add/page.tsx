@@ -71,6 +71,7 @@ const AddReplay = () => {
       setReplayData(null);
       setLoading(false);
       setReplay(null);
+      setCcInfo("CC");
     } catch (error) {
       toast({
         title: "Error",
@@ -188,6 +189,7 @@ const AddReplay = () => {
               </div>
               <RadioGroup
                 defaultValue={achievements[0]}
+                value={ccInfo}
                 className="gap-x-2 flex flex-row items-center"
                 onValueChange={(e) => {
                   setCcInfo(e as Achievement);
