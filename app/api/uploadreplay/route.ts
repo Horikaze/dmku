@@ -13,7 +13,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { UTApi } from "uploadthing/server";
 import { authOptions } from "../auth/[...nextauth]/route";
 import { Ranking } from "@prisma/client";
-import { getLastNumber } from "@/app/components/replayTable/forrmatScore";
+import { getLastScore } from "@/app/components/replayTable/forrmatScore";
 export async function POST(request: NextRequest, response: NextResponse) {
   try {
     const session = await getServerSession(authOptions);
@@ -26,7 +26,7 @@ export async function POST(request: NextRequest, response: NextResponse) {
     if (!values) {
       return new NextResponse("Problem with data", { status: 500 });
     }
-    const totalScore = getLastNumber(values.score!);
+    const totalScore = getLastScore(values.score!);
     const replayFile = formData.get("selectReplay") as File;
     const gameNumber = getGameNumber(replayFile.name);
     const gameString = getGameCode(gameNumber).toUpperCase();

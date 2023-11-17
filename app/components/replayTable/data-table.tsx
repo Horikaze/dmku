@@ -18,6 +18,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { useState } from "react";
+import { getLastScore } from "./forrmatScore";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -39,6 +40,11 @@ export function DataTable<TData, TValue>({
     state: {
       sorting,
     },
+  });
+  data.map((obj) => {
+    // @ts-ignore
+    obj.stage_score = getLastScore(obj.stage_score);
+    return obj;
   });
   return (
     <div className="rounded-md border">

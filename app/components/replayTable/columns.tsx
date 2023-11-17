@@ -1,11 +1,10 @@
 "use client";
 
+import { Button } from "@/components/ui/button";
+import { getGameCode } from "@/lib/getRankingData";
 import { Replay } from "@prisma/client";
 import { ColumnDef } from "@tanstack/react-table";
-import { getLastNumber } from "./forrmatScore";
-import { Button } from "@/components/ui/button";
 import { FaArrowUp } from "react-icons/fa";
-import { getGameCode } from "@/lib/getRankingData";
 
 export const columns: ColumnDef<Replay>[] = [
   {
@@ -43,8 +42,9 @@ export const columns: ColumnDef<Replay>[] = [
     },
     cell({ row }) {
       const score = row.getValue("stage_score");
-      const formatted = getLastNumber(score as string).toLocaleString();
-      return <div className="font-medium">{formatted}</div>;
+      return (
+        <div className="font-medium">{Number(score).toLocaleString()}</div>
+      );
     },
   },
   {
