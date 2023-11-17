@@ -12,27 +12,48 @@ generator client {
 }
 
 model Profile {
-  id               String   @id @default(uuid())
-  nickname         String?
-  name             String?
-  email            String   @unique
-  imageUrl         String?
-  scoreRank        Int?
-  achievementsRank Int?
-  CCCount          Int?
-  admin            Boolean?
-  supporter        Boolean?
-  joindate         DateTime @default(now())
-  discord          String?
-  favoriteGame     Games?
-  bio              String?  @db.VarChar(250)
-  totalPoints      Int?
-  totalScore       Int?
-  eventPoints      Int?
-  hashedPassword   String?
-  profileBanner    String?
-  Replays          Replay[]
-  pointsRank       Ranking?
+  id             String   @id @unique @default(uuid())
+  nickname       String?
+  name           String?
+  email          String   @unique
+  imageUrl       String?
+  CCCount        Int?
+  admin          Boolean?
+  supporter      Boolean?
+  joindate       DateTime @default(now())
+  discord        String?
+  favoriteGame   Games?
+  bio            String?  @db.VarChar(250)
+  points         Int?
+  pointsRanking  Ranking?
+  event          Int?
+  eventRanking   Int?
+  hashedPassword String?
+  profileBanner  String?
+  Replays        Replay[]
+}
+
+// example:  "EASY/9999.9999.9999/123+NORMAL/9999.9999.9999/345+HARD/9999.9999.9999/677+LUNATIC/9999.9999.9999/444";
+// use parseScoreString function to get ScoreObject type
+model Ranking {
+  total               Int?
+  EOSD                String?  @default("EASY/0/0+NORMAL/0/0+HARD/0/0+LUNATIC/0/0+EXTRA/0/0")
+  PCB                 String?  @default("EASY/0/0+NORMAL/0/0+HARD/0/0+LUNATIC/0/0+EXTRA/0/0")
+  IN                  String?  @default("EASY/0/0+NORMAL/0/0+HARD/0/0+LUNATIC/0/0+EXTRA/0/0")
+  POFV                String?  @default("EASY/0/0+NORMAL/0/0+HARD/0/0+LUNATIC/0/0+EXTRA/0/0")
+  MOF                 String?  @default("EASY/0/0+NORMAL/0/0+HARD/0/0+LUNATIC/0/0+EXTRA/0/0")
+  SA                  String?  @default("EASY/0/0+NORMAL/0/0+HARD/0/0+LUNATIC/0/0+EXTRA/0/0")
+  UFO                 String?  @default("EASY/0/0+NORMAL/0/0+HARD/0/0+LUNATIC/0/0+EXTRA/0/0")
+  GFW                 String?  @default("EASY/0/0+NORMAL/0/0+HARD/0/0+LUNATIC/0/0+EXTRA/0/0")
+  TD                  String?  @default("EASY/0/0+NORMAL/0/0+HARD/0/0+LUNATIC/0/0+EXTRA/0/0")
+  DDC                 String?  @default("EASY/0/0+NORMAL/0/0+HARD/0/0+LUNATIC/0/0+EXTRA/0/0")
+  LOLK                String?  @default("EASY/0/0+NORMAL/0/0+HARD/0/0+LUNATIC/0/0+EXTRA/0/0")
+  HSIFS               String?  @default("EASY/0/0+NORMAL/0/0+HARD/0/0+LUNATIC/0/0+EXTRA/0/0")
+  WBAWC               String?  @default("EASY/0/0+NORMAL/0/0+HARD/0/0+LUNATIC/0/0+EXTRA/0/0")
+  UM                  String?  @default("EASY/0/0+NORMAL/0/0+HARD/0/0+LUNATIC/0/0+EXTRA/0/0")
+  UDOALG              String?  @default("EASY/0/0+NORMAL/0/0+HARD/0/0+LUNATIC/0/0+EXTRA/0/0")
+  userIdRankingPoints String   @unique
+  Profile             Profile? @relation(fields: [userIdRankingPoints], references: [id])
 }
 
 model Replay {
@@ -47,49 +68,19 @@ model Replay {
   date         String?
   rpy_name     String?
   points       Int?
-  scorePoints  Int?
   acceptedBy   String?
   filePath     String?
   comment      String?
   hash         String?       @unique
   uploadedDate DateTime?     @default(now())
+  fileDate     String?
   achievement  Achievement?
   status       ReplayStatus?
 
-  Profile Profile? @relation(fields: [userId], references: [id])
   userId  String?
+  Profile Profile? @relation(fields: [userId], references: [id])
 
   @@index([userId])
-}
-
-// example:  "EASY/9999.9999.9999/123+NORMAL/9999.9999.9999/345+HARD/9999.9999.9999/677+LUNATIC/9999.9999.9999/444";
-// use parseScoreString function to get ScoreObject type
-model Ranking {
-  EOSD    String
-  PCB     String
-  IN      String
-  INA     String
-  INB     String
-  POFV    String
-  MOF     String
-  SA      String
-  UFO     String
-  GFW     String
-  TD      String
-  DDC     String
-  LOLK    String
-  HSIFS   String
-  WBAWC   String
-  UM      String
-  UDOALG  String
-  userId  String  @unique
-  profile Profile @relation(fields: [userId], references: [id])
-}
-
-model RnakingScore {
-  user String @unique
-
-  score Int
 }
 
 enum ReplayStatus {

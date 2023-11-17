@@ -5,11 +5,16 @@ import { ColumnDef } from "@tanstack/react-table";
 import { getLastNumber } from "./forrmatScore";
 import { Button } from "@/components/ui/button";
 import { FaArrowUp } from "react-icons/fa";
+import { getGameCode } from "@/lib/getRankingData";
 
 export const columns: ColumnDef<Replay>[] = [
   {
     accessorKey: "game",
     header: () => <div className="text-left">Game</div>,
+    cell({ row }) {
+      const gameNumber = Number(row.getValue("game"));
+      return <div className="font-medium">{getGameCode(gameNumber)}</div>;
+    },
   },
   {
     accessorKey: "player",
@@ -18,6 +23,10 @@ export const columns: ColumnDef<Replay>[] = [
   {
     accessorKey: "status",
     header: () => <div className="text-left">Status</div>,
+  },
+  {
+    accessorKey: "rank",
+    header: () => <div className="text-left">Difficulty</div>,
   },
   {
     accessorKey: "stage_score",

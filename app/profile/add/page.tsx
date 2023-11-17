@@ -34,7 +34,6 @@ const AddReplay = () => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     setLoading(true);
     e.preventDefault();
-
     try {
       if (!replayData) {
         throw new Error("No replay data");
@@ -46,7 +45,8 @@ const AddReplay = () => {
       const formData = new FormData(e.currentTarget);
       formData.append("CC", ccInfo);
       formData.append("score", replayData.stage_score.join("+"));
-      formData.append("stage", replayData.stage);
+      formData.append("score", replayData.stage_score.join("+"));
+      formData.append("fileDate", replay.lastModified.toString());
       formData.append(
         "character",
         getCharacterFromDataWithoutType(replayData.character)
@@ -236,7 +236,7 @@ const AddReplay = () => {
                     value={
                       replayData?.stage_score[
                         replayData?.stage_score.length - 1
-                      ] || ""
+                      ].toLocaleString() || ""
                     }
                   />
                   <Label htmlFor="rank">Rank</Label>

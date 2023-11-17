@@ -1,28 +1,49 @@
-import { Games } from "@prisma/client";
 import { format, fromUnixTime } from "date-fns";
 
 export type ScoreObject = {
-  difficulty: string;
-  score: number;
-  id: number;
+  EASY?: { score?: number; id?: string };
+  NORMAL?: { score?: number; id?: string };
+  HARD?: { score?: number; id?: string };
+  LUNATIC?: { score?: number; id?: string };
+  EXTRA?: { score?: number; id?: string };
 };
 
-export const parseRankingString = (scoreString: string): ScoreObject[] => {
+export const parseRankingString = (scoreString: string): ScoreObject => {
+  const scoreObject: ScoreObject = {
+    EASY: {},
+    NORMAL: {},
+    HARD: {},
+    LUNATIC: {},
+  };
+
   const scoreParts = scoreString.split("+");
 
-  const scoreObjects = scoreParts.map((part) => {
+  scoreParts.forEach((part) => {
     const [difficulty, scoreStr, idStr] = part
       .split("/")
-      .map((item) => (isNaN(Number(item)) ? item : item.trim()));
+      .map((item) => (isNaN(Number(item)) ? item.trim() : item));
 
-    // Use parseFloat to convert the string to a number
     const score = parseFloat(scoreStr);
-    const id = parseFloat(idStr);
-
-    return { difficulty, score, id };
+    const id = idStr.trim();
+    if (difficulty && !isNaN(score)) {
+      scoreObject[difficulty as keyof ScoreObject] = { score, id };
+    }
   });
 
-  return scoreObjects;
+  return scoreObject;
+};
+
+export const stringifyRanking = (scoreObject: ScoreObject): string => {
+  const scoreStrings: string[] = [];
+
+  for (const difficulty in scoreObject) {
+    if (scoreObject.hasOwnProperty(difficulty)) {
+      const { score, id } = scoreObject[difficulty as keyof ScoreObject]!;
+      scoreStrings.push(`${difficulty}/${score}/${id}`);
+    }
+  }
+
+  return scoreStrings.join("+");
 };
 
 export const getCharacterFromData = (
@@ -68,8 +89,6 @@ export const games = [
   "EOSD",
   "PCB",
   "IN",
-  "INA",
-  "INB",
   "POFV",
   "MOF",
   "SA",
@@ -108,9 +127,9 @@ export const getGameString = (gameCode: string) => {
       return 14;
     case "LOLK":
       return 15;
-    case "HSiFS":
+    case "HSIFS":
       return 16;
-    case "WBaWC":
+    case "WBAWC":
       return 17;
     case "UM":
       return 18;
@@ -118,5 +137,41 @@ export const getGameString = (gameCode: string) => {
       return 19;
     default:
       return 6;
+  }
+};
+export const getGameCode = (gameNumber: number) => {
+  switch (gameNumber) {
+    case 6:
+      return "EOSD";
+    case 7:
+      return "PCB";
+    case 8:
+      return "IN";
+    case 9:
+      return "POFV";
+    case 10:
+      return "MOF";
+    case 11:
+      return "SA";
+    case 12:
+      return "UFO";
+    case 128:
+      return "GFW";
+    case 13:
+      return "TD";
+    case 14:
+      return "DDC";
+    case 15:
+      return "LOLK";
+    case 16:
+      return "HSIFS";
+    case 17:
+      return "WBAWC";
+    case 18:
+      return "UM";
+    case 19:
+      return "UDOALG";
+    default:
+      return "EOSD";
   }
 };

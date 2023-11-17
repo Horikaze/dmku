@@ -30,4 +30,5 @@ export type ReplayFormData = {
   stage?: string;
   score?: string;
   hash?: string;
+  fileDate?: string;
 };
