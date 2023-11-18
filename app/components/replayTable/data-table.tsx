@@ -49,7 +49,7 @@ export function DataTable<TData, TValue>({
     // @ts-ignore
     obj.stage_score = getLastScore(obj.stage_score);
     // @ts-ignore
-    obj.game = getLastScore(obj.game as string).toString();
+    obj.game = obj.game.toString();
   });
   return (
     <div className="rounded-md border">

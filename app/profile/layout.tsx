@@ -18,8 +18,8 @@ export default async function ProfileLayout({
     );
 
   return (
-    <main className="flex flex-col h-full mx-2 md:mx-4 lg:mx-32 xl:mx-48 2xl:mx-64 pb-20">
-      {/* <ProfileBanner session={session} /> */}
+    <main className="flex flex-col h-full mx-2 md:mx-4 lg:mx-32 xl:mx-48 2xl:mx-64 pb-20 items-center">
+      <ProfileBanner session={session} />
       <ProfileNavigation />
       {children}
     </main>

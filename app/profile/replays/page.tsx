@@ -15,7 +15,7 @@ export default async function page() {
   });
 
   return (
-    <div>
+    <div className="w-full">
       <DataTable columns={columns} data={data} />
     </div>
   );

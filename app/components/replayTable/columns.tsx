@@ -9,7 +9,7 @@ import {
 } from "@/lib/getRankingData";
 import { Replay } from "@prisma/client";
 import { ColumnDef } from "@tanstack/react-table";
-import { FaArrowUp } from "react-icons/fa";
+import { FaArrowDown, FaArrowUp } from "react-icons/fa";
 import {
   Select,
   SelectContent,
@@ -64,7 +64,39 @@ export const columns: ColumnDef<Replay>[] = [
   },
   {
     accessorKey: "status",
-    header: () => <div className="text-left">Status</div>,
+    header: ({ table }) => {
+      return (
+        <Select
+          onValueChange={(e) => {
+            if (e === "All") {
+              table.getColumn("status")?.setFilterValue("");
+              return;
+            }
+            table.getColumn("status")?.setFilterValue(e);
+          }}
+        >
+          <SelectTrigger className="border-none">
+            <SelectValue placeholder="Status" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectGroup>
+              <SelectItem className="cursor-pointer" value={"All"}>
+                Status
+              </SelectItem>
+              <SelectItem className="cursor-pointer" value={"NEW"}>
+                NEW
+              </SelectItem>
+              <SelectItem className="cursor-pointer" value={"VERIFIED"}>
+                VERIFIED
+              </SelectItem>
+              <SelectItem className="cursor-pointer" value={"REJECTED"}>
+                REJECTED
+              </SelectItem>
+            </SelectGroup>
+          </SelectContent>
+        </Select>
+      );
+    },
   },
   {
     accessorKey: "rank",
@@ -100,14 +132,18 @@ export const columns: ColumnDef<Replay>[] = [
   },
   {
     accessorKey: "stage_score",
-    header: ({ column }) => {
+    header: ({ column, header }) => {
       return (
         <Button
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
           Score
-          <FaArrowUp className="ml-2 h-4 w-4" />
+          {header.column.getIsSorted() === "asc" ? (
+            <FaArrowDown className="ml-2 h-3 w-3" />
+          ) : (
+            <FaArrowUp className="ml-2 h-3 w-3" />
+          )}
         </Button>
       );
     },

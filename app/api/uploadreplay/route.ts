@@ -80,6 +80,8 @@ export async function POST(request: NextRequest, response: NextResponse) {
       currenntRanking = await prisma.ranking.create({
         data: {
           userIdRankingPoints: session.user.info.id,
+          [gameString]:
+            "EASY/0/0/CC+NORMAL/0/0/CC+HARD/0/0/CC+LUNATIC/0/0/CC+EXTRA/0/0/CC+PHANTASM/0/0/CC+OVERDRIVE/0/0/CC",
         },
         select: {
           [gameString]: true,
