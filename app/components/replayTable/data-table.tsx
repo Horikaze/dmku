@@ -2,11 +2,13 @@
 
 import {
   ColumnDef,
+  ColumnFiltersState,
+  SortingState,
   flexRender,
   getCoreRowModel,
-  useReactTable,
-  SortingState,
+  getFilteredRowModel,
   getSortedRowModel,
+  useReactTable,
 } from "@tanstack/react-table";
 
 import {
@@ -19,7 +21,6 @@ import {
 } from "@/components/ui/table";
 import { useState } from "react";
 import { getLastScore } from "./forrmatScore";
-
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
@@ -30,21 +31,25 @@ export function DataTable<TData, TValue>({
   data,
 }: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = useState<SortingState>([]);
-
+  const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const table = useReactTable({
     data,
     columns,
     getCoreRowModel: getCoreRowModel(),
     onSortingChange: setSorting,
+    onColumnFiltersChange: setColumnFilters,
     getSortedRowModel: getSortedRowModel(),
     state: {
+      columnFilters,
       sorting,
     },
+    getFilteredRowModel: getFilteredRowModel(),
   });
   data.map((obj) => {
     // @ts-ignore
     obj.stage_score = getLastScore(obj.stage_score);
-    return obj;
+    // @ts-ignore
+    obj.game = getLastScore(obj.game as string).toString();
   });
   return (
     <div className="rounded-md border">

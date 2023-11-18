@@ -1,18 +1,61 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { getGameCode } from "@/lib/getRankingData";
+import {
+  games,
+  getGameCode,
+  getGameString,
+  touhouDifficulty,
+} from "@/lib/getRankingData";
 import { Replay } from "@prisma/client";
 import { ColumnDef } from "@tanstack/react-table";
 import { FaArrowUp } from "react-icons/fa";
-
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 export const columns: ColumnDef<Replay>[] = [
   {
     accessorKey: "game",
-    header: () => <div className="text-left">Game</div>,
+    header: ({ table }) => {
+      return (
+        <Select
+          onValueChange={(e) => {
+            if (e === "All") {
+              table.getColumn("game")?.setFilterValue("");
+              return;
+            }
+            table
+              .getColumn("game")
+              ?.setFilterValue(getGameString(e).toString());
+          }}
+        >
+          <SelectTrigger className="border-none">
+            <SelectValue placeholder="Game" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectGroup>
+              <SelectItem className="cursor-pointer" value={"All"}>
+                Game
+              </SelectItem>
+              {games.map((game) => (
+                <SelectItem className="cursor-pointer" key={game} value={game}>
+                  {game}
+                </SelectItem>
+              ))}
+            </SelectGroup>
+          </SelectContent>
+        </Select>
+      );
+    },
     cell({ row }) {
-      const gameNumber = Number(row.getValue("game"));
-      return <div className="font-medium">{getGameCode(gameNumber)}</div>;
+      const game = row.getValue("game");
+      return <div className="font-medium">{getGameCode(Number(game))}</div>;
     },
   },
   {
@@ -25,7 +68,35 @@ export const columns: ColumnDef<Replay>[] = [
   },
   {
     accessorKey: "rank",
-    header: () => <div className="text-left">Difficulty</div>,
+    header: ({ table }) => {
+      return (
+        <Select
+          onValueChange={(e) => {
+            if (e === "All") {
+              table.getColumn("rank")?.setFilterValue("");
+              return;
+            }
+            table.getColumn("rank")?.setFilterValue(e);
+          }}
+        >
+          <SelectTrigger className="border-none">
+            <SelectValue placeholder="Rank" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectGroup>
+              <SelectItem className="cursor-pointer" value={"All"}>
+                Rank
+              </SelectItem>
+              {touhouDifficulty.map((diff) => (
+                <SelectItem className="cursor-pointer" key={diff} value={diff}>
+                  {diff}
+                </SelectItem>
+              ))}
+            </SelectGroup>
+          </SelectContent>
+        </Select>
+      );
+    },
   },
   {
     accessorKey: "stage_score",

@@ -123,7 +123,7 @@ export const AchievementRank: AchievementValuesType = {
   NB: 3,
   NMNB: 4,
   NNN: 5,
-  NNNN: 6
+  NNNN: 6,
 };
 export const gameCodeRecord: Record<string, number> = {
   EOSD: 6,
@@ -151,3 +151,13 @@ export const getGameCode = (gameNumber: number) => {
   );
   return gameCode || "EOSD";
 };
+
+export const touhouDifficulty = [
+  "Easy",
+  "Normal",
+  "Hard",
+  "Lunatic",
+  "Extra",
+  "Phantasm",
+  "Overdrive",
+];
