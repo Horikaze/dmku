@@ -66,8 +66,7 @@ export async function POST(request: NextRequest, response: NextResponse) {
         fileDate,
       },
     });
-    let currenntRanking;
-    currenntRanking = await prisma.ranking.findFirst({
+    const currenntRanking = await prisma.ranking.findFirst({
       where: {
         userIdRankingPoints: session.user.info.id,
       },
@@ -75,19 +74,7 @@ export async function POST(request: NextRequest, response: NextResponse) {
         [gameString]: true,
       },
     });
-
-    if (!currenntRanking) {
-      currenntRanking = await prisma.ranking.create({
-        data: {
-          userIdRankingPoints: session.user.info.id,
-          [gameString]:
-            "EASY/0/0/CC+NORMAL/0/0/CC+HARD/0/0/CC+LUNATIC/0/0/CC+EXTRA/0/0/CC+PHANTASM/0/0/CC+OVERDRIVE/0/0/CC",
-        },
-        select: {
-          [gameString]: true,
-        },
-      });
-    }
+    console.log(currenntRanking);
     const rankingObject = parseRankingString(currenntRanking![gameString]);
     const valueToUpdate =
       rankingObject[values.rank!.toUpperCase() as keyof ScoreObject];
@@ -104,7 +91,7 @@ export async function POST(request: NextRequest, response: NextResponse) {
           CC: values.CC,
         },
       };
-
+      console.log(newScoreObj);
       const newScoreObjString = stringifyRanking(newScoreObj);
       console.log(newScoreObjString);
       await prisma.ranking.update({
@@ -116,7 +103,6 @@ export async function POST(request: NextRequest, response: NextResponse) {
         },
       });
     }
-
     return NextResponse.json(newReplay);
   } catch (error) {
     console.log(error);

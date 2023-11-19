@@ -60,12 +60,38 @@ export const authOptions: AuthOptions = {
         if (!isUserExists) {
           const newUser = await prisma.profile.create({
             data: {
+              id: user.id,
               email: user.email!,
               nickname: user.name,
               name: user.name,
               imageUrl: user.image || null,
             },
           });
+          const userRanking = await prisma.ranking.create({
+            data: {
+              DDC: "EASY/0/0/CC+NORMAL/0/0/CC+HARD/0/0/CC+LUNATIC/0/0/CC+EXTRA/0/0/CC+PHANTASM/0/0/CC+OVERDRIVE/0/0/CC",
+              EOSD: "EASY/0/0/CC+NORMAL/0/0/CC+HARD/0/0/CC+LUNATIC/0/0/CC+EXTRA/0/0/CC+PHANTASM/0/0/CC+OVERDRIVE/0/0/CC",
+              GFW: "EASY/0/0/CC+NORMAL/0/0/CC+HARD/0/0/CC+LUNATIC/0/0/CC+EXTRA/0/0/CC+PHANTASM/0/0/CC+OVERDRIVE/0/0/CC",
+              HSIFS:
+                "EASY/0/0/CC+NORMAL/0/0/CC+HARD/0/0/CC+LUNATIC/0/0/CC+EXTRA/0/0/CC+PHANTASM/0/0/CC+OVERDRIVE/0/0/CC",
+              IN: "EASY/0/0/CC+NORMAL/0/0/CC+HARD/0/0/CC+LUNATIC/0/0/CC+EXTRA/0/0/CC+PHANTASM/0/0/CC+OVERDRIVE/0/0/CC",
+              LOLK: "EASY/0/0/CC+NORMAL/0/0/CC+HARD/0/0/CC+LUNATIC/0/0/CC+EXTRA/0/0/CC+PHANTASM/0/0/CC+OVERDRIVE/0/0/CC",
+              MOF: "EASY/0/0/CC+NORMAL/0/0/CC+HARD/0/0/CC+LUNATIC/0/0/CC+EXTRA/0/0/CC+PHANTASM/0/0/CC+OVERDRIVE/0/0/CC",
+              PCB: "EASY/0/0/CC+NORMAL/0/0/CC+HARD/0/0/CC+LUNATIC/0/0/CC+EXTRA/0/0/CC+PHANTASM/0/0/CC+OVERDRIVE/0/0/CC",
+              POFV: "EASY/0/0/CC+NORMAL/0/0/CC+HARD/0/0/CC+LUNATIC/0/0/CC+EXTRA/0/0/CC+PHANTASM/0/0/CC+OVERDRIVE/0/0/CC",
+              SA: "EASY/0/0/CC+NORMAL/0/0/CC+HARD/0/0/CC+LUNATIC/0/0/CC+EXTRA/0/0/CC+PHANTASM/0/0/CC+OVERDRIVE/0/0/CC",
+              TD: "EASY/0/0/CC+NORMAL/0/0/CC+HARD/0/0/CC+LUNATIC/0/0/CC+EXTRA/0/0/CC+PHANTASM/0/0/CC+OVERDRIVE/0/0/CC",
+              UDOALG:
+                "EASY/0/0/CC+NORMAL/0/0/CC+HARD/0/0/CC+LUNATIC/0/0/CC+EXTRA/0/0/CC+PHANTASM/0/0/CC+OVERDRIVE/0/0/CC",
+              UM: "EASY/0/0/CC+NORMAL/0/0/CC+HARD/0/0/CC+LUNATIC/0/0/CC+EXTRA/0/0/CC+PHANTASM/0/0/CC+OVERDRIVE/0/0/CC",
+              UFO: "EASY/0/0/CC+NORMAL/0/0/CC+HARD/0/0/CC+LUNATIC/0/0/CC+EXTRA/0/0/CC+PHANTASM/0/0/CC+OVERDRIVE/0/0/CC",
+              WBAWC:
+                "EASY/0/0/CC+NORMAL/0/0/CC+HARD/0/0/CC+LUNATIC/0/0/CC+EXTRA/0/0/CC+PHANTASM/0/0/CC+OVERDRIVE/0/0/CC",
+              total: 0,
+              userIdRankingPoints: user.id,
+            },
+          });
+
           token.picture = newUser?.imageUrl;
           token.name = newUser?.nickname;
           token.email = newUser?.email;

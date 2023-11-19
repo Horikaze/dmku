@@ -8,6 +8,7 @@ export type ScoreObject = {
   EXTRA: { score?: number; id?: string; CC?: string };
   PHANTASM?: { score?: number; id?: string; CC?: string };
   OVERDRIVE?: { score?: number; id?: string; CC?: string };
+  [key: string]: { score?: number; id?: string; CC?: string } | undefined;
 };
 
 export const parseRankingString = (scoreString: string): ScoreObject => {
@@ -20,9 +21,7 @@ export const parseRankingString = (scoreString: string): ScoreObject => {
     PHANTASM: {},
     OVERDRIVE: {},
   };
-
   const scoreParts = scoreString.split("+");
-
   scoreParts.forEach((part) => {
     const [difficulty, scoreStr, idStr, CC] = part
       .split("/")
