@@ -1,14 +1,16 @@
 import { format, fromUnixTime } from "date-fns";
 
 export type ScoreObject = {
-  EASY: { score?: number; id?: string; CC?: string };
-  NORMAL: { score?: number; id?: string; CC?: string };
-  HARD: { score?: number; id?: string; CC?: string };
-  LUNATIC: { score?: number; id?: string; CC?: string };
-  EXTRA: { score?: number; id?: string; CC?: string };
-  PHANTASM?: { score?: number; id?: string; CC?: string };
-  OVERDRIVE?: { score?: number; id?: string; CC?: string };
-  [key: string]: { score?: number; id?: string; CC?: string } | undefined;
+  EASY: { score?: number; id?: string; CC?: string; char?: string };
+  NORMAL: { score?: number; id?: string; CC?: string; char?: string };
+  HARD: { score?: number; id?: string; CC?: string; char?: string };
+  LUNATIC: { score?: number; id?: string; CC?: string; char?: string };
+  EXTRA: { score?: number; id?: string; CC?: string; char?: string };
+  PHANTASM?: { score?: number; id?: string; CC?: string; char?: string };
+  OVERDRIVE?: { score?: number; id?: string; CC?: string; char?: string };
+  [key: string]:
+    | { score?: number; id?: string; CC?: string; char?: string }
+    | undefined;
 };
 
 export const parseRankingString = (scoreString: string): ScoreObject => {
@@ -23,14 +25,14 @@ export const parseRankingString = (scoreString: string): ScoreObject => {
   };
   const scoreParts = scoreString.split("+");
   scoreParts.forEach((part) => {
-    const [difficulty, scoreStr, idStr, CC] = part
+    const [difficulty, scoreStr, idStr, CC, char] = part
       .split("/")
       .map((item) => (isNaN(Number(item)) ? item.trim() : item));
 
     const score = parseFloat(scoreStr);
     const id = idStr.trim();
     if (difficulty && !isNaN(score)) {
-      scoreObject[difficulty as keyof ScoreObject] = { score, id, CC };
+      scoreObject[difficulty as keyof ScoreObject] = { score, id, CC, char };
     }
   });
 
@@ -42,8 +44,9 @@ export const stringifyRanking = (scoreObject: ScoreObject): string => {
 
   for (const difficulty in scoreObject) {
     if (scoreObject.hasOwnProperty(difficulty)) {
-      const { score, id, CC } = scoreObject[difficulty as keyof ScoreObject]!;
-      scoreStrings.push(`${difficulty}/${score}/${id}/${CC}`);
+      const { score, id, CC, char } =
+        scoreObject[difficulty as keyof ScoreObject]!;
+      scoreStrings.push(`${difficulty}/${score}/${id}/${CC}/${char}`);
     }
   }
   return scoreStrings.join("+");
@@ -57,7 +60,7 @@ export const getCharacterFromData = (
     return "";
   }
   if (characters instanceof Array) {
-    return characters[0];
+    return characters[0].split(" vs ")[0].replace(/\s/g, "");
   }
 
   return `${characters} ${shotType}`;
@@ -77,7 +80,7 @@ export const getCharacterFromDataWithoutType = (
     return "";
   }
   if (characters instanceof Array) {
-    return characters[0];
+    return characters[0].split(" vs ")[0].replace(/\s/g, "");
   }
 
   return characters;

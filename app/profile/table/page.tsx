@@ -98,6 +98,8 @@ export default async function TablePage() {
                 mappedArray[game as keyof MappedArrayType]?.[difficulty]?.CC;
               const id =
                 mappedArray[game as keyof MappedArrayType]?.[difficulty]?.id;
+              const char =
+                mappedArray[game as keyof MappedArrayType]?.[difficulty]?.char;
               const cellClassName =
                 CC === "CC"
                   ? "bg-orange-400"
@@ -127,6 +129,7 @@ export default async function TablePage() {
                       </TooltipTrigger>
                       <TooltipContent className="mb-3">
                         <p>{`Score: ${score?.toLocaleString()}`}</p>
+                        <p>{char}</p>
                       </TooltipContent>
                     </Tooltip>
                   </TooltipProvider>

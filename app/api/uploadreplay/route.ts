@@ -3,6 +3,8 @@ import { ReplayFormData } from "@/app/types/Replay";
 import {
   AchievementRank,
   ScoreObject,
+  getCharacterFromData,
+  getCharacterFromDataWithoutType,
   getGameCode,
   getGameNumber,
   parseRankingString,
@@ -89,6 +91,10 @@ export async function POST(request: NextRequest, response: NextResponse) {
           score: totalScore,
           id: newReplay.replayId,
           CC: values.CC,
+          char:
+            gameNumber === 9
+              ? getCharacterFromDataWithoutType(values.character!)
+              : getCharacterFromData(values.character!, values.type!),
         },
       };
       console.log(newScoreObj);
