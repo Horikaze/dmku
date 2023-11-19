@@ -11,7 +11,7 @@ import ImagesSettings from "../components/Profile/components/ImagesSettings";
 
 export default function Settings() {
   return (
-    <Tabs defaultValue="account" className="w-[1000px]">
+    <Tabs defaultValue="account" className="w-full">
       <TabsList className="grid w-full grid-cols-2">
         <TabsTrigger value="account">Account</TabsTrigger>
         <TabsTrigger value="images">Images</TabsTrigger>
