@@ -16,6 +16,14 @@ import {
   touhouDifficulty,
 } from "@/lib/getRankingData";
 import { getServerSession } from "next-auth";
+import Link from "next/link";
+
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 export default async function TablePage() {
   const session = await getServerSession(authOptions);
@@ -48,8 +56,8 @@ export default async function TablePage() {
     "LUNATIC",
     "EXTRA",
     "PHANTASM",
-    "OVERDRIVE",
   ];
+
   type MappedArrayType = {
     [key in GamesType]?: ScoreObject;
   };
@@ -65,28 +73,66 @@ export default async function TablePage() {
   });
 
   return (
-    <Table>
-      <TableCaption>A list of your recent invoices.</TableCaption>
+    <Table className="border">
       <TableHeader>
         <TableRow>
-          <TableHead>aha</TableHead>
-          {touhouDifficulty.map((dif) => (
-            <TableHead key={dif}>{dif}</TableHead>
-          ))}
+          <TableHead>Game</TableHead>
+          {touhouDifficulty.map((dif) => {
+            if (dif === "Overdrive") return null;
+            return (
+              <TableHead className="text-center border" key={dif}>
+                {dif}
+              </TableHead>
+            );
+          })}
         </TableRow>
       </TableHeader>
       <TableBody>
         {games.map((game) => (
-          <TableRow key={game}>
+          <TableRow key={game} className="">
             <TableCell>{game}</TableCell>
-            {difficultyLevels.map((difficulty) => (
-              <TableCell key={difficulty}>
-                {
-                  mappedArray[game as keyof MappedArrayType]?.[difficulty]
-                    ?.score
-                }
-              </TableCell>
-            ))}
+            {difficultyLevels.map((difficulty) => {
+              const score =
+                mappedArray[game as keyof MappedArrayType]?.[difficulty]?.score;
+              const CC =
+                mappedArray[game as keyof MappedArrayType]?.[difficulty]?.CC;
+              const id =
+                mappedArray[game as keyof MappedArrayType]?.[difficulty]?.id;
+              const cellClassName =
+                CC === "CC"
+                  ? "bg-orange-400"
+                  : CC === "NM"
+                  ? "bg-gray-400"
+                  : CC === "NB"
+                  ? "bg-purple-400"
+                  : CC === "NMNB"
+                  ? "bg-pink-400"
+                  : CC === "NNN"
+                  ? "bg-pink-400"
+                  : CC === "NNNN"
+                  ? "bg-yellow-400"
+                  : "";
+
+              return (
+                <TableCell
+                  key={difficulty}
+                  className={`text-center ${cellClassName} border cursor-pointer hover:brightness-110`}
+                >
+                  <TooltipProvider>
+                    <Tooltip delayDuration={0}>
+                      <TooltipTrigger className="w-full h-full">
+                        <Link href={`/replay/${id}`} prefetch={false}>
+                          {CC === "null" ? "" : CC}
+                        </Link>
+                      </TooltipTrigger>
+                      <TooltipContent className="mb-3">
+                        <p>{`Score: ${score?.toLocaleString()}`}</p>
+                      </TooltipContent>
+                    </Tooltip>
+                  </TooltipProvider>
+                </TableCell>
+              );
+            })}
           </TableRow>
         ))}
       </TableBody>

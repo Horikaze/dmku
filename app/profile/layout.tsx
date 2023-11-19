@@ -3,6 +3,7 @@ import Login from "./components/Login/Login";
 import { authOptions } from "../api/auth/[...nextauth]/route";
 import ProfileBanner from "./components/Profile/components/ProfileBanner";
 import ProfileNavigation from "./components/ProfileNavigation";
+import { redirect } from "next/navigation";
 
 export default async function ProfileLayout({
   children,
