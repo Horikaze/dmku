@@ -1,3 +1,4 @@
+// @ts-nocheck
 "use client";
 
 import {
@@ -21,6 +22,7 @@ import {
 } from "@/components/ui/table";
 import { useState } from "react";
 import { getLastScore } from "./forrmatScore";
+import { getCharacterFromData, getCharacterFromDataWithoutType } from "@/lib/getRankingData";
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
@@ -50,6 +52,11 @@ export function DataTable<TData, TValue>({
     obj.stage_score = getLastScore(obj.stage_score);
     // @ts-ignore
     obj.game = obj.game.toString();
+    // @ts-ignore
+    obj.char =
+      obj.game === 9
+        ? getCharacterFromDataWithoutType(obj.character!)
+        : getCharacterFromData(obj.character!, obj.shottype!);
   });
   return (
     <div className="rounded-md border">

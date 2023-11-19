@@ -19,6 +19,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { Input } from "@/components/ui/input";
 export const columns: ColumnDef<Replay>[] = [
   {
     accessorKey: "game",
@@ -61,6 +62,20 @@ export const columns: ColumnDef<Replay>[] = [
   {
     accessorKey: "player",
     header: () => <div className="text-left">Player</div>,
+  },
+  {
+    accessorKey: "char",
+    header: ({ table }) => {
+      return (
+        <Input
+          className="border-none"
+          placeholder="Character"
+          onChange={(e) => {
+            table.getColumn("char")?.setFilterValue(e.target.value);
+          }}
+        />
+      );
+    },
   },
   {
     accessorKey: "status",
