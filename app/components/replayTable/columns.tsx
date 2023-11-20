@@ -2,10 +2,12 @@
 
 import { Button } from "@/components/ui/button";
 import {
+  convertUnixDate,
   games,
-  getGameCode,
   getGameString,
+  getGameNumber,
   touhouDifficulty,
+  getGameInt,
 } from "@/lib/getRankingData";
 import { Replay } from "@prisma/client";
 import { ColumnDef } from "@tanstack/react-table";
@@ -33,7 +35,7 @@ export const columns: ColumnDef<Replay>[] = [
             }
             table
               .getColumn("game")
-              ?.setFilterValue(getGameString(e).toString());
+              ?.setFilterValue(getGameNumber(e).toString());
           }}
         >
           <SelectTrigger className="border-none">
@@ -56,7 +58,7 @@ export const columns: ColumnDef<Replay>[] = [
     },
     cell({ row }) {
       const game = row.getValue("game");
-      return <div className="font-medium">{getGameCode(Number(game))}</div>;
+      return <div className="font-medium">{getGameString(Number(game))}</div>;
     },
   },
   {
@@ -134,8 +136,30 @@ export const columns: ColumnDef<Replay>[] = [
     },
   },
   {
-    accessorKey: "date",
-    header: () => <div className="text-left">Date</div>,
+    accessorKey: "uploadedDate",
+    header: ({ column, header }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Score
+          {header.column.getIsSorted() === "asc" ? (
+            <FaArrowDown className="ml-2 h-3 w-3" />
+          ) : (
+            <FaArrowUp className="ml-2 h-3 w-3" />
+          )}
+        </Button>
+      );
+    },
+    cell({ row }) {
+      const uploadedDate = row.getValue("uploadedDate");
+      return (
+        <div className="font-medium">
+          {convertUnixDate(uploadedDate as number)}
+        </div>
+      );
+    },
   },
   {
     accessorKey: "status",

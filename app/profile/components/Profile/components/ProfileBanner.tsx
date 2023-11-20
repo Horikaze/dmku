@@ -36,12 +36,12 @@ export default async function ProfileBanner({ session }: ProfileBannerProps) {
             )}
           </div>
           <div className="group flex items-end gap-x-4">
-            <Avatar className="w-28 h-28">
+            <Avatar className="w-20 h-20 md:w-28 md:h-28 ">
               <AvatarImage
                 src={session?.user.info.imageUrl || "/images/placeholder.jpg"}
               />
             </Avatar>
-            <p className="text-3xl font-semibold text-white drop-shadow-[2px_2px_var(--tw-shadow-color)] shadow-black">
+            <p className="lg:text-2xl md:text-xl text-base font-semibold text-white drop-shadow-[2px_2px_var(--tw-shadow-color)] shadow-black">
               {session?.user.info.nickname}
             </p>
           </div>
@@ -58,9 +58,9 @@ export default async function ProfileBanner({ session }: ProfileBannerProps) {
             </Tooltip>
           </TooltipProvider>
           {session.user.info.discord && (
-            <div className="flex flex-row gap-x-2 items-center opacity-30 mix-blend-plus-lighter ">
-              <FaDiscord size={24} />
-              <p>{session.user.info.discord}</p>
+            <div className="flex flex-row gap-x-1 items-center opacity-30 mix-blend-plus-lighter ">
+              <FaDiscord className="md:text-lg text-sm"/>
+              <p className="md:text-base text-xs">{session.user.info.discord}</p>
             </div>
           )}
         </div>

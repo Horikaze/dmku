@@ -144,10 +144,10 @@ export const gameCodeRecord: Record<string, number> = {
   UM: 18,
   UDOALG: 19,
 };
-export const getGameString = (gameCode: string) => {
+export const getGameInt = (gameCode: string) => {
   return gameCodeRecord[gameCode] || 6;
 };
-export const getGameCode = (gameNumber: number) => {
+export const getGameString = (gameNumber: number) => {
   const gameCode = Object.keys(gameCodeRecord).find(
     (key) => gameCodeRecord[key] === gameNumber
   );

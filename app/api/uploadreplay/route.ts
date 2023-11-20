@@ -5,7 +5,7 @@ import {
   ScoreObject,
   getCharacterFromData,
   getCharacterFromDataWithoutType,
-  getGameCode,
+  getGameString,
   getGameNumber,
   parseRankingString,
   stringifyRanking,
@@ -31,7 +31,7 @@ export async function POST(request: NextRequest, response: NextResponse) {
     const totalScore = getLastScore(values.score!);
     const replayFile = formData.get("selectReplay") as File;
     const gameNumber = getGameNumber(replayFile.name);
-    const gameString = getGameCode(gameNumber).toUpperCase();
+    const gameString = getGameString(gameNumber).toUpperCase();
     const fileDate = new Date(Number(values.fileDate));
     const fileExist = await prisma.replay.findFirst({
       where: {

@@ -43,7 +43,7 @@ export default async function ProfileNavigation() {
                 className="py-3 px-2 flex flex-row gap-x-1 items-center md:px-10 cursor-pointer hover:bg-secondary rounded"
               >
                 <Icon />
-                <p>{label}</p>
+                <p className="hidden md:block">{label}</p>
               </Link>
             );
           }
@@ -54,7 +54,7 @@ export default async function ProfileNavigation() {
               className="py-3 px-2 flex flex-row gap-x-1 items-center md:px-10 cursor-pointer hover:bg-secondary rounded"
             >
               <Icon />
-              <p>{label}</p>
+              <p className="hidden md:block">{label}</p>
             </Link>
           );
         })}
