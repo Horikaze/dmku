@@ -1,4 +1,7 @@
+"use client";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { useMemo } from "react";
 import {
   FaGamepad,
   FaGear,
@@ -6,41 +9,50 @@ import {
   FaTableCells,
   FaUser,
 } from "react-icons/fa6";
-
-const tabs = [
-  {
-    label: "Profile",
-    icon: FaUser,
-  },
-  {
-    label: "Add",
-    icon: FaPlus,
-  },
-  {
-    label: "Replays",
-    icon: FaGamepad,
-  },
-  {
-    label: "Table",
-    icon: FaTableCells,
-  },
-  {
-    label: "Settings",
-    icon: FaGear,
-  },
-];
-
-export default async function ProfileNavigation() {
+export default function ProfileNavigation() {
+  const pathName = usePathname();
+  const tabs = useMemo(
+    () => [
+      {
+        label: "Profile",
+        icon: FaUser,
+        active: pathName === "/profile",
+      },
+      {
+        label: "Add",
+        icon: FaPlus,
+        active: pathName === "/profile/add",
+      },
+      {
+        label: "Replays",
+        icon: FaGamepad,
+        active: pathName === "/profile/replays",
+      },
+      {
+        label: "Table",
+        icon: FaTableCells,
+        active: pathName === "/profile/table",
+      },
+      {
+        label: "Settings",
+        icon: FaGear,
+        active: pathName === "/profile/settings",
+      },
+    ],
+    [pathName]
+  );
   return (
     <div className="flex w-full flex-col p-3">
       <div className="flex flex-row justify-around border">
-        {tabs.map(({ icon: Icon, label }) => {
+        {tabs.map(({ icon: Icon, label, active }) => {
           if (label === "Profile") {
             return (
               <Link
                 href={`/profile`}
                 key={label}
-                className="py-3 px-2 flex flex-row gap-x-1 items-center md:px-10 cursor-pointer hover:bg-secondary rounded"
+                className={`py-3 px-8 flex flex-row gap-x-1 items-center md:px-10 cursor-pointer hover:bg-secondary rounded ${
+                  active && "bg-card"
+                }`}
               >
                 <Icon />
                 <p className="hidden md:block">{label}</p>
@@ -51,7 +63,9 @@ export default async function ProfileNavigation() {
             <Link
               href={`/profile/${label.toLocaleLowerCase()}`}
               key={label}
-              className="py-3 px-2 flex flex-row gap-x-1 items-center md:px-10 cursor-pointer hover:bg-secondary rounded"
+              className={`py-3 px-8 flex flex-row gap-x-1 items-center md:px-10 cursor-pointer hover:bg-secondary rounded ${
+                active && "bg-card"
+              }`}
             >
               <Icon />
               <p className="hidden md:block">{label}</p>
