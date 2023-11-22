@@ -87,7 +87,10 @@ const AddReplay = () => {
         throw new Error("File error");
       }
       const hash = await hashFromFile(replay);
-      const ifExist = await axios.post("/api/replayexists", { hash: hash });
+      const ifExist = await axios.post("/api/replayexists", {
+        hash: hash,
+        score: replayData!.stage_score.join("+"),
+      });
       toast({
         title: "Info",
         description: `${ifExist.data}`,
@@ -172,7 +175,12 @@ const AddReplay = () => {
                     disabled={loading}
                     onClick={readReplayData}
                   >
-                    <PulseLoader size={6} loading={loading} />
+                    <PulseLoader
+                      size={6}
+                      loading={loading}
+                      color="white"
+                      className="pr-2"
+                    />
                     <p>Read file</p>
                   </Button>
                 )}
@@ -182,7 +190,12 @@ const AddReplay = () => {
                     onClick={checkExisting}
                     disabled={loading}
                   >
-                    <PulseLoader size={6} loading={loading} />
+                    <PulseLoader
+                      size={6}
+                      loading={loading}
+                      color="white"
+                      className="pr-2"
+                    />
                     <p> Check if replay exists</p>
                   </Button>
                 )}
@@ -288,7 +301,12 @@ const AddReplay = () => {
               Reset
             </Button>
             <Button type="submit" disabled={replayData === null || loading}>
-              <PulseLoader size={6} loading={loading} />
+              <PulseLoader
+                size={6}
+                loading={loading}
+                color="white"
+                className="pr-2"
+              />
               Upload
             </Button>
           </div>

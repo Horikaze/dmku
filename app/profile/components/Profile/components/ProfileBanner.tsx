@@ -30,13 +30,13 @@ export default async function ProfileBanner({ session }: ProfileBannerProps) {
         <div className="flex flex-col justify-between gap-x-4">
           <div className="w-3/5">
             {session.user.info.bio && (
-              <p className="text-white leading-5 text-xs md:text-base break-words opacity-60">
+              <p className=" leading-5 text-xs md:text-base break-words opacity-60">
                 {session.user.info.bio}
               </p>
             )}
           </div>
           <div className="group flex items-end gap-x-4">
-            <Avatar className="w-20 h-20 md:w-28 md:h-28 ">
+            <Avatar className="w-20 h-20 md:w-24 md:h-24 ">
               <AvatarImage
                 src={session?.user.info.imageUrl || "/images/placeholder.jpg"}
               />
@@ -59,8 +59,10 @@ export default async function ProfileBanner({ session }: ProfileBannerProps) {
           </TooltipProvider>
           {session.user.info.discord && (
             <div className="flex flex-row gap-x-1 items-center opacity-30 mix-blend-plus-lighter ">
-              <FaDiscord className="md:text-lg text-sm"/>
-              <p className="md:text-base text-xs">{session.user.info.discord}</p>
+              <FaDiscord className="md:text-lg text-sm" />
+              <p className="md:text-base text-xs">
+                {session.user.info.discord}
+              </p>
             </div>
           )}
         </div>

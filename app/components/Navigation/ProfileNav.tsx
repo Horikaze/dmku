@@ -24,8 +24,8 @@ export default function ProfileNav({
 }: ProfileNavProps) {
   const textAndIconColor = useMemo(() => {
     const textAndIconColor = clsx(
-      "font-medium text-sm group-hover:text-white",
-      active ? "font-bold text-black text-white" : "text-slate-500"
+      "font-medium text-sm",
+      active ? "font-bold text-black " : "text-slate-500"
     );
     return textAndIconColor;
   }, [active]);

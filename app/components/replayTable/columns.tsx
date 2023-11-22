@@ -1,27 +1,25 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import {
-  convertUnixDate,
-  games,
-  getGameString,
-  getGameNumber,
-  touhouDifficulty,
-  getGameInt,
-} from "@/lib/getRankingData";
-import { Replay } from "@prisma/client";
-import { ColumnDef } from "@tanstack/react-table";
-import { FaArrowDown, FaArrowUp } from "react-icons/fa";
+import { Input } from "@/components/ui/input";
 import {
   Select,
   SelectContent,
   SelectGroup,
   SelectItem,
-  SelectLabel,
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Input } from "@/components/ui/input";
+import {
+  convertUnixDate,
+  games,
+  getGameInt,
+  getGameString,
+  touhouDifficulty
+} from "@/lib/getRankingData";
+import { Replay } from "@prisma/client";
+import { ColumnDef } from "@tanstack/react-table";
+import { FaArrowDown, FaArrowUp } from "react-icons/fa";
 export const columns: ColumnDef<Replay>[] = [
   {
     accessorKey: "game",
@@ -29,19 +27,18 @@ export const columns: ColumnDef<Replay>[] = [
       return (
         <Select
           onValueChange={(e) => {
+            console.log(table.getColumn("game")?.getFilterValue() as string);
             if (e === "All") {
               table.getColumn("game")?.setFilterValue("");
               return;
             }
-            table
-              .getColumn("game")
-              ?.setFilterValue(getGameNumber(e).toString());
+            table.getColumn("game")?.setFilterValue(getGameInt(e).toString());
           }}
         >
           <SelectTrigger className="border-none">
             <SelectValue placeholder="Game" />
           </SelectTrigger>
-          <SelectContent>
+          <SelectContent className="h-[350px]">
             <SelectGroup>
               <SelectItem className="cursor-pointer" value={"All"}>
                 Game
@@ -143,7 +140,7 @@ export const columns: ColumnDef<Replay>[] = [
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-          Score
+          Added date
           {header.column.getIsSorted() === "asc" ? (
             <FaArrowDown className="ml-2 h-3 w-3" />
           ) : (
@@ -155,7 +152,7 @@ export const columns: ColumnDef<Replay>[] = [
     cell({ row }) {
       const uploadedDate = row.getValue("uploadedDate");
       return (
-        <div className="font-medium">
+        <div className="font-medium text-center">
           {convertUnixDate(uploadedDate as number)}
         </div>
       );

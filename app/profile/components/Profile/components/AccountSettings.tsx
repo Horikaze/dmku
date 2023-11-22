@@ -22,7 +22,9 @@ import { useToast } from "@/components/ui/use-toast";
 import { zodResolver } from "@hookform/resolvers/zod";
 import axios from "axios";
 import { useSession } from "next-auth/react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
+import { PulseLoader } from "react-spinners";
 import * as z from "zod";
 export default function AccountSettings() {
   const { toast } = useToast();
@@ -43,8 +45,10 @@ export default function AccountSettings() {
       bio: "",
     },
   });
+  const [loading, setLoading] = useState(false);
 
   function onSubmit(values: z.infer<typeof formSchema>) {
+    setLoading(true);
     axios
       .post("/api/changeprofile", values)
       .then(() => {
@@ -58,6 +62,9 @@ export default function AccountSettings() {
           title: "Error",
           description: `${e}`,
         });
+      })
+      .finally(() => {
+        setLoading(false);
       });
   }
 
@@ -156,7 +163,15 @@ export default function AccountSettings() {
           )}
         />
         <div className="flex flex-row justify-end">
-          <Button type="submit">Save</Button>
+          <Button type="submit">
+            <PulseLoader
+              size={6}
+              loading={loading}
+              color="white"
+              className="pr-2"
+            />
+            <p>Save</p>
+          </Button>
         </div>
       </form>
     </Form>

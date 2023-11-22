@@ -9,10 +9,11 @@ export const POST = async (req: Request) => {
       return new NextResponse("Unauthorized", { status: 401 });
     }
     const data = await req.json();
-    const { hash } = data;
+    const { hash, score } = data;
     const replay = await prisma.replay.findFirst({
       where: {
         hash,
+        stage_score: score,
       },
     });
     console.log(replay);

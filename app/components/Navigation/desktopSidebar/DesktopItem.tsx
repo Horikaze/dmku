@@ -19,8 +19,8 @@ export default function DesktopItem({
 }: DesktopItemProps) {
   const textAndIconColor = useMemo(() => {
     const textAndIconColor = clsx(
-      "font-medium text-basetext-base group-hover:text-white",
-      active ? "font-bold text-black text-white" : "text-slate-500"
+      "font-medium text-basetext-base",
+      active ? "font-bold text-black" : "text-slate-500"
     );
     return textAndIconColor;
   }, [active]);

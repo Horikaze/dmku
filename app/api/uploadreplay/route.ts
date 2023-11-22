@@ -1,3 +1,4 @@
+import { getLastScore } from "@/app/components/replayTable/forrmatScore";
 import prisma from "@/app/lib/prismadb";
 import { ReplayFormData } from "@/app/types/Replay";
 import {
@@ -5,8 +6,8 @@ import {
   ScoreObject,
   getCharacterFromData,
   getCharacterFromDataWithoutType,
-  getGameString,
   getGameNumber,
+  getGameString,
   parseRankingString,
   stringifyRanking,
 } from "@/lib/getRankingData";
@@ -14,8 +15,6 @@ import { getServerSession } from "next-auth";
 import { NextRequest, NextResponse } from "next/server";
 import { UTApi } from "uploadthing/server";
 import { authOptions } from "../auth/[...nextauth]/route";
-import { Ranking } from "@prisma/client";
-import { getLastScore } from "@/app/components/replayTable/forrmatScore";
 export async function POST(request: NextRequest, response: NextResponse) {
   try {
     const session = await getServerSession(authOptions);
@@ -36,6 +35,7 @@ export async function POST(request: NextRequest, response: NextResponse) {
     const fileExist = await prisma.replay.findFirst({
       where: {
         hash: values.hash,
+        stage_score: values.score,
       },
     });
 
