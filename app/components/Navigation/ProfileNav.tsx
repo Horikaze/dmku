@@ -4,6 +4,15 @@ import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import clsx from "clsx";
 import Link from "next/link";
 import { useMemo } from "react";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { ModeToggle } from "../ModeToggle";
 
 type ProfileNavProps = {
   href: string;
@@ -25,7 +34,7 @@ export default function ProfileNav({
   const textAndIconColor = useMemo(() => {
     const textAndIconColor = clsx(
       "font-medium text-sm",
-      active ? "font-bold text-black " : "text-slate-500"
+      active ? "font-bold text-black dark:text-white" : "text-slate-500"
     );
     return textAndIconColor;
   }, [active]);
@@ -35,7 +44,7 @@ export default function ProfileNav({
       <Link
         href={href}
         className="
-          group relative flex h-full flex-col  justify-center items-center hover:brightness-110 transition"
+            group relative flex h-full flex-col  justify-center items-center hover:brightness-110 transition"
       >
         <div
           className={`flex ${
@@ -44,9 +53,25 @@ export default function ProfileNav({
               : "flex-col"
           }`}
         >
-          <Avatar className="w-[35px] h-[35px]">
-            <AvatarImage src={src || "/images/placeholder.jpg"} />
-          </Avatar>
+          <DropdownMenu>
+            <DropdownMenuTrigger>
+              <Avatar className="w-[35px] h-[35px]">
+                <AvatarImage src={src || "/images/placeholder.jpg"} />
+              </Avatar>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent>
+              <DropdownMenuLabel>My Account</DropdownMenuLabel>
+              <DropdownMenuSeparator />
+              <Link href={"/profile"}>
+                <DropdownMenuItem className="cursor-pointer hover:bg-secondary">
+                  Profile
+                </DropdownMenuItem>
+              </Link>
+              <DropdownMenuItem className="cursor-pointer hover:bg-secondary">
+                <ModeToggle />
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
 
           {nav === "desktop" && <p className={textAndIconColor}>{nickname}</p>}
         </div>

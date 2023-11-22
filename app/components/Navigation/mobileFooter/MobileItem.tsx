@@ -21,7 +21,7 @@ export default function MobileItem({
   const textAndIconColor = useMemo(() => {
     const textAndIconColor = clsx(
       "font-medium text-sm",
-      active ? "font-bold text-black" : "text-slate-500"
+      active ? "font-bold text-black dark:text-white" : "text-slate-500"
     );
     return textAndIconColor;
   }, [active]);

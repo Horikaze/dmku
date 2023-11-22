@@ -20,7 +20,7 @@ export default function DesktopItem({
   const textAndIconColor = useMemo(() => {
     const textAndIconColor = clsx(
       "font-medium text-basetext-base",
-      active ? "font-bold text-black" : "text-slate-500"
+      active ? "font-bold text-black dark:text-white" : "text-slate-500"
     );
     return textAndIconColor;
   }, [active]);

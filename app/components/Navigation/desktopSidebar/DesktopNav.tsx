@@ -3,6 +3,7 @@ import { useRoutes } from "@/app/hooks/useRoutes";
 import { useSession } from "next-auth/react";
 import ProfileNav from "../ProfileNav";
 import DesktopItem from "./DesktopItem";
+import { ModeToggle } from "../../ModeToggle";
 
 const DesktopNav = () => {
   const routes = useRoutes();
