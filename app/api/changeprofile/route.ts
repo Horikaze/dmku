@@ -27,7 +27,7 @@ export const POST = async (req: Request) => {
       fieldsToChange["discord"] = discord;
     }
     if (game !== "") {
-      fieldsToChange["favoriteGame"] = game;
+      fieldsToChange["favoriteGame"] = (game as string).toUpperCase();
     }
     if (bio !== "") {
       fieldsToChange["bio"] = bio;
