@@ -148,11 +148,11 @@ const AddReplay = () => {
         <form onSubmit={handleSubmit} id="form">
           <div className="grid w-full items-center gap-4">
             <div className="flex flex-row justify-between">
-              <div className="flex flex-col xl:items-center xl:flex-row xl:space-x-3 space-y-2 xl:space-y-0">
+              <div className="flex flex-col xl:items-center xl:flex-row xl:space-x-3 space-y-2 xl:space-y-0 mr-2 xl:mr-0">
                 <Label
                   className={`${buttonVariants({
                     variant: "default",
-                  })} cursor-pointer`}
+                  })} cursor-pointer text-xs xl:text-base`}
                   htmlFor="selectReplay"
                 >
                   Select a replay file
@@ -172,6 +172,7 @@ const AddReplay = () => {
                 {replay && (
                   <Button
                     type="button"
+                    className="text-xs xl:text-base"
                     disabled={loading}
                     onClick={readReplayData}
                   >
@@ -187,6 +188,7 @@ const AddReplay = () => {
                 {replayData && (
                   <Button
                     type="button"
+                    className="text-xs xl:text-base"
                     onClick={checkExisting}
                     disabled={loading}
                   >
@@ -200,33 +202,36 @@ const AddReplay = () => {
                   </Button>
                 )}
               </div>
-              <RadioGroup
-                defaultValue={achievements[0]}
-                value={ccInfo}
-                className="gap-x-2 flex flex-row items-center"
-                onValueChange={(e) => {
-                  setCcInfo(e as Achievement);
-                }}
-              >
-                {achievements.map((achiv) => {
-                  if (
-                    achiv === "NNNN" &&
-                    ccInfo !== "NNN" &&
-                    ccInfo !== "NNNN"
-                  ) {
-                    return null;
-                  }
-                  return (
-                    <div
-                      key={achiv}
-                      className="space-x-1 flex items-center justify-center"
-                    >
-                      <RadioGroupItem value={achiv} id={achiv} />
-                      <Label htmlFor={achiv}>{achiv}</Label>
-                    </div>
-                  );
-                })}
-              </RadioGroup>
+              <div>
+                <RadioGroup
+                  defaultValue={achievements[0]}
+                  value={ccInfo}
+                  className="gap-2 grid grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 2xl:grid-cols-6 items-center"
+                  onValueChange={(e) => {
+                    setCcInfo(e as Achievement);
+                  }}
+                >
+                  {achievements.map((achiv) => {
+                    if (
+                      achiv === "NNNN" &&
+                      ccInfo !== "NNN" &&
+                      ccInfo !== "NNNN"
+                    ) {
+                      return null;
+                    }
+                    return (
+                      <div key={achiv} className="space-x-1 flex items-center">
+                        <RadioGroupItem
+                          value={achiv}
+                          id={achiv}
+                          className="mb-1"
+                        />
+                        <Label htmlFor={achiv}>{achiv}</Label>
+                      </div>
+                    );
+                  })}
+                </RadioGroup>
+              </div>
             </div>
 
             <div className="flex flex-col w-full items-center gap-y-3">

@@ -24,7 +24,7 @@ export default async function ProfileBanner({ session }: ProfileBannerProps) {
         }
         alt="banner"
         fill
-        className="opacity-30 object-cover"
+        className="opacity-100 object-cover"
       />
       <div className="flex flex-row p-2 w-full justify-between">
         <div className="flex flex-col justify-between gap-x-4">
