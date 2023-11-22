@@ -21,13 +21,14 @@ import { games, touhouDifficulty } from "@/lib/getRankingData";
 import axios from "axios";
 import { useState } from "react";
 import { PulseLoader } from "react-spinners";
-import { DataTable } from "../components/replayTable/data-table";
 import { columns } from "../components/replayTable/columns";
-import { Replay } from "@prisma/client";
+import { DataTable } from "../components/replayTable/data-table";
 
 const Search = () => {
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState();
+  const [selectedGame, setSelectedGame] = useState("All");
+  const [selectedRank, setSelectedRank] = useState("All");
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     try {
@@ -35,7 +36,6 @@ const Search = () => {
       e.preventDefault();
       const formData = new FormData(e.currentTarget);
       const res = await axios.post("/api/search", formData);
-      console.log(res.data);
       setData(res.data);
       setLoading(false);
     } catch (error) {
@@ -67,7 +67,11 @@ const Search = () => {
             </div>
             <div className="grid w-full max-w-sm items-center gap-1.5">
               <Label>Game</Label>
-              <Select name="game">
+              <Select
+                name="game"
+                value={selectedGame}
+                onValueChange={setSelectedGame}
+              >
                 <SelectTrigger>
                   <SelectValue placeholder="Game" />
                 </SelectTrigger>
@@ -111,7 +115,11 @@ const Search = () => {
             </div>
             <div className="grid w-full max-w-sm items-center gap-1.5">
               <Label>Rank</Label>
-              <Select name="rank">
+              <Select
+                name="rank"
+                value={selectedRank}
+                onValueChange={setSelectedRank}
+              >
                 <SelectTrigger>
                   <SelectValue placeholder="Rank" />
                 </SelectTrigger>
@@ -135,7 +143,15 @@ const Search = () => {
             </div>
           </form>
           <div className="flex row-auto justify-end gap-x-3 mr-6 mt-6">
-            <Button form="search" type="reset" variant={"ghost"}>
+            <Button
+              form="search"
+              type="reset"
+              variant={"ghost"}
+              onClick={() => {
+                setSelectedGame("All");
+                setSelectedRank("All");
+              }}
+            >
               Reset
             </Button>
             <Button form="search" type="submit">

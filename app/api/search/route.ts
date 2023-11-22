@@ -18,7 +18,7 @@ export const POST = async (req: Request) => {
       };
     }
 
-    if (game !== "") {
+    if (game !== "" && game !== "All") {
       whereClause.game = getGameInt(game);
     }
 
