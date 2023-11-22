@@ -15,7 +15,7 @@ import {
   games,
   getGameInt,
   getGameString,
-  touhouDifficulty
+  touhouDifficulty,
 } from "@/lib/getRankingData";
 import { Replay } from "@prisma/client";
 import { ColumnDef } from "@tanstack/react-table";
@@ -67,13 +67,21 @@ export const columns: ColumnDef<Replay>[] = [
     header: ({ table }) => {
       return (
         <Input
-          className="border-none"
+          className="border-none max-w-[200px]"
           placeholder="Character"
           onChange={(e) => {
             table.getColumn("char")?.setFilterValue(e.target.value);
           }}
         />
       );
+    },
+  },
+  {
+    accessorKey: "achievement",
+    header: () => <div className="text-center">Achievement</div>,
+    cell({ row }) {
+      const achievement = row.getValue("achievement") as string;
+      return <div className="text-center">{achievement}</div>;
     },
   },
   {
@@ -136,23 +144,26 @@ export const columns: ColumnDef<Replay>[] = [
     accessorKey: "uploadedDate",
     header: ({ column, header }) => {
       return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          Added date
-          {header.column.getIsSorted() === "asc" ? (
-            <FaArrowDown className="ml-2 h-3 w-3" />
-          ) : (
-            <FaArrowUp className="ml-2 h-3 w-3" />
-          )}
-        </Button>
+        <div className="w-full flex justify-center">
+          <Button
+            className="place-self-center"
+            variant="ghost"
+            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          >
+            Added date
+            {header.column.getIsSorted() === "asc" ? (
+              <FaArrowDown className="ml-2 h-3 w-3" />
+            ) : (
+              <FaArrowUp className="ml-2 h-3 w-3" />
+            )}
+          </Button>
+        </div>
       );
     },
     cell({ row }) {
       const uploadedDate = row.getValue("uploadedDate");
       return (
-        <div className="font-medium text-center">
+        <div className="text-center">
           {convertUnixDate(uploadedDate as number)}
         </div>
       );

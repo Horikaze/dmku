@@ -51,7 +51,7 @@ export default function ProfileNavigation() {
                 href={`/profile`}
                 key={label}
                 className={`py-3 px-4 flex flex-row gap-x-1 items-center md:px-10 cursor-pointer hover:bg-secondary rounded ${
-                  active && "bg-card"
+                  active && "bg-gray-100"
                 }`}
               >
                 <Icon />
@@ -64,7 +64,7 @@ export default function ProfileNavigation() {
               href={`/profile/${label.toLocaleLowerCase()}`}
               key={label}
               className={`py-3 px-4 flex flex-row gap-x-1 items-center md:px-10 cursor-pointer hover:bg-secondary rounded ${
-                active && "bg-card"
+                active && "bg-gray-100"
               }`}
             >
               <Icon />

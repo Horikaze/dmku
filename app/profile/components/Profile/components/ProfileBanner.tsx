@@ -58,7 +58,7 @@ export default async function ProfileBanner({ session }: ProfileBannerProps) {
             </Tooltip>
           </TooltipProvider>
           {session.user.info.discord && (
-            <div className="flex flex-row gap-x-1 items-center opacity-30 mix-blend-plus-lighter ">
+            <div className="flex flex-row gap-x-1 items-center opacity-30 mix-blend-difference">
               <FaDiscord className="md:text-lg text-sm" />
               <p className="md:text-base text-xs">
                 {session.user.info.discord}

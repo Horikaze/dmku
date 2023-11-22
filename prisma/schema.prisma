@@ -17,17 +17,17 @@ model Profile {
   name           String?
   email          String   @unique
   imageUrl       String?
-  CCCount        Int?
+  CCCount        Int?     @default(0)
   admin          Boolean?
   supporter      Boolean?
   joindate       DateTime @default(now())
   discord        String?
   favoriteGame   Games?
   bio            String?  @db.VarChar(250)
-  points         Int?
+  points         Int?     @default(0)
   pointsRanking  Ranking?
-  event          Int?
-  eventRanking   Int?
+  event          Int?     @default(0)
+  eventRanking   Int?     @default(0)
   hashedPassword String?
   profileBanner  String?
   Replays        Replay[]

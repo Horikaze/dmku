@@ -1,5 +1,6 @@
 "use client";
 import { UploadButton } from "@/app/ulils/uploadthing";
+import { buttonVariants } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/components/ui/use-toast";
 export default function ImagesSettings() {
@@ -9,6 +10,11 @@ export default function ImagesSettings() {
       <div>
         <Label className="text-lg">Profile Image</Label>
         <UploadButton
+          appearance={{
+            button({ isUploading, ready, uploadProgress }) {
+              return buttonVariants({ variant: "default" });
+            },
+          }}
           endpoint="profileImage"
           onClientUploadComplete={(res) => {
             toast({
@@ -28,6 +34,11 @@ export default function ImagesSettings() {
       <div>
         <Label className="text-lg">Profile Banner</Label>
         <UploadButton
+          appearance={{
+            button({ isUploading, ready, uploadProgress }) {
+              return buttonVariants({ variant: "default" });
+            },
+          }}
           endpoint="profileBanner"
           onClientUploadComplete={(res) => {
             toast({

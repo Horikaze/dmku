@@ -64,7 +64,7 @@ export default async function TablePage() {
 
   let mappedArray: MappedArrayType = {};
   Object.entries(tableData!).forEach(([key, value]) => {
-    if (key === "userIdRankingPoints") return;
+    if (key === "userIdRankingPoints" || key === "total") return;
 
     if (value && key) {
       const objGameData = parseRankingString(value as string);
