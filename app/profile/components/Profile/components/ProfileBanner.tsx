@@ -46,17 +46,7 @@ export default async function ProfileBanner({ session }: ProfileBannerProps) {
             </p>
           </div>
         </div>
-        <div className="flex flex-col justify-between items-end text-white">
-          <TooltipProvider delayDuration={0}>
-            <Tooltip>
-              <TooltipTrigger>
-                <LogoutButton />
-              </TooltipTrigger>
-              <TooltipContent side="left">
-                <p>Logout</p>
-              </TooltipContent>
-            </Tooltip>
-          </TooltipProvider>
+        <div className="flex flex-col items-end justify-end text-white">
           {session.user.info.discord && (
             <div className="flex flex-row gap-x-1 items-center opacity-80 drop-shadow-[1px_1px_var(--tw-shadow-color)] shadow-black">
               <FaDiscord className="md:text-lg text-sm" />

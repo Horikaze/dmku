@@ -114,7 +114,7 @@ const AuthForm = () => {
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="space-y-2 flex w-full max-w-md flex-col text-gray-200 rounded-md border bg-card px-7 py-3"
+        className="space-y-2 flex w-full max-w-md flex-col rounded-md border bg-card px-7 py-3"
       >
         <FormField
           control={form.control}
@@ -170,7 +170,7 @@ const AuthForm = () => {
         <div className="relative flex justify-center items-center py-2">
           <Separator className="absolute bg-primary" />
           <div className="absolute w-32 h-2 bg-card"></div>
-          <p className="absolute text-sm text-slate-300">or continue with</p>
+          <p className="absolute text-sm ">or continue with</p>
         </div>
         <div className="flex">
           <Button
@@ -184,7 +184,7 @@ const AuthForm = () => {
             <FaDiscord size={18} />
           </Button>
         </div>
-        <div className="flex gap-2 justify-center text-sm mt-6 px-2 text-gray-400">
+        <div className="flex gap-2 justify-center text-sm mt-6 px-2 ">
           <div>
             {variant === "LOGIN" ? "New to Dmku?" : "Already have a account?"}
           </div>

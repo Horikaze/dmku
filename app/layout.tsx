@@ -27,7 +27,7 @@ export default function RootLayout({
               `}
           // style={{ backgroundImage: "url(images/bg.jpg)" }}
         >
-          <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+          <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
             <Navigation>{children}</Navigation>
           </ThemeProvider>
           <Toaster />

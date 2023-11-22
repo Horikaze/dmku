@@ -1,9 +1,6 @@
 "use client";
 
 import { Avatar, AvatarImage } from "@/components/ui/avatar";
-import clsx from "clsx";
-import Link from "next/link";
-import { useMemo } from "react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -12,7 +9,13 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import clsx from "clsx";
+import { signOut } from "next-auth/react";
+import Link from "next/link";
+import { useMemo } from "react";
 import { ModeToggle } from "../ModeToggle";
+import { RiLogoutBoxRFill } from "react-icons/ri";
+import { FaUser } from "react-icons/fa";
 
 type ProfileNavProps = {
   href: string;
@@ -64,11 +67,25 @@ export default function ProfileNav({
               <DropdownMenuSeparator />
               <Link href={"/profile"}>
                 <DropdownMenuItem className="cursor-pointer hover:bg-secondary">
-                  Profile
+                  <div className="flex flex-row gap-x-1 items-center">
+                    <FaUser className="h-5 w-5" />
+                    Profile
+                  </div>
                 </DropdownMenuItem>
               </Link>
               <DropdownMenuItem className="cursor-pointer hover:bg-secondary">
                 <ModeToggle />
+              </DropdownMenuItem>
+              <DropdownMenuItem
+                className="cursor-pointer hover:bg-secondary"
+                onClick={() => {
+                  signOut();
+                }}
+              >
+                <div className="flex flex-row gap-x-1 items-center">
+                  <RiLogoutBoxRFill className="h-5 w-5" />
+                  Logout
+                </div>
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
