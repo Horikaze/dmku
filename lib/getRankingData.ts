@@ -67,10 +67,14 @@ export const getCharacterFromData = (
 };
 
 export const convertUnixDate = (date: number) => {
-  if (!date) {
-    return "";
+  try {
+    if (!date) {
+      return "";
+    }
+    return format(fromUnixTime(date / 1000), "dd-MM-yyyy");
+  } catch (error) {
+    console.log(error);
   }
-  return format(fromUnixTime(date / 1000), "dd-MM-yyyy");
 };
 
 export const getCharacterFromDataWithoutType = (

@@ -59,8 +59,6 @@ export function DataTable<TData, TValue>({
   });
   data.map((obj) => {
     // @ts-ignore
-    obj.stage_score = getLastScore(obj.stage_score);
-    // @ts-ignore
     obj.game = obj.game.toString();
     // @ts-ignore
     obj.char =

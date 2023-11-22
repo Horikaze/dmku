@@ -19,6 +19,7 @@ import {
 } from "@/lib/getRankingData";
 import { Replay } from "@prisma/client";
 import { ColumnDef } from "@tanstack/react-table";
+import { format } from "date-fns";
 import { FaArrowDown, FaArrowUp } from "react-icons/fa";
 export const columns: ColumnDef<Replay>[] = [
   {
@@ -117,7 +118,7 @@ export const columns: ColumnDef<Replay>[] = [
     },
   },
   {
-    accessorKey: "stage_score",
+    accessorKey: "score",
     header: ({ column, header }) => {
       return (
         <Button
@@ -134,10 +135,8 @@ export const columns: ColumnDef<Replay>[] = [
       );
     },
     cell({ row }) {
-      const score = row.getValue("stage_score");
-      return (
-        <div className="font-medium">{Number(score).toLocaleString()}</div>
-      );
+      const score = row.getValue("score") as number;
+      return <div className="font-medium">{score.toLocaleString()}</div>;
     },
   },
   {
@@ -161,11 +160,10 @@ export const columns: ColumnDef<Replay>[] = [
       );
     },
     cell({ row }) {
-      const uploadedDate = row.getValue("uploadedDate");
+      const uploadedDate = row.getValue("uploadedDate") as string;
+      const dateObject = new Date(uploadedDate);
       return (
-        <div className="text-center">
-          {convertUnixDate(uploadedDate as number)}
-        </div>
+        <div className="text-center">{format(dateObject, "dd-MM-yyyy")}</div>
       );
     },
   },

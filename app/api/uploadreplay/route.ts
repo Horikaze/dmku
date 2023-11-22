@@ -65,6 +65,7 @@ export async function POST(request: NextRequest, response: NextResponse) {
         shottype: values.type,
         status: "NEW",
         stage_score: values.score,
+        score: totalScore,
         hash: values.hash,
         fileDate,
       },

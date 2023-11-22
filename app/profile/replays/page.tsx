@@ -13,7 +13,6 @@ export default async function page() {
       uploadedDate: "desc",
     },
   });
-
   return (
     <div className="w-full">
       <DataTable columns={columns} data={data} />

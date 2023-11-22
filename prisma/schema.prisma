@@ -65,6 +65,7 @@ model Replay {
   shottype     String?
   stage        String?
   stage_score  String?
+  score        Int?
   game         Int?
   date         String?
   rpy_name     String?
