@@ -202,11 +202,12 @@ const AddReplay = () => {
                   </Button>
                 )}
               </div>
+
               <div>
                 <RadioGroup
                   defaultValue={achievements[0]}
                   value={ccInfo}
-                  className="gap-2 grid grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 2xl:grid-cols-6 items-center"
+                  className="flex flex-wrap items-start"
                   onValueChange={(e) => {
                     setCcInfo(e as Achievement);
                   }}
