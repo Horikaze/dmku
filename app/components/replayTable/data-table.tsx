@@ -12,7 +12,6 @@ import {
   useReactTable,
 } from "@tanstack/react-table";
 
-
 import {
   Table,
   TableBody,
@@ -26,6 +25,7 @@ import {
   getCharacterFromDataWithoutType,
 } from "@/lib/getRankingData";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
@@ -59,6 +59,7 @@ export function DataTable<TData, TValue>({
         ? getCharacterFromDataWithoutType(obj.character!)
         : getCharacterFromData(obj.character!, obj.shottype!);
   });
+  const router = useRouter();
   return (
     <div className="rounded-md border">
       <Table>
@@ -94,6 +95,10 @@ export function DataTable<TData, TValue>({
           {table.getRowModel().rows?.length ? (
             table.getRowModel().rows.map((row) => (
               <TableRow
+                className="cursor-pointer"
+                onClick={() => {
+                  router.push(`/replay/${row.original.replayId}`);
+                }}
                 key={row.id}
                 data-state={row.getIsSelected() && "selected"}
               >
