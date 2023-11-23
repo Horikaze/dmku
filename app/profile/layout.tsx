@@ -21,7 +21,7 @@ export default async function ProfileLayout({
 
   return (
     <main className="flex flex-col h-full items-center">
-      <ProfileBanner session={session} />
+      {/* <ProfileBanner session={session} /> */}
       <ProfileNavigation />
       <Suspense fallback={<LoadingState />}>{children}</Suspense>
     </main>

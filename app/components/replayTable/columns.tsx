@@ -12,13 +12,13 @@ import {
 } from "@/components/ui/select";
 import {
   games,
+  getDateFromReplay,
   getGameInt,
   getGameString,
   touhouDifficulty,
 } from "@/lib/getRankingData";
 import { Replay } from "@prisma/client";
 import { ColumnDef } from "@tanstack/react-table";
-import { format } from "date-fns";
 import { FaArrowDown, FaArrowUp } from "react-icons/fa";
 export const columns: ColumnDef<Replay>[] = [
   {
@@ -159,10 +159,9 @@ export const columns: ColumnDef<Replay>[] = [
       );
     },
     cell({ row }) {
-      const uploadedDate = row.getValue("uploadedDate") as string;
-      const dateObject = new Date(uploadedDate);
+      const uploadedDate = row.getValue("uploadedDate") as Date;
       return (
-        <div className="text-center">{format(dateObject, "dd-MM-yyyy")}</div>
+        <div className="text-center">{getDateFromReplay(uploadedDate)}</div>
       );
     },
   },

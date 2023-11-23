@@ -120,19 +120,19 @@ export default async function TablePage() {
                   key={difficulty}
                   className={`text-center ${cellClassName} border cursor-pointer hover:brightness-110`}
                 >
-                  <TooltipProvider>
-                    <Tooltip delayDuration={0}>
-                      <TooltipTrigger className="w-full h-full">
-                        <Link href={`/replay/${id}`} prefetch={false}>
+                  <Link href={`/replay/${id}`} prefetch={false}>
+                    <TooltipProvider>
+                      <Tooltip delayDuration={0}>
+                        <TooltipTrigger className="w-full h-full">
                           {CC === "null" ? "" : CC}
-                        </Link>
-                      </TooltipTrigger>
-                      <TooltipContent className="mb-3">
-                        <p>{`Score: ${score?.toLocaleString()}`}</p>
-                        <p>{char}</p>
-                      </TooltipContent>
-                    </Tooltip>
-                  </TooltipProvider>
+                        </TooltipTrigger>
+                        <TooltipContent className="mb-3">
+                          <p>{`Score: ${score?.toLocaleString()}`}</p>
+                          <p>{char}</p>
+                        </TooltipContent>
+                      </Tooltip>
+                    </TooltipProvider>
+                  </Link>
                 </TableCell>
               );
             })}

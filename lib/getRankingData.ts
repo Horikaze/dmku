@@ -167,3 +167,9 @@ export const touhouDifficulty = [
   "Phantasm",
   "Overdrive",
 ];
+
+export const getDateFromReplay = (uploadedDate: Date) => {
+  const replayDateString = uploadedDate?.toString();
+  const dateObject = new Date(replayDateString!);
+  return format(dateObject, "dd-MM-yyyy");
+};

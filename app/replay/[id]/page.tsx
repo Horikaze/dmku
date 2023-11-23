@@ -1,14 +1,18 @@
+import RouterBack from "@/app/components/RouterBack";
 import prisma from "@/app/lib/prismadb";
 import {
   Card,
   CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Label } from "@/components/ui/label";
-import { format } from "date-fns";
+import {
+  getCharacterFromData,
+  getCharacterFromDataWithoutType,
+  getDateFromReplay,
+  getGameString,
+} from "@/lib/getRankingData";
 
 export default async function page({ params }: { params: { id: string } }) {
   const replay = await prisma.replay.findFirst({
@@ -19,8 +23,6 @@ export default async function page({ params }: { params: { id: string } }) {
   if (!replay) {
     return "XD";
   }
-  const replayDateString = replay?.uploadedDate?.toString();
-  const dateObject = new Date(replayDateString!);
 
   const scoreParse = () => {
     if (replay?.stage_score?.includes("+")) {
@@ -28,24 +30,93 @@ export default async function page({ params }: { params: { id: string } }) {
       return scoreParts;
     }
   };
+  const chara =
+    replay.game === 9
+      ? getCharacterFromDataWithoutType(replay.character!)
+      : getCharacterFromData(replay.character!, replay.shottype!) || "";
+
   const score = scoreParse();
+
   return (
     <Card>
       <CardHeader>
-        <CardTitle>{replay?.rpy_name}</CardTitle>
-        <CardDescription>{`Added ${format(
-          dateObject,
-          "dd-MM-yyyy"
-        )}`}</CardDescription>
+        <div className="flex flex-row justify-between">
+          <div className="space-y-1">
+            <CardTitle>{replay?.rpy_name}</CardTitle>
+            <CardDescription>ID: {params.id}</CardDescription>
+          </div>
+          <div>
+            <RouterBack />
+          </div>
+        </div>
       </CardHeader>
+
       <CardContent className="flex flex-col">
         <div className="flex flex-col gap-y-2">
+          <div className="font-semibold">
+            Player -{" "}
+            <span className="font-normal text-gray-400">{replay?.player}</span>
+          </div>
+          <div className="font-semibold">
+            Game -{" "}
+            <span className="font-normal text-gray-400">
+              Touhou {getGameString(replay.game!)}
+            </span>
+          </div>
           <div>
-            <Label className="font-semibold text-lg">Player</Label>
-            <p className="text-sm">{replay?.player}</p>
+            Character -{" "}
+            <span className="font-normal text-gray-400">{chara}</span>
+          </div>
+          <div>
+            Rank -{" "}
+            <span className="font-normal text-gray-400">{replay?.rank}</span>
+          </div>
+          <div>
+            Slow rate -{" "}
+            <span className="font-normal text-gray-400">
+              {replay?.slowRate}
+            </span>
+          </div>
+          <div>
+            Achievement -{" "}
+            <span className="font-normal text-gray-400">
+              {replay?.achievement}
+            </span>
+          </div>
+          <div>
+            Stage -{" "}
+            <span className="font-normal text-gray-400">
+              {replay.stage! || ""}
+            </span>
+          </div>
+          <div>
+            Added -{" "}
+            <span className="font-normal text-gray-400">
+              {getDateFromReplay(replay.uploadedDate!)}
+            </span>
+          </div>
+          <div>
+            Replay Date -{" "}
+            <span className="font-normal text-gray-400">
+              {getDateFromReplay(replay.fileDate!)}
+            </span>
+          </div>
+          <div>
+            Points -{" "}
+            <span className="font-normal text-gray-400">{replay?.points}</span>
+          </div>
+          <div>
+            Status -{" "}
+            <span className="font-normal text-gray-400">{replay?.status}</span>
           </div>
           <div className="flex flex-col gap-y-2">
-            <Label>Score</Label>
+            <div>
+              Score -{" "}
+              <span className="font-normal text-gray-400">
+                {Number(replay.score).toLocaleString()}{" "}
+                {replay?.stage_score?.includes("+") ? ":" : null}
+              </span>
+            </div>
             <div className="flex flex-wrap">
               {replay?.stage_score?.includes("+")
                 ? score?.map((score, index) => (
@@ -56,14 +127,19 @@ export default async function page({ params }: { params: { id: string } }) {
                       </div>
                     </div>
                   ))
-                : replay?.score}
+                : null}
             </div>
           </div>
+          {replay?.comment!.length > 3 ? (
+            <div>
+              Comment -{" "}
+              <span className="font-normal text-gray-400">
+                {replay?.comment}
+              </span>
+            </div>
+          ) : null}
         </div>
       </CardContent>
-      <CardFooter>
-        <p>Card Footer</p>
-      </CardFooter>
     </Card>
   );
 }
