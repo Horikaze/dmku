@@ -43,7 +43,8 @@ export default async function page({ params }: { params: { id: string } }) {
         <div className="flex flex-row justify-between">
           <div className="space-y-1">
             <CardTitle>{replay?.rpy_name}</CardTitle>
-            <CardDescription>ID: {params.id}</CardDescription>
+            <CardDescription>Replay ID: {params.id}</CardDescription>
+            <CardDescription>User ID: {replay.userId}</CardDescription>
           </div>
           <div>
             <RouterBack />

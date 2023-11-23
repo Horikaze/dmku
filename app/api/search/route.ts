@@ -9,6 +9,10 @@ export const POST = async (req: Request) => {
     const scoreFrom = formData.get("scoreFrom") as string;
     const scoreTo = formData.get("scoreTo") as string;
     const rank = formData.get("rank") as string;
+    const achievement = formData.get("achievement") as string;
+    const shottype = formData.get("shottype") as string;
+    const character = formData.get("character") as string;
+    const userId = formData.get("userId") as string;
 
     let whereClause: Record<string, any> = {};
 
@@ -39,6 +43,24 @@ export const POST = async (req: Request) => {
     if (rank !== "" && rank !== "All") {
       whereClause.rank = rank;
     }
+
+    if (achievement !== "" && achievement !== "All") {
+      whereClause.achievement = achievement;
+    }
+
+    if (shottype !== "" && shottype !== "All") {
+      whereClause.shottype = shottype;
+    }
+    if (character !== "") {
+      whereClause.character = {
+        contains: character,
+      };
+    }
+
+    if (userId !== "") {
+      whereClause.userId = userId;
+    }
+
     console.log(whereClause);
     const replays = await prisma.replay.findMany({
       where: whereClause,

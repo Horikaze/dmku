@@ -131,6 +131,11 @@ export const AchievementRank: AchievementValuesType = {
   NNN: 5,
   NNNN: 6,
 };
+
+export const achievementList = ["CC", "NM", "NB", "NMNB", "NNN", "NNNN"];
+
+export const shotTypeList = ["A", "B", "C"];
+
 export const gameCodeRecord: Record<string, number> = {
   EOSD: 6,
   PCB: 7,
