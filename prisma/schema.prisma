@@ -69,6 +69,7 @@ model Replay {
   game         Int?
   date         String?
   rpy_name     String?
+  slowRate     String?
   points       Int?
   acceptedBy   String?
   filePath     String?

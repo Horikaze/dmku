@@ -33,6 +33,7 @@ export async function POST(request: NextRequest, response: NextResponse) {
     const gameNumber = getGameNumber(replayFile.name);
     const gameString = getGameString(gameNumber).toUpperCase();
     const fileDate = new Date(Number(values.fileDate));
+
     const fileExist = await prisma.replay.findFirst({
       where: {
         hash: values.hash,
@@ -60,6 +61,7 @@ export async function POST(request: NextRequest, response: NextResponse) {
         player: values.player,
         userId: session.user.info.id,
         rank: values.rank,
+        slowRate: values.slowRate,
         rpy_name: replayFile.name,
         stage: values.stage,
         shottype: values.type,
