@@ -3,7 +3,6 @@
 import { MoonIcon, SunIcon } from "@radix-ui/react-icons";
 import { useTheme } from "next-themes";
 
-
 export function ModeToggle() {
   const { setTheme, theme } = useTheme();
 
@@ -13,9 +12,6 @@ export function ModeToggle() {
     }
     if (theme === "light") {
       setTheme("dark");
-    }
-    if (theme === "system") {
-      setTheme("light");
     }
   };
 

@@ -20,12 +20,12 @@ import {
 import { games, touhouDifficulty } from "@/lib/getRankingData";
 import axios from "axios";
 import { useState } from "react";
-import { PulseLoader } from "react-spinners";
+import ButtonLoader from "../components/ButtonLoader";
 import { columns } from "../components/replayTable/columns";
 import { DataTable } from "../components/replayTable/data-table";
 
 const Search = () => {
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [data, setData] = useState();
   const [selectedGame, setSelectedGame] = useState("All");
   const [selectedRank, setSelectedRank] = useState("All");
@@ -155,12 +155,7 @@ const Search = () => {
               Reset
             </Button>
             <Button form="search" type="submit">
-              <PulseLoader
-                size={6}
-                loading={loading}
-                color="white"
-                className="pr-2"
-              />
+              <ButtonLoader loading={loading} />
               Search
             </Button>
           </div>

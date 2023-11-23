@@ -1,4 +1,5 @@
 "use client";
+import ButtonLoader from "@/app/components/ButtonLoader";
 import { gamesString } from "@/app/constants/games";
 import { Button } from "@/components/ui/button";
 import {
@@ -24,7 +25,6 @@ import axios from "axios";
 import { useSession } from "next-auth/react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { PulseLoader } from "react-spinners";
 import * as z from "zod";
 export default function AccountSettings() {
   const { toast } = useToast();
@@ -164,12 +164,7 @@ export default function AccountSettings() {
         />
         <div className="flex flex-row justify-end">
           <Button type="submit">
-            <PulseLoader
-              size={6}
-              loading={loading}
-              color="white"
-              className="pr-2"
-            />
+            <ButtonLoader loading={loading} />
             <p>Save</p>
           </Button>
         </div>

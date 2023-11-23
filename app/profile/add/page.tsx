@@ -1,5 +1,6 @@
 "use client";
 
+import ButtonLoader from "@/app/components/ButtonLoader";
 import { achievements } from "@/app/constants/games";
 import { ReplayInfo } from "@/app/types/Replay";
 import { Button, buttonVariants } from "@/components/ui/button";
@@ -23,7 +24,6 @@ import {
 import { Achievement } from "@prisma/client";
 import axios from "axios";
 import { useState } from "react";
-import PulseLoader from "react-spinners/PulseLoader";
 
 const AddReplay = () => {
   const { toast } = useToast();
@@ -176,12 +176,7 @@ const AddReplay = () => {
                     disabled={loading}
                     onClick={readReplayData}
                   >
-                    <PulseLoader
-                      size={6}
-                      loading={loading}
-                      color="white"
-                      className="pr-2"
-                    />
+                    <ButtonLoader loading={loading} />
                     <p>Read file</p>
                   </Button>
                 )}
@@ -192,12 +187,7 @@ const AddReplay = () => {
                     onClick={checkExisting}
                     disabled={loading}
                   >
-                    <PulseLoader
-                      size={6}
-                      loading={loading}
-                      color="white"
-                      className="pr-2"
-                    />
+                    <ButtonLoader loading={loading} />
                     <p> Check if replay exists</p>
                   </Button>
                 )}
@@ -307,12 +297,7 @@ const AddReplay = () => {
               Reset
             </Button>
             <Button type="submit" disabled={replayData === null || loading}>
-              <PulseLoader
-                size={6}
-                loading={loading}
-                color="white"
-                className="pr-2"
-              />
+              <ButtonLoader loading={loading} />
               Upload
             </Button>
           </div>
