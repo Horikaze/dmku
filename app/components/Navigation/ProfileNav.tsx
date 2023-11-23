@@ -16,6 +16,7 @@ import { useMemo } from "react";
 import { ModeToggle } from "../ModeToggle";
 import { RiLogoutBoxRFill } from "react-icons/ri";
 import { FaUser } from "react-icons/fa";
+import { useTheme } from "next-themes";
 
 type ProfileNavProps = {
   href: string;
@@ -41,6 +42,17 @@ export default function ProfileNav({
     );
     return textAndIconColor;
   }, [active]);
+
+  const { setTheme, theme } = useTheme();
+
+  const handleClick = () => {
+    if (theme === "dark") {
+      setTheme("light");
+    }
+    if (theme === "light") {
+      setTheme("dark");
+    }
+  };
 
   return (
     <div className={`${nav === "mobile" && "w-full"}`}>
@@ -77,7 +89,10 @@ export default function ProfileNav({
                 </div>
               </DropdownMenuItem>
             </Link>
-            <DropdownMenuItem className="cursor-pointer hover:bg-secondary">
+            <DropdownMenuItem
+              className="cursor-pointer hover:bg-secondary"
+              onClick={handleClick}
+            >
               <ModeToggle />
             </DropdownMenuItem>
             <DropdownMenuItem

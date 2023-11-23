@@ -25,7 +25,7 @@ import { columns } from "../components/replayTable/columns";
 import { DataTable } from "../components/replayTable/data-table";
 
 const Search = () => {
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [data, setData] = useState();
   const [selectedGame, setSelectedGame] = useState("All");
   const [selectedRank, setSelectedRank] = useState("All");
