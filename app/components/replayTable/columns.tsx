@@ -11,7 +11,6 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import {
-  convertUnixDate,
   games,
   getGameInt,
   getGameString,
@@ -165,6 +164,14 @@ export const columns: ColumnDef<Replay>[] = [
       return (
         <div className="text-center">{format(dateObject, "dd-MM-yyyy")}</div>
       );
+    },
+  },
+  {
+    accessorKey: "slowRate",
+    header: () => <div className="text-center">Slow rate</div>,
+    cell({ row }) {
+      const slowRate = row.getValue("slowRate") as string;
+      return <div className="text-center">{slowRate}</div>;
     },
   },
   {

@@ -12,12 +12,6 @@ import {
   useReactTable,
 } from "@tanstack/react-table";
 
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
 
 import {
   Table,
@@ -27,12 +21,11 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { useState } from "react";
-import { getLastScore } from "./forrmatScore";
 import {
   getCharacterFromData,
   getCharacterFromDataWithoutType,
 } from "@/lib/getRankingData";
+import { useState } from "react";
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
