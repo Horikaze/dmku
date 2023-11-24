@@ -58,6 +58,7 @@ const AddReplay = () => {
       formData.append("CC", ccInfo);
       formData.append("score", replayData.stage_score.join("+"));
       formData.append("score", replayData.stage_score.join("+"));
+      formData.append("stage", replayData.stage);
       formData.append("fileDate", replay.lastModified.toString());
       formData.append(
         "character",

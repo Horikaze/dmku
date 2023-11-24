@@ -37,7 +37,7 @@ export default async function page({ params }: { params: { id: string } }) {
       : getCharacterFromData(replay.character!, replay.shottype!) || "";
 
   const score = scoreParse();
-
+  console.log(replay);
   return (
     <Card>
       <CardHeader>
@@ -88,7 +88,7 @@ export default async function page({ params }: { params: { id: string } }) {
           <div>
             Stage -{" "}
             <span className="font-normal text-gray-400">
-              {replay.stage! || "Not supported"}
+              {replay.stage || "Not supported"}
             </span>
           </div>
           <div>
@@ -152,6 +152,11 @@ export default async function page({ params }: { params: { id: string } }) {
               </Link>
             </div>
           ) : null}
+          <div>
+            <Link className="underline" href={replay.filePath!} download>
+              Download rpy
+            </Link>{" "}
+          </div>
         </div>
       </CardContent>
     </Card>
