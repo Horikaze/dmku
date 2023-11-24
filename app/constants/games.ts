@@ -20,4 +20,16 @@ export const gamesString = [
   "UM",
   "UDoALG",
 ];
-export const achievements = ["CC", "NM", "NB", "NMNB", "NNN", "NNNN"];
+export const achievementList = ["CC", "NM", "NB", "NMNB", "NNN", "NNNN"];
+
+export const touhouDifficulty = [
+  "Easy",
+  "Normal",
+  "Hard",
+  "Lunatic",
+  "Extra",
+  "Phantasm",
+  "Overdrive",
+];
+
+export const shotTypeList = ["A", "B", "C"];

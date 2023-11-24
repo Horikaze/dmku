@@ -1,7 +1,7 @@
 "use client";
 
 import ButtonLoader from "@/app/components/ButtonLoader";
-import { achievements } from "@/app/constants/games";
+import { achievementList } from "@/app/constants/games";
 import { ReplayInfo } from "@/app/types/Replay";
 import { Button, buttonVariants } from "@/components/ui/button";
 import {
@@ -195,14 +195,14 @@ const AddReplay = () => {
 
               <div>
                 <RadioGroup
-                  defaultValue={achievements[0]}
+                  defaultValue={achievementList[0]}
                   value={ccInfo}
                   className="flex flex-wrap items-start"
                   onValueChange={(e) => {
                     setCcInfo(e as Achievement);
                   }}
                 >
-                  {achievements.map((achiv) => {
+                  {achievementList.map((achiv) => {
                     if (
                       achiv === "NNNN" &&
                       ccInfo !== "NNN" &&

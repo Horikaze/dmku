@@ -34,8 +34,6 @@ export const POST = async (req: Request) => {
         POFV: "EASY/0/0/null/char+NORMAL/0/0/null/char+HARD/0/0/null/char+LUNATIC/0/0/null/char+EXTRA/0/0/null/char+PHANTASM/0/0/null/char+OVERDRIVE/0/0/null/char",
         SA: "EASY/0/0/null/char+NORMAL/0/0/null/char+HARD/0/0/null/char+LUNATIC/0/0/null/char+EXTRA/0/0/null/char+PHANTASM/0/0/null/char+OVERDRIVE/0/0/null/char",
         TD: "EASY/0/0/null/char+NORMAL/0/0/null/char+HARD/0/0/null/char+LUNATIC/0/0/null/char+EXTRA/0/0/null/char+PHANTASM/0/0/null/char+OVERDRIVE/0/0/null/char",
-        UDOALG:
-          "EASY/0/0/null/char+NORMAL/0/0/null/char+HARD/0/0/null/char+LUNATIC/0/0/null/char+EXTRA/0/0/null/char+PHANTASM/0/0/null/char+OVERDRIVE/0/0/null/char",
         UM: "EASY/0/0/null/char+NORMAL/0/0/null/char+HARD/0/0/null/char+LUNATIC/0/0/null/char+EXTRA/0/0/null/char+PHANTASM/0/0/null/char+OVERDRIVE/0/0/null/char",
         UFO: "EASY/0/0/null/char+NORMAL/0/0/null/char+HARD/0/0/null/char+LUNATIC/0/0/null/char+EXTRA/0/0/null/char+PHANTASM/0/0/null/char+OVERDRIVE/0/0/null/char",
         WBAWC:

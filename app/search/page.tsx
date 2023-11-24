@@ -18,16 +18,14 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import {
-  achievementList,
   games,
-  shotTypeList,
-  touhouDifficulty,
 } from "@/lib/getRankingData";
 import axios from "axios";
 import { useState } from "react";
 import ButtonLoader from "../components/ButtonLoader";
 import { columns } from "../components/replayTable/columns";
 import { DataTable } from "../components/replayTable/data-table";
+import { achievementList, shotTypeList, touhouDifficulty } from "../constants/games";
 
 const Search = () => {
   const [loading, setLoading] = useState(false);

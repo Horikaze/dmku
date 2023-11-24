@@ -1,5 +1,6 @@
 "use client";
 
+import { touhouDifficulty } from "@/app/constants/games";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -15,7 +16,6 @@ import {
   getDateFromReplay,
   getGameInt,
   getGameString,
-  touhouDifficulty,
 } from "@/lib/getRankingData";
 import { Replay } from "@prisma/client";
 import { ColumnDef } from "@tanstack/react-table";
@@ -115,7 +115,6 @@ export const columns: ColumnDef<Replay>[] = [
         </Select>
       );
     },
-    
   },
   {
     accessorKey: "score",

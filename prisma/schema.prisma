@@ -52,7 +52,6 @@ model Ranking {
   HSIFS               String?  @db.Text
   WBAWC               String?  @db.Text
   UM                  String?  @db.Text
-  UDOALG              String?  @db.Text
   userIdRankingPoints String   @unique
   Profile             Profile? @relation(fields: [userIdRankingPoints], references: [id])
 }
@@ -118,5 +117,4 @@ enum Games {
   HSIFS
   WBAWC
   UM
-  UDOALG
 }

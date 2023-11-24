@@ -3,21 +3,20 @@ import prisma from "@/app/lib/prismadb";
 import {
   Table,
   TableBody,
-  TableCaption,
   TableCell,
   TableHead,
   TableHeader,
-  TableRow,
+  TableRow
 } from "@/components/ui/table";
 import {
   ScoreObject,
   games,
   parseRankingString,
-  touhouDifficulty,
 } from "@/lib/getRankingData";
 import { getServerSession } from "next-auth";
 import Link from "next/link";
 
+import { touhouDifficulty } from "@/app/constants/games";
 import {
   Tooltip,
   TooltipContent,

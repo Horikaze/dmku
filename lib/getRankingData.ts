@@ -110,7 +110,6 @@ export const games = [
   "HSIFS",
   "WBAWC",
   "UM",
-  "UDOALG",
 ];
 
 interface AchievementValuesType {
@@ -132,9 +131,7 @@ export const AchievementRank: AchievementValuesType = {
   NNNN: 6,
 };
 
-export const achievementList = ["CC", "NM", "NB", "NMNB", "NNN", "NNNN"];
 
-export const shotTypeList = ["A", "B", "C"];
 
 export const gameCodeRecord: Record<string, number> = {
   EOSD: 6,
@@ -151,7 +148,6 @@ export const gameCodeRecord: Record<string, number> = {
   HSIFS: 16,
   WBAWC: 17,
   UM: 18,
-  UDOALG: 19,
 };
 export const getGameInt = (gameCode: string) => {
   return gameCodeRecord[gameCode] || 6;
@@ -163,15 +159,6 @@ export const getGameString = (gameNumber: number) => {
   return gameCode || "EOSD";
 };
 
-export const touhouDifficulty = [
-  "Easy",
-  "Normal",
-  "Hard",
-  "Lunatic",
-  "Extra",
-  "Phantasm",
-  "Overdrive",
-];
 
 export const getDateFromReplay = (uploadedDate: Date) => {
   const replayDateString = uploadedDate?.toString();
