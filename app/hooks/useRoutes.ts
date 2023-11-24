@@ -35,7 +35,7 @@ export const useRoutes = () => {
         label: "Login",
         href: "/profile",
         icon: FaSignInAlt,
-        active: pathName.startsWith("/profile"),
+        active: pathName.startsWith("/profile") || "/login",
       },
     ],
     [pathName]

@@ -23,7 +23,7 @@ export default async function ProfileBanner({ session }: ProfileBannerProps) {
         <div className="flex flex-col justify-between gap-x-4">
           <div className="w-3/5">
             {session.user.info.bio && (
-              <p className=" leading-5 text-xs md:text-base break-words opacity-60">
+              <p className=" leading-5 text-xs md:text-base break-words opacity-80 drop-shadow-[1px_1px_var(--tw-shadow-color)] shadow-black">
                 {session.user.info.bio}
               </p>
             )}
