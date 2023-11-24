@@ -31,4 +31,5 @@ export type ReplayFormData = {
   score?: string;
   hash?: string;
   fileDate?: string;
+  videoLink?: string;
 };

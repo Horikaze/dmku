@@ -1,4 +1,4 @@
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import { authOptions } from "@/app/api/auth/[...nextauth]/auth";
 import { columns } from "@/app/components/replayTable/columns";
 import { DataTable } from "@/app/components/replayTable/data-table";
 import prisma from "@/app/lib/prismadb";

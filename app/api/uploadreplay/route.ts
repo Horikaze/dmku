@@ -14,8 +14,7 @@ import {
 import { getServerSession } from "next-auth";
 import { NextRequest, NextResponse } from "next/server";
 import { UTApi } from "uploadthing/server";
-import { authOptions } from "../auth/[...nextauth]/route";
-import { gamesString } from "@/app/constants/games";
+import { authOptions } from "../auth/[...nextauth]/auth";
 export async function POST(request: NextRequest, response: NextResponse) {
   try {
     const session = await getServerSession(authOptions);
@@ -65,6 +64,7 @@ export async function POST(request: NextRequest, response: NextResponse) {
         rpy_name: replayFile.name,
         stage: values.stage,
         shottype: values.type,
+        videoLink: values.videoLink,
         status: "NEW",
         stage_score: values.score,
         score: totalScore,

@@ -13,6 +13,7 @@ import {
   getDateFromReplay,
   getGameString,
 } from "@/lib/getRankingData";
+import Link from "next/link";
 
 export default async function page({ params }: { params: { id: string } }) {
   const replay = await prisma.replay.findFirst({
@@ -87,7 +88,7 @@ export default async function page({ params }: { params: { id: string } }) {
           <div>
             Stage -{" "}
             <span className="font-normal text-gray-400">
-              {replay.stage! || ""}
+              {replay.stage! || "Not supported"}
             </span>
           </div>
           <div>
@@ -137,6 +138,18 @@ export default async function page({ params }: { params: { id: string } }) {
               <span className="font-normal text-gray-400">
                 {replay?.comment}
               </span>
+            </div>
+          ) : null}
+          {replay?.videoLink ? (
+            <div>
+              Video -{" "}
+              <Link
+                className="font-normal text-gray-400 underline"
+                href={replay?.videoLink}
+                target="_blank"
+              >
+                {replay?.videoLink}
+              </Link>
             </div>
           ) : null}
         </div>

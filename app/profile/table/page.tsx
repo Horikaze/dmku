@@ -1,4 +1,3 @@
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import prisma from "@/app/lib/prismadb";
 import {
   Table,
@@ -6,13 +5,9 @@ import {
   TableCell,
   TableHead,
   TableHeader,
-  TableRow
+  TableRow,
 } from "@/components/ui/table";
-import {
-  ScoreObject,
-  games,
-  parseRankingString,
-} from "@/lib/getRankingData";
+import { ScoreObject, games, parseRankingString } from "@/lib/getRankingData";
 import { getServerSession } from "next-auth";
 import Link from "next/link";
 
@@ -23,6 +18,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { authOptions } from "@/app/api/auth/[...nextauth]/auth";
 
 export default async function TablePage() {
   const session = await getServerSession(authOptions);

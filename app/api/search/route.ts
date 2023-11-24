@@ -64,6 +64,9 @@ export const POST = async (req: Request) => {
     console.log(whereClause);
     const replays = await prisma.replay.findMany({
       where: whereClause,
+      orderBy: {
+        uploadedDate: "desc",
+      },
     });
 
     // console.log(replays);

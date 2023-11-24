@@ -1,10 +1,9 @@
 import { getServerSession } from "next-auth";
 import { Suspense } from "react";
-import { authOptions } from "../api/auth/[...nextauth]/route";
 import LoadingState from "../components/LoadingState";
 import Login from "./components/Login/Login";
-import ProfileBanner from "./components/Profile/components/ProfileBanner";
 import ProfileNavigation from "./components/ProfileNavigation";
+import { authOptions } from "../api/auth/[...nextauth]/auth";
 
 export default async function ProfileLayout({
   children,

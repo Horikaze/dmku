@@ -31,6 +31,18 @@ const AddReplay = () => {
   const [loading, setLoading] = useState(false);
   const [replayData, setReplayData] = useState<ReplayInfo | null>(null);
   const [ccInfo, setCcInfo] = useState<Achievement>("CC");
+  const [commment, setCommment] = useState("");
+  const [videoLink, setVideoLink] = useState("");
+
+  const clearAll = () => {
+    setReplay(null);
+    setReplayData(null);
+    setLoading(false);
+    setCcInfo("CC");
+    setCommment("");
+    setVideoLink("");
+  };
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     setLoading(true);
     e.preventDefault();
@@ -67,11 +79,7 @@ const AddReplay = () => {
             description: `${e.response.data}`,
           });
         });
-      setReplay(null);
-      setReplayData(null);
-      setLoading(false);
-      setReplay(null);
-      setCcInfo("CC");
+      clearAll();
     } catch (error) {
       toast({
         title: "Error",
@@ -127,6 +135,7 @@ const AddReplay = () => {
       });
     }
   };
+
   return (
     <Card className="w-full">
       <div className="flex flex-row justify-between">
@@ -138,10 +147,14 @@ const AddReplay = () => {
           <Textarea
             form="form"
             name="comment"
+            value={commment}
+            onChange={(e) => {
+              setCommment(e.target.value);
+            }}
             placeholder="Write something if there are problems with replay, there is desync, or you need additional tools to be able to open it correctly. "
             maxLength={250}
             className="h-2 resize-none"
-          ></Textarea>
+          />
         </div>
       </div>
       <CardContent>
@@ -193,7 +206,7 @@ const AddReplay = () => {
                 )}
               </div>
 
-              <div>
+              <div className="flex flex-col gap-y-2">
                 <RadioGroup
                   defaultValue={achievementList[0]}
                   value={ccInfo}
@@ -222,6 +235,16 @@ const AddReplay = () => {
                     );
                   })}
                 </RadioGroup>
+                <Input
+                  type="text"
+                  placeholder="Video link (optional)"
+                  name="videoLink"
+                  form="form"
+                  value={videoLink}
+                  onChange={(e) => {
+                    setVideoLink(e.target.value);
+                  }}
+                />
               </div>
             </div>
 
@@ -287,14 +310,8 @@ const AddReplay = () => {
             </div>
           </div>
           <div className="flex justify-between mt-4">
-            <Button
-              variant="outline"
-              type="button"
-              onClick={() => {
-                setReplayData(null);
-              }}
-            >
-              Reset
+            <Button variant="outline" type="reset" onClick={clearAll}>
+              Clear
             </Button>
             <Button type="submit" disabled={replayData === null || loading}>
               <ButtonLoader loading={loading} />
