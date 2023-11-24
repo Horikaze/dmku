@@ -115,6 +115,7 @@ export const columns: ColumnDef<Replay>[] = [
         </Select>
       );
     },
+    
   },
   {
     accessorKey: "score",

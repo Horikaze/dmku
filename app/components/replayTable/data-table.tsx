@@ -25,7 +25,8 @@ import {
   getCharacterFromDataWithoutType,
 } from "@/lib/getRankingData";
 import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { FaInfo } from "react-icons/fa";
+import Link from "next/link";
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
@@ -59,7 +60,6 @@ export function DataTable<TData, TValue>({
         ? getCharacterFromDataWithoutType(obj.character!)
         : getCharacterFromData(obj.character!, obj.shottype!);
   });
-  const router = useRouter();
   return (
     <div className="rounded-md border">
       <Table>
@@ -95,10 +95,7 @@ export function DataTable<TData, TValue>({
           {table.getRowModel().rows?.length ? (
             table.getRowModel().rows.map((row) => (
               <TableRow
-                className="cursor-pointer"
-                onClick={() => {
-                  router.push(`/replay/${row.original.replayId}`);
-                }}
+                onscroll
                 key={row.id}
                 data-state={row.getIsSelected() && "selected"}
               >
@@ -107,6 +104,16 @@ export function DataTable<TData, TValue>({
                     {flexRender(cell.column.columnDef.cell, cell.getContext())}
                   </TableCell>
                 ))}
+                <TableCell className="hover:brightness-125 cursor-pointer bg-secondary p-0">
+                  <Link
+                    href={`/replay/${row.original.replayId}`}
+                    prefetch={false}
+                  >
+                    <div className="h-8 w-full flex items-center justify-center px-3">
+                      <FaInfo />
+                    </div>
+                  </Link>
+                </TableCell>
               </TableRow>
             ))
           ) : (

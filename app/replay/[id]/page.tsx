@@ -61,7 +61,7 @@ export default async function page({ params }: { params: { id: string } }) {
           <div className="font-semibold">
             Game -{" "}
             <span className="font-normal text-gray-400">
-              Touhou {getGameString(replay.game!)}
+              Touhou: {getGameString(replay.game!)}
             </span>
           </div>
           <div>
