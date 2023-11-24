@@ -25,8 +25,9 @@ import {
   getCharacterFromDataWithoutType,
 } from "@/lib/getRankingData";
 import { useState } from "react";
-import { FaInfo } from "react-icons/fa";
+import { FaCopy, FaInfo } from "react-icons/fa";
 import Link from "next/link";
+import { useToast } from "@/components/ui/use-toast";
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
@@ -60,6 +61,7 @@ export function DataTable<TData, TValue>({
         ? getCharacterFromDataWithoutType(obj.character!)
         : getCharacterFromData(obj.character!, obj.shottype!);
   });
+  const { toast } = useToast();
   return (
     <div className="rounded-md border">
       <Table>
@@ -103,6 +105,19 @@ export function DataTable<TData, TValue>({
                     {flexRender(cell.column.columnDef.cell, cell.getContext())}
                   </TableCell>
                 ))}
+                <TableCell className="hover:brightness-125 cursor-pointer bg-secondary p-0">
+                  <div
+                    onClick={() => {
+                      navigator.clipboard.writeText(row.original.replayId);
+                      toast({
+                        description: "Replay ID copied",
+                      });
+                    }}
+                    className="h-8 w-full flex items-center justify-center px-3"
+                  >
+                    <FaCopy />
+                  </div>
+                </TableCell>
                 <TableCell className="hover:brightness-125 cursor-pointer bg-secondary p-0">
                   <Link
                     href={`/replay/${row.original.replayId}`}
