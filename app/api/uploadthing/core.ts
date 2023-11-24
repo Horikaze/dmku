@@ -45,7 +45,7 @@ export const ourFileRouter = {
 
       return { uploadedBy: metadata.email };
     }),
-  profileBanner: f({ image: { maxFileSize: "2MB" } })
+  profileBanner: f({ image: { maxFileSize: "4MB" } })
     .middleware(async ({ req }) => {
       const user = await getServerSession(authOptions);
 

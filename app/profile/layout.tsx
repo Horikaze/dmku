@@ -4,6 +4,7 @@ import LoadingState from "../components/LoadingState";
 import Login from "./components/Login/Login";
 import ProfileNavigation from "./components/ProfileNavigation";
 import { authOptions } from "../api/auth/[...nextauth]/auth";
+import ProfileBanner from "./components/Profile/components/ProfileBanner";
 
 export default async function ProfileLayout({
   children,
@@ -16,11 +17,11 @@ export default async function ProfileLayout({
       <main>
         <Login />
       </main>
-    )
+    );
 
   return (
     <main className="flex flex-col h-full items-center">
-      {/* <ProfileBanner session={session} /> */}
+      <ProfileBanner session={session} />
       <ProfileNavigation />
       <Suspense fallback={<LoadingState />}>{children}</Suspense>
     </main>

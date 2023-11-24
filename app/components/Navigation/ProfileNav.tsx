@@ -82,7 +82,7 @@ export default function ProfileNav({
             <DropdownMenuLabel>My Account</DropdownMenuLabel>
             <DropdownMenuSeparator />
             <Link href={"/profile"}>
-              <DropdownMenuItem className="cursor-pointer hover:bg-secondary">
+              <DropdownMenuItem className="cursor-pointer hover:bg-secondary py-3 pr-5">
                 <div className="flex flex-row gap-x-1 items-center">
                   <FaUser className="h-5 w-5" />
                   Profile
@@ -90,13 +90,13 @@ export default function ProfileNav({
               </DropdownMenuItem>
             </Link>
             <DropdownMenuItem
-              className="cursor-pointer hover:bg-secondary"
+              className="cursor-pointer hover:bg-secondary py-3 pr-5"
               onClick={handleClick}
             >
               <ModeToggle />
             </DropdownMenuItem>
             <DropdownMenuItem
-              className="cursor-pointer hover:bg-secondary"
+              className="cursor-pointer hover:bg-secondary py-3 pr-5"
               onClick={() => {
                 signOut();
               }}

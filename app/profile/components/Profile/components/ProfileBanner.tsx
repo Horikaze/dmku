@@ -1,14 +1,7 @@
 import { Avatar, AvatarImage } from "@/components/ui/avatar";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
 import { Session } from "next-auth";
 import Image from "next/image";
 import { FaDiscord } from "react-icons/fa";
-import LogoutButton from "./LogoutButton";
 
 type ProfileBannerProps = {
   session: Session;
