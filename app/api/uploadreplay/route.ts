@@ -60,7 +60,7 @@ export async function POST(request: NextRequest, response: NextResponse) {
         player: values.player,
         userId: session.user.info.id,
         rank: values.rank,
-        slowRate: values.slowRate,
+        slowRate: values.slowRate === "" ? "0" : values.slowRate,
         rpy_name: replayFile.name,
         stage: values.stage,
         shottype: values.type,

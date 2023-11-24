@@ -297,7 +297,13 @@ const AddReplay = () => {
                     id="slowRate"
                     name="slowRate"
                     readOnly
-                    value={replayData?.slow_rate || ""}
+                    value={
+                      replayData
+                        ? replayData?.slow_rate === 0
+                          ? "0"
+                          : replayData?.slow_rate
+                        : ""
+                    }
                   />
                   <Label htmlFor="date">Date</Label>
                   <Input
