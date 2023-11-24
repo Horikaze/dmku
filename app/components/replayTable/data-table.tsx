@@ -21,11 +21,18 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+
+import {
   getCharacterFromData,
   getCharacterFromDataWithoutType,
 } from "@/lib/getRankingData";
 import { useState } from "react";
-import { FaCopy, FaInfo } from "react-icons/fa";
+import { FaCopy, FaInfo, FaTrash, FaWindowClose } from "react-icons/fa";
 import Link from "next/link";
 import { useToast } from "@/components/ui/use-toast";
 interface DataTableProps<TData, TValue> {
@@ -80,15 +87,26 @@ export function DataTable<TData, TValue>({
                   </TableHead>
                 );
               })}
-
+              <TableHead></TableHead>
               <TableHead
                 onClick={() => {
                   setColumnFilters([]);
                   setSorting([]);
                 }}
-                className="font-bold hover:brightness-125 cursor-pointer"
+                className="font-bold hover:brightness-125 cursor-pointer text-center"
               >
-                X
+                <TooltipProvider>
+                  <Tooltip delayDuration={500}>
+                    <TooltipTrigger>
+                      <div className="h-6 w-6 flex items-center justify-center">
+                        <FaWindowClose />
+                      </div>
+                    </TooltipTrigger>
+                    <TooltipContent side="left">
+                      <p>Reset filters</p>
+                    </TooltipContent>
+                  </Tooltip>
+                </TooltipProvider>
               </TableHead>
             </TableRow>
           ))}
