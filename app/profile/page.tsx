@@ -1,5 +1,10 @@
-import LoadingState from "../components/LoadingState";
+import DeleteReplay from "./components/Profile/components/DeleteReplay";
 
 export default function MainPage() {
-  return <div>Main Page</div>;
+  return (
+    <div>
+      <p>Main Page </p>
+      <DeleteReplay />
+    </div>
+  );
 }
