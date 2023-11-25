@@ -9,10 +9,10 @@ import {
 } from "@/components/ui/popover";
 
 import ButtonLoader from "@/app/components/ButtonLoader";
+import { useToast } from "@/components/ui/use-toast";
 import { useRef } from "react";
 import { useFormStatus } from "react-dom";
-import { deleteReplayAction } from "./serverAction";
-import { useToast } from "@/components/ui/use-toast";
+import { deleteReplayAction } from "@/app/lib/serverActions";
 
 const DeleteReplay = () => {
   const { pending } = useFormStatus();
@@ -30,13 +30,8 @@ const DeleteReplay = () => {
           action={async (FormData) => {
             ref.current?.reset();
             const { status } = await deleteReplayAction(FormData);
-            if (status === "ERROR") {
-              return toast({
-                description: "Error while deleting replay",
-              });
-            }
             return toast({
-              description: "Deleted replay",
+              description: `${status}`,
             });
           }}
           className="flex flex-col items-end gap-y-3"
