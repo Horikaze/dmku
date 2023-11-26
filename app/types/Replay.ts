@@ -1,5 +1,3 @@
-import { Achievement } from "@prisma/client";
-
 export type ReplayInfo = {
   character: string | string[];
   date: string;
@@ -18,7 +16,7 @@ export type ReplayInfo = {
 };
 
 export type ReplayFormData = {
-  CC?: Achievement;
+  CC?: string;
   comment?: string;
   character?: string;
   date?: string;
