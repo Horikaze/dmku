@@ -77,7 +77,7 @@ model Replay {
   hash         String?       @unique
   uploadedDate DateTime?     @default(now())
   fileDate     DateTime?
-  achievement  Achievement?
+  achievement  Int?
   status       ReplayStatus?
 
   userId  String?

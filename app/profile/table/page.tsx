@@ -7,7 +7,13 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { ScoreObject, games, parseRankingString } from "@/lib/getRankingData";
+import {
+  AchievementRank,
+  ScoreObject,
+  games,
+  getCCstring,
+  parseRankingString,
+} from "@/lib/getRankingData";
 import { getServerSession } from "next-auth";
 import Link from "next/link";
 
@@ -96,17 +102,17 @@ export default async function TablePage() {
               const char =
                 mappedArray[game as keyof MappedArrayType]?.[difficulty]?.char;
               const cellClassName =
-                CC === "CC"
+                CC === 1
                   ? "bg-orange-400"
-                  : CC === "NM"
+                  : CC === 2
                   ? "bg-gray-400"
-                  : CC === "NB"
+                  : CC === 3
                   ? "bg-purple-400"
-                  : CC === "NMNB"
+                  : CC === 4
                   ? "bg-pink-400"
-                  : CC === "NNN"
+                  : CC === 5
                   ? "bg-pink-400"
-                  : CC === "NNNN"
+                  : CC === 6
                   ? "bg-yellow-400"
                   : "";
 
@@ -119,7 +125,7 @@ export default async function TablePage() {
                     <TooltipProvider>
                       <Tooltip delayDuration={0}>
                         <TooltipTrigger className="w-full h-full">
-                          {CC === "null" ? "" : CC}
+                          {CC === 0 ? "" : getCCstring(CC!)}
                         </TooltipTrigger>
                         <TooltipContent className="mb-3">
                           <p>{`Score: ${score?.toLocaleString()}`}</p>

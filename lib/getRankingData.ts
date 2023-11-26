@@ -1,15 +1,15 @@
 import { format, fromUnixTime } from "date-fns";
 
 export type ScoreObject = {
-  EASY: { score?: number; id?: string; CC?: string; char?: string };
-  NORMAL: { score?: number; id?: string; CC?: string; char?: string };
-  HARD: { score?: number; id?: string; CC?: string; char?: string };
-  LUNATIC: { score?: number; id?: string; CC?: string; char?: string };
-  EXTRA: { score?: number; id?: string; CC?: string; char?: string };
-  PHANTASM?: { score?: number; id?: string; CC?: string; char?: string };
-  OVERDRIVE?: { score?: number; id?: string; CC?: string; char?: string };
+  EASY: { score?: number; id?: string; CC?: number; char?: string };
+  NORMAL: { score?: number; id?: string; CC?: number; char?: string };
+  HARD: { score?: number; id?: string; CC?: number; char?: string };
+  LUNATIC: { score?: number; id?: string; CC?: number; char?: string };
+  EXTRA: { score?: number; id?: string; CC?: number; char?: string };
+  PHANTASM?: { score?: number; id?: string; CC?: number; char?: string };
+  OVERDRIVE?: { score?: number; id?: string; CC?: number; char?: string };
   [key: string]:
-    | { score?: number; id?: string; CC?: string; char?: string }
+    | { score?: number; id?: string; CC?: number; char?: string }
     | undefined;
 };
 
@@ -25,12 +25,13 @@ export const parseRankingString = (scoreString: string): ScoreObject => {
   };
   const scoreParts = scoreString.split("+");
   scoreParts.forEach((part) => {
-    const [difficulty, scoreStr, idStr, CC, char] = part
+    const [difficulty, scoreStr, idStr, CCStr, char] = part
       .split("/")
       .map((item) => (isNaN(Number(item)) ? item.trim() : item));
 
     const score = parseFloat(scoreStr);
     const id = idStr.trim();
+    const CC = Number(CCStr);
     if (difficulty && !isNaN(score)) {
       scoreObject[difficulty as keyof ScoreObject] = { score, id, CC, char };
     }
@@ -131,7 +132,12 @@ export const AchievementRank: AchievementValuesType = {
   NNNN: 6,
 };
 
-
+export const getCCstring = (CCNumber: number) => {
+  const CCString = Object.keys(AchievementRank).find(
+    (key) => AchievementRank[key] === CCNumber
+  );
+  return CCString || "CC";
+};
 
 export const gameCodeRecord: Record<string, number> = {
   EOSD: 6,
@@ -158,7 +164,6 @@ export const getGameString = (gameNumber: number) => {
   );
   return gameCode || "EOSD";
 };
-
 
 export const getDateFromReplay = (uploadedDate: Date) => {
   const replayDateString = uploadedDate?.toString();

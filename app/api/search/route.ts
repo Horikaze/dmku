@@ -1,5 +1,5 @@
 import prisma from "@/app/lib/prismadb";
-import { getGameInt } from "@/lib/getRankingData";
+import { AchievementRank, getGameInt } from "@/lib/getRankingData";
 import { NextResponse } from "next/server";
 export const POST = async (req: Request) => {
   try {
@@ -13,6 +13,7 @@ export const POST = async (req: Request) => {
     const shottype = formData.get("shottype") as string;
     const character = formData.get("character") as string;
     const userId = formData.get("userId") as string;
+    const achivInt = AchievementRank[achievement!];
 
     let whereClause: Record<string, any> = {};
 
@@ -43,9 +44,8 @@ export const POST = async (req: Request) => {
     if (rank !== "" && rank !== "All") {
       whereClause.rank = rank;
     }
-
-    if (achievement !== "" && achievement !== "All") {
-      whereClause.achievement = achievement;
+    if (achivInt !== 0 && achievement !== "All") {
+      whereClause.achievement = achivInt;
     }
 
     if (shottype !== "" && shottype !== "All") {

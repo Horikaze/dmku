@@ -32,7 +32,7 @@ export async function POST(request: NextRequest, response: NextResponse) {
     const gameNumber = getGameNumber(replayFile.name);
     const gameString = getGameString(gameNumber).toUpperCase();
     const fileDate = new Date(Number(values.fileDate));
-
+    const newCC = AchievementRank[values.CC as string];
     const fileExist = await prisma.replay.findFirst({
       where: {
         hash: values.hash,
@@ -51,7 +51,7 @@ export async function POST(request: NextRequest, response: NextResponse) {
 
     const newReplay = await prisma.replay.create({
       data: {
-        achievement: values.CC,
+        achievement: newCC,
         character: values.character,
         comment: values.comment,
         date: values.date,
@@ -80,21 +80,17 @@ export async function POST(request: NextRequest, response: NextResponse) {
         [gameString]: true,
       },
     });
-    console.log(currenntRanking);
     const rankingObject = parseRankingString(currenntRanking![gameString]);
     const valueToUpdate =
       rankingObject[values.rank!.toUpperCase() as keyof ScoreObject];
 
-    if (
-      valueToUpdate!.score! <= totalScore ||
-      AchievementRank[valueToUpdate?.CC!] <= AchievementRank[values.CC!]
-    ) {
+    if (valueToUpdate!.score! <= totalScore || valueToUpdate?.CC! <= newCC) {
       const newScoreObj: ScoreObject = {
         ...rankingObject,
         [values.rank!.toUpperCase() as keyof ScoreObject]: {
           score: totalScore,
           id: newReplay.replayId,
-          CC: values.CC,
+          CC: newCC,
           char:
             gameNumber === 9
               ? getCharacterFromDataWithoutType(values.character!)
@@ -103,7 +99,7 @@ export async function POST(request: NextRequest, response: NextResponse) {
       };
       console.log(newScoreObj);
 
-      if (valueToUpdate?.CC === "null") {
+      if (valueToUpdate?.CC === 0) {
         await prisma.ranking.update({
           where: {
             userIdRankingPoints: session.user.info.id,

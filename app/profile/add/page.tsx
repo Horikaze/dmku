@@ -21,9 +21,10 @@ import {
   getCharacterFromData,
   getCharacterFromDataWithoutType,
 } from "@/lib/getRankingData";
-import { Achievement } from "@prisma/client";
 import axios from "axios";
 import { useState } from "react";
+
+type Achievement = "CC" | "NM" | "NB" | "NMNB" | "NNN" | "NNNN";
 
 const AddReplay = () => {
   const { toast } = useToast();

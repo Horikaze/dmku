@@ -13,6 +13,7 @@ import {
 } from "@/components/ui/select";
 import {
   games,
+  getCCstring,
   getDateFromReplay,
   getGameInt,
   getGameString,
@@ -80,8 +81,8 @@ export const columns: ColumnDef<Replay>[] = [
     accessorKey: "achievement",
     header: () => <div className="text-center">Achievement</div>,
     cell({ row }) {
-      const achievement = row.getValue("achievement") as string;
-      return <div className="text-center">{achievement}</div>;
+      const achievement = row.getValue("achievement") as number;
+      return <div className="text-center">{getCCstring(achievement!)}</div>;
     },
   },
   {
