@@ -30,4 +30,5 @@ export type ReplayFormData = {
   hash?: string;
   fileDate?: string;
   videoLink?: string;
+  points?: string;
 };

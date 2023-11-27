@@ -64,6 +64,7 @@ export async function POST(request: NextRequest, response: NextResponse) {
         rpy_name: replayFile.name,
         stage: values.stage,
         shottype: values.type,
+        points: Number(values.points),
         videoLink: values.videoLink,
         status: "NEW",
         stage_score: values.score,

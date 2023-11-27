@@ -1,6 +1,7 @@
 "use client";
 
 import ButtonLoader from "@/app/components/ButtonLoader";
+import { getLastScore } from "@/app/components/replayTable/forrmatScore";
 import { achievementList } from "@/app/constants/games";
 import { ReplayInfo } from "@/app/types/Replay";
 import { Button, buttonVariants } from "@/components/ui/button";
@@ -16,13 +17,16 @@ import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/components/ui/use-toast";
+import { calculatePoints } from "@/lib/calculatePoints";
 import { hashFromFile } from "@/lib/fileHash";
 import {
+  AchievementRank,
   getCharacterFromData,
   getCharacterFromDataWithoutType,
+  getGameNumber,
 } from "@/lib/getRankingData";
 import axios from "axios";
-import { useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 
 type Achievement = "CC" | "NM" | "NB" | "NMNB" | "NNN" | "NNNN";
 
@@ -34,6 +38,19 @@ const AddReplay = () => {
   const [ccInfo, setCcInfo] = useState<Achievement>("CC");
   const [commment, setCommment] = useState("");
   const [videoLink, setVideoLink] = useState("");
+
+  const points = useMemo(() => {
+    try {
+      return calculatePoints(
+        getLastScore(replayData ? replayData!.stage_score.join("+") : "0"),
+        ccInfo,
+        replayData?.rank!,
+        getGameNumber(replay?.name!)
+      );
+    } catch (error) {
+      return 0;
+    }
+  }, [replayData, ccInfo, replay]);
 
   const clearAll = () => {
     setReplay(null);
@@ -60,6 +77,7 @@ const AddReplay = () => {
       formData.append("score", replayData.stage_score.join("+"));
       formData.append("score", replayData.stage_score.join("+"));
       formData.append("stage", replayData.stage);
+      formData.append("points", points.toString());
       formData.append("fileDate", replay.lastModified.toString());
       formData.append(
         "character",
@@ -247,6 +265,9 @@ const AddReplay = () => {
                     setVideoLink(e.target.value);
                   }}
                 />
+                <div>
+                  <p>Score:{points}</p>
+                </div>
               </div>
             </div>
 

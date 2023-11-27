@@ -113,7 +113,7 @@ export const games = [
   "UM",
 ];
 
-interface AchievementValuesType {
+export interface AchievementValuesType {
   CC: number;
   NM: number;
   NB: number;
