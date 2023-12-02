@@ -21,12 +21,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <AuthContext>
-        <body
-          className={`${inter.className} 
-              // bg-cover bg-center
-              `}
-          // style={{ backgroundImage: "url(images/bg.jpg)" }}
-        >
+        <body className={`${inter.className}`}>
           <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
             <Navigation>{children}</Navigation>
           </ThemeProvider>
