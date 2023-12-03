@@ -9,6 +9,7 @@ import {
 } from "@/components/ui/card";
 import { useToast } from "@/components/ui/use-toast";
 import {
+  getCCstring,
   getCharacterFromData,
   getCharacterFromDataWithoutType,
   getDateFromReplay,
@@ -83,7 +84,7 @@ export default async function page({ params }: { params: { id: string } }) {
           <div>
             Achievement -{" "}
             <span className="font-normal text-gray-400">
-              {replay?.achievement}
+              {getCCstring(replay?.achievement!)}
             </span>
           </div>
           <div>
