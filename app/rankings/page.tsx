@@ -1,5 +1,6 @@
 import RankingCard from "./components/RankingCard";
 import prisma from "@/app/lib/prismadb";
+export const revalidate = 3600;
 const Rankings = async () => {
   const CCData = await prisma.profile.findMany({
     take: 20,

@@ -10,6 +10,7 @@ import {
   parseRankingString,
   stringifyRanking,
 } from "@/lib/getRankingData";
+import { UTApi } from "uploadthing/server";
 
 type deleteReplayActionReturns = {
   status:
@@ -17,17 +18,29 @@ type deleteReplayActionReturns = {
     | "Replay dosent exists"
     | "Unauthorized"
     | "Internal error"
-    | "No data provided";
+    | "No data provided"
+    | "Replay is not yours";
 };
 
 export const deleteReplayAction = async (
   formData: FormData
 ): Promise<deleteReplayActionReturns> => {
   try {
+    const utapi = new UTApi();
     const session = await getServerSession(authOptions);
     if (!session) return { status: "Unauthorized" };
     const replayId = formData.get("replayID") as string;
     if (!replayId || replayId === "") return { status: "No data provided" };
+
+    const isReplayYours = await prisma.replay.findFirst({
+      where: {
+        replayId,
+        userId: session?.user.info.id,
+      },
+    });
+    if (isReplayYours?.userId !== session.user.info.id) {
+      return { status: "Replay is not yours" };
+    }
 
     const deletedReplay = await prisma.replay.delete({
       where: {
@@ -37,6 +50,9 @@ export const deleteReplayAction = async (
     });
     const gameString = getGameString(deletedReplay.game!).toUpperCase();
     if (deletedReplay) {
+      const parts = deletedReplay.filePath!.split("/");
+      const fileName = parts[parts.length - 1];
+      await utapi.deleteFiles(fileName);
       const CCreplacement = await prisma.replay.findFirst({
         where: {
           game: deletedReplay.game,

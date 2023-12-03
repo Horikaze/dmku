@@ -1,5 +1,3 @@
-"use client";
-
 import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import {
   DropdownMenu,
@@ -11,12 +9,12 @@ import {
 } from "@/components/ui/dropdown-menu";
 import clsx from "clsx";
 import { signOut } from "next-auth/react";
+import { useTheme } from "next-themes";
 import Link from "next/link";
 import { useMemo } from "react";
-import { ModeToggle } from "../ModeToggle";
-import { RiLogoutBoxRFill } from "react-icons/ri";
 import { FaUser } from "react-icons/fa";
-import { useTheme } from "next-themes";
+import { RiLogoutBoxRFill } from "react-icons/ri";
+import { ModeToggle } from "../ModeToggle";
 
 type ProfileNavProps = {
   href: string;
@@ -60,34 +58,49 @@ export default function ProfileNav({
         className="
         group relative flex h-full flex-col  justify-center items-center hover:brightness-110 transition"
       >
+        <div
+          className={`flex ${
+            nav === "desktop"
+              ? "flex-row gap-x-3 items-center px-2"
+              : "flex-col"
+          }`}
+        >
+          <Avatar className="w-[35px] h-[35px]">
+            <AvatarImage src={src || "/images/placeholder.jpg"} />
+          </Avatar>
+
+          {nav === "desktop" && <p className={textAndIconColor}>{nickname}</p>}
+        </div>
         <DropdownMenu>
           <DropdownMenuTrigger>
-            <div
-              className={`flex ${
-                nav === "desktop"
-                  ? "flex-row gap-x-3 items-center px-2"
-                  : "flex-col"
-              }`}
-            >
-              <Avatar className="w-[35px] h-[35px]">
-                <AvatarImage src={src || "/images/placeholder.jpg"} />
-              </Avatar>
-
-              {nav === "desktop" && (
-                <p className={textAndIconColor}>{nickname}</p>
-              )}
-            </div>
+            <div className="w-full h-full top-0 left-0 absolute" />
           </DropdownMenuTrigger>
-          <DropdownMenuContent>
+          <DropdownMenuContent
+            className={`${nav === "mobile" ? "mb-12" : "mt-3"}`}
+          >
             <DropdownMenuLabel>My Account</DropdownMenuLabel>
             <DropdownMenuSeparator />
             <Link href={"/profile"}>
-              <DropdownMenuItem className="cursor-pointer hover:bg-secondary py-3 pr-5">
-                <div className="flex flex-row gap-x-1 items-center">
-                  <FaUser className="h-5 w-5" />
-                  Profile
-                </div>
-              </DropdownMenuItem>
+              {nav === "desktop" ? (
+                <DropdownMenuItem className="cursor-pointer hover:bg-secondary py-3 pr-5">
+                  <div className="flex flex-row gap-x-1 items-center">
+                    <FaUser className="h-5 w-5" />
+                    Profile
+                  </div>
+                </DropdownMenuItem>
+              ) : (
+                <DropdownMenuItem
+                  className="cursor-pointer hover:bg-secondary py-3 pr-5"
+                  onClick={() => {
+                    signOut();
+                  }}
+                >
+                  <div className="flex flex-row gap-x-1 items-center">
+                    <RiLogoutBoxRFill className="h-5 w-5" />
+                    Logout
+                  </div>
+                </DropdownMenuItem>
+              )}
             </Link>
             <DropdownMenuItem
               className="cursor-pointer hover:bg-secondary py-3 pr-5"
@@ -95,17 +108,26 @@ export default function ProfileNav({
             >
               <ModeToggle />
             </DropdownMenuItem>
-            <DropdownMenuItem
-              className="cursor-pointer hover:bg-secondary py-3 pr-5"
-              onClick={() => {
-                signOut();
-              }}
-            >
-              <div className="flex flex-row gap-x-1 items-center">
-                <RiLogoutBoxRFill className="h-5 w-5" />
-                Logout
-              </div>
-            </DropdownMenuItem>
+            {nav === "mobile" ? (
+              <DropdownMenuItem className="cursor-pointer hover:bg-secondary py-3 pr-5">
+                <div className="flex flex-row gap-x-1 items-center">
+                  <FaUser className="h-5 w-5" />
+                  Profile
+                </div>
+              </DropdownMenuItem>
+            ) : (
+              <DropdownMenuItem
+                className="cursor-pointer hover:bg-secondary py-3 pr-5"
+                onClick={() => {
+                  signOut();
+                }}
+              >
+                <div className="flex flex-row gap-x-1 items-center">
+                  <RiLogoutBoxRFill className="h-5 w-5" />
+                  Logout
+                </div>
+              </DropdownMenuItem>
+            )}
           </DropdownMenuContent>
         </DropdownMenu>
         <div
