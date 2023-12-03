@@ -39,6 +39,7 @@ const Rankings = async () => {
       id: item.id!,
     };
   });
+
   const updatedPointsData = pointsData.map((item) => {
     return {
       imageUrl: item.Profile?.imageUrl!,

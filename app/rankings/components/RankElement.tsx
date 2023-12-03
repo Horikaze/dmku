@@ -1,6 +1,6 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import Link from "next/link";
-
+import { FaMedal } from "react-icons/fa";
 type RankingElement = {
   nickname: string | null;
   imageUrl: string | null;
@@ -8,15 +8,27 @@ type RankingElement = {
   id: string | number;
   index: number;
 };
-
 const RankElement = ({ user }: { user: RankingElement }) => {
+  const color =
+    user.index === 0
+      ? "text-yellow-400"
+      : user.index === 1
+      ? "text-slate-400"
+      : user.index === 2
+      ? "text-green-900"
+      : "";
   return (
     <Link
       href={`/user/${user.id}`}
       prefetch={false}
       className="w-full gap-x-3 border flex relative p-2 items-center rounded-md hover:bg-secondary"
     >
-      <p>{user.index}</p>
+      {user.index === 0 || user.index === 1 || user.index === 2 ? (
+        <FaMedal className={color} />
+      ) : (
+        <p className="px-1">{user.index + 1}</p>
+      )}
+
       <Avatar>
         <AvatarImage src={user.imageUrl!} alt="avatar" />
         <AvatarFallback>:3</AvatarFallback>
