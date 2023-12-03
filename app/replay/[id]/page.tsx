@@ -7,7 +7,6 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { useToast } from "@/components/ui/use-toast";
 import {
   getCCstring,
   getCharacterFromData,
@@ -47,7 +46,11 @@ export default async function page({ params }: { params: { id: string } }) {
           <div className="space-y-1">
             <CardTitle>{replay?.rpy_name}</CardTitle>
             <CardDescription>Replay ID: {params.id}</CardDescription>
-            <CardDescription>User ID: {replay.userId}</CardDescription>
+            <CardDescription>
+              <Link href={`/user/${replay.userId}`} prefetch={false}>
+                User ID: {replay.userId}
+              </Link>
+            </CardDescription>
           </div>
           <div>
             <RouterBack />

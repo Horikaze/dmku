@@ -80,28 +80,28 @@ export default function ProfileNav({
           >
             <DropdownMenuLabel>My Account</DropdownMenuLabel>
             <DropdownMenuSeparator />
-            <Link href={"/profile"}>
-              {nav === "desktop" ? (
+            {nav === "desktop" ? (
+              <Link href={"/profile"}>
                 <DropdownMenuItem className="cursor-pointer hover:bg-secondary py-3 pr-5">
                   <div className="flex flex-row gap-x-1 items-center">
                     <FaUser className="h-5 w-5" />
                     Profile
                   </div>
                 </DropdownMenuItem>
-              ) : (
-                <DropdownMenuItem
-                  className="cursor-pointer hover:bg-secondary py-3 pr-5"
-                  onClick={() => {
-                    signOut();
-                  }}
-                >
-                  <div className="flex flex-row gap-x-1 items-center">
-                    <RiLogoutBoxRFill className="h-5 w-5" />
-                    Logout
-                  </div>
-                </DropdownMenuItem>
-              )}
-            </Link>
+              </Link>
+            ) : (
+              <DropdownMenuItem
+                className="cursor-pointer hover:bg-secondary py-3 pr-5"
+                onClick={() => {
+                  signOut();
+                }}
+              >
+                <div className="flex flex-row gap-x-1 items-center">
+                  <RiLogoutBoxRFill className="h-5 w-5" />
+                  Logout
+                </div>
+              </DropdownMenuItem>
+            )}
             <DropdownMenuItem
               className="cursor-pointer hover:bg-secondary py-3 pr-5"
               onClick={handleClick}
@@ -109,12 +109,14 @@ export default function ProfileNav({
               <ModeToggle />
             </DropdownMenuItem>
             {nav === "mobile" ? (
+              <Link href={"/profile"}>
               <DropdownMenuItem className="cursor-pointer hover:bg-secondary py-3 pr-5">
                 <div className="flex flex-row gap-x-1 items-center">
                   <FaUser className="h-5 w-5" />
                   Profile
                 </div>
               </DropdownMenuItem>
+            </Link>
             ) : (
               <DropdownMenuItem
                 className="cursor-pointer hover:bg-secondary py-3 pr-5"

@@ -116,6 +116,10 @@ export const columns: ColumnDef<Replay>[] = [
         </Select>
       );
     },
+    cell({ row }) {
+      const rank = row.getValue("rank") as string;
+      return <div className="text-center">{rank}</div>;
+    },
   },
   {
     accessorKey: "score",
