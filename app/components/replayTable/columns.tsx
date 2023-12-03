@@ -171,11 +171,11 @@ export const columns: ColumnDef<Replay>[] = [
     },
   },
   {
-    accessorKey: "slowRate",
-    header: () => <div className="text-center">Slow rate</div>,
+    accessorKey: "points",
+    header: () => <div className="text-center">Points</div>,
     cell({ row }) {
-      const slowRate = row.getValue("slowRate") as string;
-      return <div className="text-center">{slowRate}</div>;
+      const points = row.getValue("points") as string;
+      return <div className="text-center">{points}</div>;
     },
   },
   {

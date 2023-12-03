@@ -13,7 +13,7 @@ export const scoreWR: { [key: number]: Record<string, number> } = {
     Hard: 2854468430,
     Lunatic: 4026942260,
     Extra: 1509003300,
-    phantasm: 1710441020,
+    Phantasm: 1710441020,
   },
   8: {
     Easy: 3379425090,

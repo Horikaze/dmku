@@ -21,12 +21,12 @@ const Rankings = async () => {
       total: "desc",
     },
     select: {
-      total: true,
       userIdRankingPoints: true,
       Profile: {
         select: {
           imageUrl: true,
           nickname: true,
+          points: true,
         },
       },
     },
@@ -44,7 +44,7 @@ const Rankings = async () => {
     return {
       imageUrl: item.Profile?.imageUrl!,
       nickname: item.Profile?.nickname!,
-      points: item.total!,
+      points: item.Profile?.points!,
       id: item.userIdRankingPoints!,
     };
   });

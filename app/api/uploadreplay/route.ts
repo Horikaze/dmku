@@ -49,6 +49,15 @@ export async function POST(request: NextRequest, response: NextResponse) {
       return new NextResponse("Problem with file upload", { status: 500 });
     }
 
+    const sameReplay = await prisma.replay.findFirst({
+      where: {
+        game: gameNumber,
+        rank: values.rank,
+      },
+      orderBy: {
+        points: "desc",
+      },
+    });
     const newReplay = await prisma.replay.create({
       data: {
         achievement: newCC,
@@ -73,6 +82,33 @@ export async function POST(request: NextRequest, response: NextResponse) {
         fileDate,
       },
     });
+    if (sameReplay) {
+      if (sameReplay.points! <= newReplay.points!) {
+        const updatedPoints = newReplay.points! - sameReplay.points!;
+        await prisma.profile.update({
+          where: {
+            id: session.user.info.id,
+          },
+          data: {
+            points: {
+              increment: updatedPoints,
+            },
+          },
+        });
+      }
+    } else {
+      await prisma.profile.update({
+        where: {
+          id: session.user.info.id,
+        },
+        data: {
+          points: {
+            increment: Number(values.points),
+          },
+        },
+      });
+    }
+
     const currenntRanking = await prisma.ranking.findFirst({
       where: {
         userIdRankingPoints: session.user.info.id,
