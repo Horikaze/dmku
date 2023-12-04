@@ -1,3 +1,4 @@
+import CCTable from "@/app/components/CCTable";
 import RouterBack from "@/app/components/RouterBack";
 import { columns } from "@/app/components/replayTable/columns";
 import { DataTable } from "@/app/components/replayTable/data-table";
@@ -29,7 +30,11 @@ export default async function User({ params }: { params: { id: string } }) {
       userId: params.id,
     },
   });
-
+  const tableData = await prisma.ranking.findFirst({
+    where: {
+      userIdRankingPoints: params.id,
+    },
+  });
   return (
     <div className="flex flex-col gap-y-4">
       <Card>
@@ -94,6 +99,7 @@ export default async function User({ params }: { params: { id: string } }) {
       <div>
         <DataTable columns={columns} data={replays!} />
       </div>
+      <CCTable tableData={tableData!} />
     </div>
   );
 }
