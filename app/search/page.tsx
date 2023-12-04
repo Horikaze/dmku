@@ -17,15 +17,17 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import {
-  games,
-} from "@/lib/getRankingData";
+import { games } from "@/lib/getRankingData";
 import axios from "axios";
 import { useState } from "react";
 import ButtonLoader from "../components/ButtonLoader";
 import { columns } from "../components/replayTable/columns";
 import { DataTable } from "../components/replayTable/data-table";
-import { achievementList, shotTypeList, touhouDifficulty } from "../constants/games";
+import {
+  achievementList,
+  shotTypeList,
+  touhouDifficulty,
+} from "../constants/games";
 
 const Search = () => {
   const [loading, setLoading] = useState(false);
@@ -65,7 +67,7 @@ const Search = () => {
             <div className="flex flex-col items-center justify-center gap-3 md:flex-row">
               <div className="flex gap-3 w-full">
                 <div className="grid w-full max-w-sm items-center gap-1.5">
-                  <Label htmlFor="player">Player</Label>
+                  <Label>Player</Label>
                   <Input
                     type="text"
                     id="player"
@@ -124,67 +126,89 @@ const Search = () => {
                   </div>
                 </div>
                 <div className="grid w-full max-w-sm items-center gap-1.5">
-                  <Label>Rank</Label>
-                  <Select
-                    name="rank"
-                    value={selectedRank}
-                    onValueChange={setSelectedRank}
-                  >
-                    <SelectTrigger>
-                      <SelectValue placeholder="Rank" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectGroup>
-                        <SelectItem className="cursor-pointer" value={"All"}>
-                          All
-                        </SelectItem>
-                        {touhouDifficulty.map((diff) => (
-                          <SelectItem
-                            className="cursor-pointer"
-                            key={diff}
-                            value={diff}
-                          >
-                            {diff}
+                  <div className="flex justify-between">
+                    <Label>Rank</Label>
+                    <Label>Achievement</Label>
+                  </div>
+                  <div className="gap-x-1 flex">
+                    <Select
+                      name="rank"
+                      value={selectedRank}
+                      onValueChange={setSelectedRank}
+                    >
+                      <SelectTrigger>
+                        <SelectValue placeholder="Rank" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectGroup>
+                          <SelectItem className="cursor-pointer" value={"All"}>
+                            All
                           </SelectItem>
-                        ))}
-                      </SelectGroup>
-                    </SelectContent>
-                  </Select>
+                          {touhouDifficulty.map((diff) => (
+                            <SelectItem
+                              className="cursor-pointer"
+                              key={diff}
+                              value={diff}
+                            >
+                              {diff}
+                            </SelectItem>
+                          ))}
+                        </SelectGroup>
+                      </SelectContent>
+                    </Select>
+                    <Select
+                      name="achievement"
+                      value={selectedAchiv}
+                      onValueChange={setSelectedAchiv}
+                    >
+                      <SelectTrigger>
+                        <SelectValue placeholder="Rank" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectGroup>
+                          <SelectItem className="cursor-pointer" value={"All"}>
+                            All
+                          </SelectItem>
+                          {achievementList.map((achiv) => (
+                            <SelectItem
+                              className="cursor-pointer"
+                              key={achiv}
+                              value={achiv}
+                            >
+                              {achiv}
+                            </SelectItem>
+                          ))}
+                        </SelectGroup>
+                      </SelectContent>
+                    </Select>
+                  </div>
                 </div>
               </div>
             </div>
             <div className="flex flex-col items-center justify-center gap-3 md:flex-row">
               <div className="flex gap-3 w-full">
                 <div className="grid w-full max-w-sm items-center gap-1.5">
-                  <Label htmlFor="player">Achievement</Label>
-                  <Select
-                    name="achievement"
-                    value={selectedAchiv}
-                    onValueChange={setSelectedAchiv}
-                  >
-                    <SelectTrigger>
-                      <SelectValue placeholder="Rank" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectGroup>
-                        <SelectItem className="cursor-pointer" value={"All"}>
-                          All
-                        </SelectItem>
-                        {achievementList.map((achiv) => (
-                          <SelectItem
-                            className="cursor-pointer"
-                            key={achiv}
-                            value={achiv}
-                          >
-                            {achiv}
-                          </SelectItem>
-                        ))}
-                      </SelectGroup>
-                    </SelectContent>
-                  </Select>
+                  <Label>Points</Label>
+                  <div className="gap-x-1 flex">
+                    <Input
+                      name="pointsFrom"
+                      type="number"
+                      id="pointsFrom"
+                      placeholder="From"
+                      className="[appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                    />
+                    <p className="flex items-center">-</p>
+                    <Input
+                      type="number"
+                      id="pointsTo"
+                      name="pointsTo"
+                      placeholder="To"
+                      className="[appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                    />
+                  </div>
                 </div>
                 <div className="grid w-full max-w-sm items-center gap-1.5">
-                  <Label htmlFor="player">Shot-type</Label>
+                  <Label>Shot-type</Label>
                   <Select
                     name="shottype"
                     value={selectedType}
@@ -214,7 +238,7 @@ const Search = () => {
               </div>
               <div className="flex gap-3 w-full">
                 <div className="grid w-full max-w-sm items-center gap-1.5">
-                  <Label htmlFor="player">Character</Label>
+                  <Label>Character</Label>
                   <Input
                     type="text"
                     id="character"
@@ -223,7 +247,7 @@ const Search = () => {
                   />
                 </div>
                 <div className="grid w-full max-w-sm items-center gap-1.5">
-                  <Label htmlFor="player">User ID</Label>
+                  <Label>User ID</Label>
                   <Input
                     type="text"
                     id="userId"

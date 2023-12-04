@@ -108,27 +108,23 @@ export default function CCTable({ tableData }: { tableData: Ranking }) {
                   : "";
 
               //extra and phantasm in one cell
-              if (
-                game === "PCB" &&
-                difficulty === "EXTRA" &&
-                mappedArray["PCB"]?.["PHANTASM"]?.CC !== 0
-              ) {
+              if (game === "PCB" && difficulty === "EXTRA") {
                 const phanScore = mappedArray["PCB"]?.["PHANTASM"]?.score;
                 const phanCC = mappedArray["PCB"]?.["PHANTASM"]?.CC;
                 const phanId = mappedArray["PCB"]?.["PHANTASM"]?.id;
                 const phanChar = mappedArray["PCB"]?.["PHANTASM"]?.char;
                 const phanCellClassName =
-                  CC === 1
+                  phanCC === 1
                     ? "bg-orange-400"
-                    : CC === 2
+                    : phanCC === 2
                     ? "bg-gray-400"
-                    : CC === 3
+                    : phanCC === 3
                     ? "bg-purple-400"
-                    : CC === 4
+                    : phanCC === 4
                     ? "bg-pink-400"
-                    : CC === 5
+                    : phanCC === 5
                     ? "bg-pink-400"
-                    : CC === 6
+                    : phanCC === 6
                     ? "bg-yellow-400"
                     : "";
 
@@ -168,10 +164,10 @@ export default function CCTable({ tableData }: { tableData: Ranking }) {
                             <Link
                               href={`/replay/${phanId}`}
                               prefetch={false}
-                              className="block w-1/2 hover:brightness-110"
+                              className={`block w-1/2 hover:brightness-110 ${phanCellClassName}`}
                             >
                               <div
-                                className={`flex w-full h-full items-center justify-center ${phanCellClassName}`}
+                                className={`flex w-full h-full items-center justify-center`}
                               >
                                 {phanCC === 0 ? "" : getCCstring(phanCC!)}
                               </div>

@@ -8,6 +8,8 @@ export const POST = async (req: Request) => {
     const game = formData.get("game") as string;
     const scoreFrom = formData.get("scoreFrom") as string;
     const scoreTo = formData.get("scoreTo") as string;
+    const pointsFrom = formData.get("pointsFrom") as string;
+    const pointsTo = formData.get("pointsTo") as string;
     const rank = formData.get("rank") as string;
     const achievement = formData.get("achievement") as string;
     const shottype = formData.get("shottype") as string;
@@ -38,6 +40,19 @@ export const POST = async (req: Request) => {
       whereClause.score = {
         ...whereClause.score,
         lte: Number(scoreTo),
+      };
+    }
+    if (pointsFrom !== "") {
+      whereClause.points = {
+        ...whereClause.points,
+        gte: Number(pointsFrom),
+      };
+    }
+
+    if (pointsTo !== "") {
+      whereClause.points = {
+        ...whereClause.points,
+        lte: Number(pointsTo),
       };
     }
 
