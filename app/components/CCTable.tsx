@@ -113,16 +113,10 @@ export default function CCTable({ tableData }: { tableData: Ranking }) {
                 difficulty === "EXTRA" &&
                 mappedArray["PCB"]?.["PHANTASM"]?.CC !== 0
               ) {
-                const phanScore =
-                  mappedArray["PCB"]?.["PHANTASM"]
-                    ?.score;
-                const phanCC =
-                  mappedArray["PCB"]?.["PHANTASM"]?.CC;
-                const phanId =
-                  mappedArray["PCB"]?.["PHANTASM"]?.id;
-                const phanChar =
-                  mappedArray["PCB"]?.["PHANTASM"]
-                    ?.char;
+                const phanScore = mappedArray["PCB"]?.["PHANTASM"]?.score;
+                const phanCC = mappedArray["PCB"]?.["PHANTASM"]?.CC;
+                const phanId = mappedArray["PCB"]?.["PHANTASM"]?.id;
+                const phanChar = mappedArray["PCB"]?.["PHANTASM"]?.char;
                 const phanCellClassName =
                   CC === 1
                     ? "bg-orange-400"
@@ -162,6 +156,7 @@ export default function CCTable({ tableData }: { tableData: Ranking }) {
                             </Link>
                           </TooltipTrigger>
                           <TooltipContent className="mb-3 text-center">
+                            <p className="font-semibold">Extra</p>
                             <p>{`Score: ${score?.toLocaleString()}`}</p>
                             <p>{char}</p>
                           </TooltipContent>
@@ -183,6 +178,7 @@ export default function CCTable({ tableData }: { tableData: Ranking }) {
                             </Link>
                           </TooltipTrigger>
                           <TooltipContent className="mb-3 text-center">
+                            <p className="font-semibold">Phantasm</p>
                             <p>{`Score: ${phanScore?.toLocaleString()}`}</p>
                             <p>{phanChar}</p>
                           </TooltipContent>
