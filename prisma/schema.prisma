@@ -72,7 +72,6 @@ model Replay {
   acceptedBy   String?
   filePath     String?
   comment      String?
-  hash         String?       @unique
   uploadedDate DateTime?     @default(now())
   fileDate     DateTime?
   achievement  Int?

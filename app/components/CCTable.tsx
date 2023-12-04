@@ -138,7 +138,7 @@ export default function CCTable({ tableData }: { tableData: Ranking }) {
                     className={`border p-0 flex justify-center min-h-[1px] items-center w-full h-full`}
                   >
                     <div
-                      className={`w-full h-[35px] flex justify-between invalid:justify-center`}
+                      className={`w-full h-[34px] flex justify-between invalid:justify-center`}
                     >
                       <TooltipProvider>
                         <Tooltip delayDuration={0}>

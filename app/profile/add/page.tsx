@@ -18,7 +18,6 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/components/ui/use-toast";
 import { calculatePoints } from "@/lib/calculatePoints";
-import { hashFromFile } from "@/lib/fileHash";
 import {
   AchievementRank,
   getCharacterFromData,
@@ -84,8 +83,6 @@ const AddReplay = () => {
         getCharacterFromDataWithoutType(replayData.character)
       );
       formData.append("type", replayData.shottype);
-      const hash = await hashFromFile(replay);
-      formData.append("hash", hash);
       const fileInfo = await axios
         .post("/api/uploadreplay", formData)
         .then(() => {
@@ -114,9 +111,7 @@ const AddReplay = () => {
       if (!replay) {
         throw new Error("File error");
       }
-      const hash = await hashFromFile(replay);
       const ifExist = await axios.post("/api/replayexists", {
-        hash: hash,
         score: replayData!.stage_score.join("+"),
       });
       toast({
