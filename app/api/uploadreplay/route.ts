@@ -82,6 +82,8 @@ export async function POST(request: NextRequest, response: NextResponse) {
         fileDate,
       },
     });
+
+    // calc points
     if (sameReplay) {
       if (sameReplay.points! <= newReplay.points!) {
         const updatedPoints = newReplay.points! - sameReplay.points!;
@@ -108,6 +110,7 @@ export async function POST(request: NextRequest, response: NextResponse) {
         },
       });
     }
+    //end of calc points
 
     const currenntRanking = await prisma.ranking.findFirst({
       where: {
@@ -125,7 +128,7 @@ export async function POST(request: NextRequest, response: NextResponse) {
       const newScoreObj: ScoreObject = {
         ...rankingObject,
         [values.rank!.toUpperCase() as keyof ScoreObject]: {
-          score: totalScore,
+          score: totalScore, 
           id: newReplay.replayId,
           CC: newCC,
           char:

@@ -48,6 +48,43 @@ export const deleteReplayAction = async (
         userId: session?.user.info.id,
       },
     });
+
+    // calc points
+    const sameReplay = await prisma.replay.findFirst({
+      where: {
+        game: deletedReplay.game,
+        rank: deletedReplay.rank,
+      },
+      orderBy: {
+        points: "desc",
+      },
+    });
+    if (sameReplay) {
+      const updatedPoints = -deletedReplay.points! + sameReplay.points!;
+      await prisma.profile.update({
+        where: {
+          id: session.user.info.id,
+        },
+        data: {
+          points: {
+            increment: updatedPoints,
+          },
+        },
+      });
+    } else {
+      await prisma.profile.update({
+        where: {
+          id: session.user.info.id,
+        },
+        data: {
+          points: {
+            decrement: deletedReplay.points!,
+          },
+        },
+      });
+    }
+    //end of calc points
+
     const gameString = getGameString(deletedReplay.game!).toUpperCase();
     if (deletedReplay) {
       const parts = deletedReplay.filePath!.split("/");
