@@ -35,7 +35,6 @@ export async function POST(request: NextRequest, response: NextResponse) {
     const newCC = AchievementRank[values.CC as string];
     const fileExist = await prisma.replay.findFirst({
       where: {
-        hash: values.hash,
         stage_score: values.score,
       },
     });
@@ -78,7 +77,6 @@ export async function POST(request: NextRequest, response: NextResponse) {
         status: "NEW",
         stage_score: values.score,
         score: totalScore,
-        hash: values.hash,
         fileDate,
       },
     });

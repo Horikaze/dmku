@@ -27,7 +27,6 @@ export type ReplayFormData = {
   type?: string;
   stage?: string;
   score?: string;
-  hash?: string;
   fileDate?: string;
   videoLink?: string;
   points?: string;

@@ -120,7 +120,7 @@ export default function Search() {
                 </SelectTrigger>
                 <SelectContent className="h-[350px]">
                   <SelectGroup>
-                    {[6, 7, 8, 9, 10, 11, 12, 12.3, 13, 14, 15, 16, 17, 18].map(
+                    {[6, 7, 8, 9, 10, 11, 12, 12.8, 13, 14, 15, 16, 17, 18].map(
                       (game) => (
                         <SelectItem
                           className="cursor-pointer"
