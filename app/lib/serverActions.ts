@@ -162,16 +162,6 @@ export const deleteReplayAction = async (
           },
         });
 
-        await prisma.ranking.update({
-          where: {
-            userIdRankingPoints: session.user.info.id,
-          },
-          data: {
-            total: {
-              decrement: 1,
-            },
-          },
-        });
         await prisma.profile.update({
           where: {
             id: session.user.info.id,

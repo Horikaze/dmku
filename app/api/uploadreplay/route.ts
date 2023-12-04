@@ -128,7 +128,7 @@ export async function POST(request: NextRequest, response: NextResponse) {
       const newScoreObj: ScoreObject = {
         ...rankingObject,
         [values.rank!.toUpperCase() as keyof ScoreObject]: {
-          score: totalScore, 
+          score: totalScore,
           id: newReplay.replayId,
           CC: newCC,
           char:
@@ -140,16 +140,6 @@ export async function POST(request: NextRequest, response: NextResponse) {
       console.log(newScoreObj);
 
       if (valueToUpdate?.CC === 0) {
-        await prisma.ranking.update({
-          where: {
-            userIdRankingPoints: session.user.info.id,
-          },
-          data: {
-            total: {
-              increment: 1,
-            },
-          },
-        });
         await prisma.profile.update({
           where: {
             id: session.user.info.id,

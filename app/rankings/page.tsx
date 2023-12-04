@@ -18,7 +18,9 @@ const Rankings = async () => {
   const pointsData = await prisma.ranking.findMany({
     take: 20,
     orderBy: {
-      total: "desc",
+      Profile: {
+        points: "desc",
+      },
     },
     select: {
       userIdRankingPoints: true,

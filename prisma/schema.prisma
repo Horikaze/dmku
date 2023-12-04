@@ -25,9 +25,8 @@ model Profile {
   favoriteGame   Games?
   bio            String?  @db.VarChar(250)
   points         Int?     @default(0)
-  pointsRanking  Ranking?
+  CCTable        Ranking?
   event          Int?     @default(0)
-  eventRanking   Int?     @default(0)
   hashedPassword String?
   profileBanner  String?
   Replays        Replay[]
@@ -37,7 +36,6 @@ model Profile {
 // use parseScoreString function to get ScoreObject type
 // DIFF/SCORE/ID/CC
 model Ranking {
-  total               Int?
   EOSD                String?  @db.Text
   PCB                 String?  @db.Text
   IN                  String?  @db.Text

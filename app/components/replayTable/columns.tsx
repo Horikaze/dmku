@@ -172,7 +172,21 @@ export const columns: ColumnDef<Replay>[] = [
   },
   {
     accessorKey: "points",
-    header: () => <div className="text-center">Points</div>,
+    header: ({ column, header }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Points
+          {header.column.getIsSorted() === "asc" ? (
+            <FaArrowDown className="ml-2 h-3 w-3" />
+          ) : (
+            <FaArrowUp className="ml-2 h-3 w-3" />
+          )}
+        </Button>
+      );
+    },
     cell({ row }) {
       const points = row.getValue("points") as string;
       return <div className="text-center">{points}</div>;

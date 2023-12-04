@@ -12,6 +12,15 @@ export default async function User({ params }: { params: { id: string } }) {
     where: {
       id: params.id,
     },
+    include: {
+      Replays: {
+        take: 20,
+        orderBy: {
+          uploadedDate: "desc",
+        },
+      },
+      CCTable: true,
+    },
   });
 
   if (!user) {
@@ -21,20 +30,6 @@ export default async function User({ params }: { params: { id: string } }) {
       </div>
     );
   }
-  const replays = await prisma.replay.findMany({
-    take: 20,
-    orderBy: {
-      acceptedBy: "desc",
-    },
-    where: {
-      userId: params.id,
-    },
-  });
-  const tableData = await prisma.ranking.findFirst({
-    where: {
-      userIdRankingPoints: params.id,
-    },
-  });
   return (
     <div className="flex flex-col gap-y-4">
       <Card>
@@ -96,10 +91,8 @@ export default async function User({ params }: { params: { id: string } }) {
           </div>
         ) : null}
       </Card>
-      <div>
-        <DataTable columns={columns} data={replays!} />
-      </div>
-      <CCTable tableData={tableData!} />
+      <CCTable tableData={user.CCTable!} />
+      <DataTable columns={columns} data={user.Replays!} />
     </div>
   );
 }
