@@ -9,15 +9,13 @@ import {
 } from "@/components/ui/popover";
 
 import ButtonLoader from "@/app/components/ButtonLoader";
+import { deleteReplayAction } from "@/app/lib/serverActions";
 import { useToast } from "@/components/ui/use-toast";
 import { useRef } from "react";
 import { useFormStatus } from "react-dom";
-import { deleteReplayAction } from "@/app/lib/serverActions";
 
 const DeleteReplay = () => {
-  const { pending } = useFormStatus();
   const { toast } = useToast();
-
   const ref = useRef<HTMLFormElement>(null);
   return (
     <Popover>
@@ -45,10 +43,7 @@ const DeleteReplay = () => {
               placeholder="Replay ID"
             />
           </div>
-          <Button type="submit" variant={"destructive"}>
-            <ButtonLoader loading={pending} />
-            Delete
-          </Button>
+          <SubmbitButton />
         </form>
       </PopoverContent>
     </Popover>
@@ -56,3 +51,14 @@ const DeleteReplay = () => {
 };
 
 export default DeleteReplay;
+
+export const SubmbitButton = () => {
+  const { pending } = useFormStatus();
+
+  return (
+    <Button type="submit" variant={"destructive"}>
+      <ButtonLoader loading={pending} />
+      Delete
+    </Button>
+  );
+};
