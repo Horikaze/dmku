@@ -1,8 +1,4 @@
-"use client";
-
-import clsx from "clsx";
 import Link from "next/link";
-import { useMemo } from "react";
 
 type DesktopItemProps = {
   href: string;
@@ -17,14 +13,6 @@ export default function DesktopItem({
   icon: Icon,
   active,
 }: DesktopItemProps) {
-  const textAndIconColor = useMemo(() => {
-    const textAndIconColor = clsx(
-      "font-medium text-basetext-base",
-      active ? "font-bold text-black dark:text-white" : "text-slate-500"
-    );
-    return textAndIconColor;
-  }, [active]);
-
   return (
     <div>
       <Link
@@ -32,8 +20,8 @@ export default function DesktopItem({
         className="
           group flex relative gap-x-3 py-5 center items-center rounded-md px-4 hover:brightness-110 transition"
       >
-        <Icon className={`h-5 w-5 ${textAndIconColor}`} />
-        <p className={textAndIconColor}>{label}</p>
+        <Icon className={`h-5 w-5 font-medium`} />
+        <p>{label}</p>
         <div
           className={`${
             active ? "block" : "hidden"

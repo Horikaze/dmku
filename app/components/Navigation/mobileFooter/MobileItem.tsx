@@ -1,8 +1,5 @@
-"use client";
 
-import clsx from "clsx";
 import Link from "next/link";
-import { useMemo } from "react";
 
 type MobileItemProps = {
   href: string;
@@ -18,14 +15,6 @@ export default function MobileItem({
   icon: Icon,
   active,
 }: MobileItemProps) {
-  const textAndIconColor = useMemo(() => {
-    const textAndIconColor = clsx(
-      "font-medium text-sm",
-      active ? "font-bold text-black dark:text-white" : "text-slate-500"
-    );
-    return textAndIconColor;
-  }, [active]);
-
   return (
     <div className="w-full">
       <Link
@@ -33,13 +22,13 @@ export default function MobileItem({
         className="
           group relative flex flex-col p-3 gap-y-1 items-center  hover:brightness-125 transition"
       >
-        <Icon className={`h-5 w-5 ${textAndIconColor}`} />
+        <Icon className={`h-5 w-5 font-medium`} />
         <div
           className={`${
             active ? "block" : "hidden"
           } absolute h-1 w-full bg-orange-500 top-0 left-0`}
         />
-        <p className={textAndIconColor}>{label}</p>
+        <p className="text-sm">{label}</p>
       </Link>
     </div>
   );
