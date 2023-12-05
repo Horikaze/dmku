@@ -57,14 +57,9 @@ export default async function User({ params }: { params: { id: string } }) {
             <RouterBack />
             <div className="flex flex-row gap-y-2 h-full items-end gap-x-1">
               <div>
-                <p>Join date</p>
-                <p>Discord </p>
-                <p>Favorite Game </p>
-              </div>
-              <div>
-                <p>-</p>
-                <p>-</p>
-                <p>-</p>
+                <p>Join date -</p>
+                <p>Discord -</p>
+                <p>Favorite Game -</p>
               </div>
               <div className="flex flex-col items-end">
                 <p> {getDateFromReplay(user.joindate as any)}</p>

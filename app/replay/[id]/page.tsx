@@ -15,6 +15,7 @@ import {
   getGameString,
 } from "@/lib/getRankingData";
 import Link from "next/link";
+import CompareButton from "./CompareButton";
 
 export default async function page({ params }: { params: { id: string } }) {
   const replay = await prisma.replay.findFirst({
@@ -52,8 +53,11 @@ export default async function page({ params }: { params: { id: string } }) {
               </Link>
             </CardDescription>
           </div>
-          <div>
-            <RouterBack />
+          <div className="flex flex-col gap-y-1">
+            <div className="flex justify-end">
+              <RouterBack />
+            </div>
+            <CompareButton replay={replay} />
           </div>
         </div>
       </CardHeader>

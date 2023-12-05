@@ -1,16 +1,17 @@
 import currentReplay from "@/app/zustand/currentReplay";
-import { Toggle } from "@/components/ui/toggle";
+import { Checkbox } from "@/components/ui/checkbox";
 import { getCharacterFromData } from "@/lib/getRankingData";
 import { Replay } from "@prisma/client";
-import { FontBoldIcon } from "@radix-ui/react-icons";
 import { FaTrash } from "react-icons/fa";
 export default function CompareItem({ replay }: { replay: Replay }) {
-  const { addReplay, removeReplay } = currentReplay();
+  const { removeReplay, addToCompare, removeFromCompare, selectedReplay } =
+    currentReplay();
+  console.log(selectedReplay);
   return (
-    <div className="flex font-light text-sm justify-between px-2 py-1 rounded-md border">
+    <div className="flex text-start font-light text-sm justify-between px-2 py-1 rounded-md border">
       <div className="w-full flex items-center justify-between">
         <div className="flex flex-col">
-          <p className="font-semibold pb-1">{replay.rpy_name} </p>
+          <p className="font-semibold pb-1">Touhou: {replay.game} </p>
           <p>Player: {replay.player}</p>
           <p>
             Character:{" "}
@@ -19,23 +20,30 @@ export default function CompareItem({ replay }: { replay: Replay }) {
           <p>Rank: {replay.rank}</p>
           <p>Score: {replay.score?.toLocaleString()}</p>
         </div>
-        <div className="flex flex-col justify-between h-full">
+        <div className="flex flex-col justify-between h-full items-end">
           <div
-            className="cursor-pointer hover:bg-secondary px-3 py-3 rounded-lg"
+            className="cursor-pointer hover:bg-secondary p-2 rounded-lg"
             onClick={() => {
               removeReplay(replay);
             }}
           >
             <FaTrash className="h-4 w-4" />
           </div>
-
-          <Toggle
-            onPressedChange={(e) => {
-              console.log(e);
-            }}
-          >
-            Select
-          </Toggle>
+          <div className="flex items-center space-x-1 my-2">
+            <Checkbox
+              id={replay.replayId}
+              defaultChecked={false}
+              onCheckedChange={(e) => {
+                e ? addToCompare(replay) : removeFromCompare(replay);
+              }}
+            />
+            <label
+              htmlFor={replay.replayId}
+              className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+            >
+              Compare
+            </label>
+          </div>
         </div>
       </div>
     </div>
