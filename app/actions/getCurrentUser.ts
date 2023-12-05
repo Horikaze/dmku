@@ -10,7 +10,6 @@ export const getCurrentUser = async () => {
     const currentUser = await data.data;
     return currentUser as Profile;
   } catch (error) {
-    console.log(error);
     return null;
   }
 };

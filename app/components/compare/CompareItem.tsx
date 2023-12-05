@@ -6,7 +6,6 @@ import { FaTrash } from "react-icons/fa";
 export default function CompareItem({ replay }: { replay: Replay }) {
   const { removeReplay, addToCompare, removeFromCompare, selectedReplay } =
     currentReplay();
-  console.log(selectedReplay);
   return (
     <div className="flex text-start font-light text-sm justify-between px-2 py-1 rounded-md border">
       <div className="w-full flex items-center justify-between">

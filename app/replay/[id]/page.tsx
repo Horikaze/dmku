@@ -34,7 +34,6 @@ export default async function page({ params }: { params: { id: string } }) {
       : getCharacterFromData(replay.character!, replay.shottype!) || "";
 
   const score = scoreParse(replay);
-  console.log(replay);
   return (
     <Card>
       <CardHeader>

@@ -39,9 +39,10 @@ export const calculatePoints = (
   }
 };
 
-export const scoreParse = (replay:Replay) => {
+export const scoreParse = (replay: Replay) => {
   if (replay?.stage_score?.includes("+")) {
     const scoreParts = replay.stage_score.split("+");
     return scoreParts;
   }
+  return [replay?.stage_score!];
 };

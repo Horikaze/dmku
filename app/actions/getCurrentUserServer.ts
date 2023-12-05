@@ -11,7 +11,6 @@ export const getCurrentUserServer = async () => {
     });
     return currentUser;
   } catch (error) {
-    console.log(error);
     return null;
   }
 };

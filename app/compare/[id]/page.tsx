@@ -4,6 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { scoreParse } from "@/lib/calculatePoints";
 import ReplayItem from "./components/ReplayItem";
 import { ReplayScores } from "./components/ReplayScores";
+import { max } from "date-fns";
 
 export default async function Page({
   searchParams,
@@ -30,8 +31,17 @@ export default async function Page({
 
   const score1 = scoreParse(replay1);
   const score2 = scoreParse(replay2);
-  const diffArray = score1!.map(
-    (value, index) => parseInt(value) - parseInt(score2![index])
+
+  const maxLength = Math.max(score1!.length, score2!.length);
+  const filledArray1 = score1!.concat(
+    Array(maxLength - score1!.length).fill("0")
+  );
+  const filledArray2 = score2!.concat(
+    Array(maxLength - score2!.length).fill("0")
+  );
+
+  const diffArray = filledArray1.map(
+    (value, index) => parseInt(value) - parseInt(filledArray2[index])
   );
 
   return (
