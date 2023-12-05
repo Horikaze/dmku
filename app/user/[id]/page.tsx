@@ -6,6 +6,7 @@ import prisma from "@/app/lib/prismadb";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Card } from "@/components/ui/card";
 import { getDateFromReplay } from "@/lib/getRankingData";
+import Image from "next/image";
 
 export default async function User({ params }: { params: { id: string } }) {
   const user = await prisma.profile.findFirst({
@@ -32,39 +33,38 @@ export default async function User({ params }: { params: { id: string } }) {
   }
   return (
     <div className="flex flex-col gap-y-4">
-      <Card>
-        <div className="flex justify-between gap-2  rounded-lg p-2 ">
-          <div className="flex w-1/3 items-center flex-col gap-y-2 m-3">
+      <Card
+        style={{
+          backgroundImage: `url(${user.profileBanner})`,
+        }}
+        className="bg-cover"
+      >
+        <div className="flex text-sm md:text-base justify-between gap-2 relative rounded-md p-2">
+          <div className="flex w-1/3 bg-secondary/60 rounded-md p-3 items-center flex-col gap-y-2 m-3">
             <Avatar className="h-20 w-20 md:h-24 md:w-24">
               <AvatarImage src={user.imageUrl!} alt="avatar" />
               <AvatarFallback>:3</AvatarFallback>
             </Avatar>
-            <p className="font-semibold">{user.nickname}</p>
+            <p>{user.nickname}</p>
             <div className="flex flex-col w-full items-start">
-              <p>
-                CC amount -{" "}
-                <span className="font-normal text-gray-400">
-                  {user.CCCount}
-                </span>
-              </p>
-              <p>
-                Points amount -{" "}
-                <span className="font-normal text-gray-400">{user.points}</span>
-              </p>
+              <p>CC amount - {user.CCCount}</p>
+              <p>Points amount - {user.points}</p>
             </div>
           </div>
           <div className="flex flex-col items-end m-3 justify-between">
-            <RouterBack />
-            <div className="flex flex-row gap-y-2 h-full items-end gap-x-1">
-              <div>
+            <div className="bg-secondary/60 rounded-md">
+              <RouterBack />
+            </div>
+            <div className="flex flex-row gap-y-2 h-full items-end">
+              <div className="bg-secondary/60 p-3 rounded-l-md">
                 <p>Join date -</p>
                 <p>Discord -</p>
                 <p>Favorite Game -</p>
               </div>
-              <div className="flex flex-col items-end">
+              <div className="flex flex-col items-end bg-secondary/60 p-3 rounded-r-md">
                 <p> {getDateFromReplay(user.joindate as any)}</p>
-                <p> {user.discord || "not set"}</p>
-                <p> {user.favoriteGame || "not set"}</p>
+                <p> {user.discord || "-"}</p>
+                <p> {user.favoriteGame || "-"}</p>
               </div>
             </div>
           </div>
@@ -72,7 +72,7 @@ export default async function User({ params }: { params: { id: string } }) {
         {user.bio ? (
           <div className="w-full p-5">
             <p>
-              Bio: <span className="text-sm text-gray-400">{user.bio}</span>
+              Bio: <span className="text-sm  0">{user.bio}</span>
             </p>
           </div>
         ) : null}

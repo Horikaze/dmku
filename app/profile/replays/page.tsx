@@ -3,6 +3,7 @@ import { columns } from "@/app/components/replayTable/columns";
 import { DataTable } from "@/app/components/replayTable/data-table";
 import prisma from "@/app/lib/prismadb";
 import { getServerSession } from "next-auth";
+import DeleteReplay from "../components/Profile/components/DeleteReplay";
 export default async function page() {
   const session = await getServerSession(authOptions);
   let data = await prisma.replay.findMany({
@@ -14,7 +15,8 @@ export default async function page() {
     },
   });
   return (
-    <div className="w-full">
+    <div className="w-full flex flex-col gap-y-3 items-end">
+      <DeleteReplay />
       <DataTable columns={columns} data={data} />
     </div>
   );

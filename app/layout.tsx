@@ -7,7 +7,7 @@ import AuthContext from "./context/AuthContext";
 import "./globals.css";
 import CompareReplaySheet from "./components/compare/CompareReplaySheet";
 
-const inter = Inter({ subsets: ["latin"] });
+const inter = Inter({ subsets: ["latin"], weight:"500" });
 
 export const metadata: Metadata = {
   title: "dmku",
