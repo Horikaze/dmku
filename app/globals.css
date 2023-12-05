@@ -58,14 +58,9 @@
   }
 }
 
-/* html,
 body {
-  scrollbar-width: none;
-  -ms-overflow-style: none;
+  overflow: scroll;
 }
-::-webkit-scrollbar {
-  display: none;
-} */
 
 *::-webkit-scrollbar {
   width: 8px;
