@@ -29,7 +29,12 @@ export default function ReplayItem({ replay }: { replay: Replay }) {
       </div>
       <div className="font-semibold">
         Player -{" "}
-        <span className="font-normal text-gray-400">{replay?.player}</span>
+        <Link
+          href={`/user/${replay.userId}`}
+          className="font-normal underline text-gray-400"
+        >
+          {replay?.player}
+        </Link>
       </div>
       <div className="font-semibold">
         Game -{" "}

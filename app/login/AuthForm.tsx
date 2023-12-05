@@ -68,6 +68,7 @@ const AuthForm = () => {
     }
   }, [variant]);
   const onSubmit = async (data: z.infer<typeof formSchema>) => {
+    console.log("asas");
     if (variant === "LOGIN") {
       signIn("credentials", {
         ...data,
@@ -75,6 +76,10 @@ const AuthForm = () => {
       }).then((callback) => {
         if (callback?.error) {
           console.log("Invalid credencials");
+          toast({
+            title: "Error",
+            description: "Invalid credentials",
+          });
         }
         if (callback?.ok && !callback.error) {
           router.refresh();
@@ -100,10 +105,7 @@ const AuthForm = () => {
       redirect: false,
     }).then((callback) => {
       if (callback?.error) {
-        toast({
-          title: "Error",
-          description: "Invalid credentials",
-        });
+        console.log(callback?.error);
       }
       if (callback?.ok && !callback.error) {
         console.log("Logged");

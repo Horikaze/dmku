@@ -58,7 +58,6 @@ export const authOptions: AuthOptions = {
         if (!isUserExists) {
           const newUser = await prisma.profile.create({
             data: {
-              id: user.id,
               email: user.email!,
               nickname: user.name,
               name: user.name,
@@ -83,7 +82,7 @@ export const authOptions: AuthOptions = {
               UFO: "EASY/0/0/0/char+NORMAL/0/0/0/char+HARD/0/0/0/char+LUNATIC/0/0/0/char+EXTRA/0/0/0/char+PHANTASM/0/0/0/char+OVERDRIVE/0/0/0/char",
               WBAWC:
                 "EASY/0/0/0/char+NORMAL/0/0/0/char+HARD/0/0/0/char+LUNATIC/0/0/0/char+EXTRA/0/0/0/char+PHANTASM/0/0/0/char+OVERDRIVE/0/0/0/char",
-              userIdRankingPoints: user.id,
+              userIdRankingPoints: newUser.id,
             },
           });
 

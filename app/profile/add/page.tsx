@@ -261,7 +261,7 @@ const AddReplay = () => {
                   }}
                 />
                 <div>
-                  <p>Score:{points}</p>
+                  <p>Points: {points}</p>
                 </div>
               </div>
             </div>

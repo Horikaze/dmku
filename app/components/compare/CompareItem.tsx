@@ -38,7 +38,7 @@ export default function CompareItem({ replay }: { replay: Replay }) {
             />
             <label
               htmlFor={replay.replayId}
-              className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+              className="text-sx font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
             >
               Compare
             </label>
