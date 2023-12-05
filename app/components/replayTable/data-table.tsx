@@ -26,7 +26,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-
+import { FaCodeCompare } from "react-icons/fa6";
 import {
   getCharacterFromData,
   getCharacterFromDataWithoutType,
@@ -35,6 +35,8 @@ import { useState } from "react";
 import { FaCopy, FaInfo, FaTrash, FaWindowClose } from "react-icons/fa";
 import Link from "next/link";
 import { useToast } from "@/components/ui/use-toast";
+import currentReplay from "@/app/zustand/currentReplay";
+import { Replay } from "@prisma/client";
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
@@ -69,6 +71,8 @@ export function DataTable<TData, TValue>({
         : getCharacterFromData(obj.character!, obj.shottype!);
   });
   const { toast } = useToast();
+  const { addReplay } = currentReplay();
+
   return (
     <div className="rounded-md border">
       <Table>
@@ -108,6 +112,7 @@ export function DataTable<TData, TValue>({
                   </Tooltip>
                 </TooltipProvider>
               </TableHead>
+              <TableHead></TableHead>
             </TableRow>
           ))}
         </TableHeader>
@@ -134,6 +139,20 @@ export function DataTable<TData, TValue>({
                     className="h-8 w-full flex items-center justify-center px-3"
                   >
                     <FaCopy />
+                  </div>
+                </TableCell>
+                <TableCell className="hover:brightness-125 cursor-pointer bg-secondary p-0">
+                  <div
+                    onClick={() => {
+                      addReplay(row.original as Replay);
+                      toast({
+                        description: "Replay added to compare",
+                      });
+                    }}
+                  >
+                    <div className="h-8 w-full flex items-center justify-center px-3">
+                      <FaCodeCompare />
+                    </div>
                   </div>
                 </TableCell>
                 <TableCell className="hover:brightness-125 cursor-pointer bg-secondary p-0">

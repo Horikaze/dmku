@@ -5,6 +5,7 @@ import Navigation from "./components/Navigation/Navigation";
 import { ThemeProvider } from "./components/theme-provider";
 import AuthContext from "./context/AuthContext";
 import "./globals.css";
+import CompareReplaySheet from "./components/compare/CompareReplaySheet";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -26,6 +27,7 @@ export default function RootLayout({
             <Navigation>{children}</Navigation>
           </ThemeProvider>
           <Toaster />
+          <CompareReplaySheet/>
         </body>
       </AuthContext>
     </html>
