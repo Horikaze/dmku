@@ -1,4 +1,5 @@
 import { scoreWR } from "@/app/constants/wrScores";
+import { Replay } from "@prisma/client";
 
 export const rankValueRecord: { [key: string]: number } = {
   Easy: 1,
@@ -35,5 +36,12 @@ export const calculatePoints = (
   } catch (error) {
     console.log(error);
     return 0;
+  }
+};
+
+export const scoreParse = (replay:Replay) => {
+  if (replay?.stage_score?.includes("+")) {
+    const scoreParts = replay.stage_score.split("+");
+    return scoreParts;
   }
 };

@@ -32,7 +32,7 @@ export default function CompareItem({ replay }: { replay: Replay }) {
           <div className="flex items-center space-x-1 my-2">
             <Checkbox
               id={replay.replayId}
-              defaultChecked={false}
+              checked={selectedReplay.includes(replay) ? true : false}
               onCheckedChange={(e) => {
                 e ? addToCompare(replay) : removeFromCompare(replay);
               }}

@@ -7,6 +7,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { scoreParse } from "@/lib/calculatePoints";
 import {
   getCCstring,
   getCharacterFromData,
@@ -27,18 +28,12 @@ export default async function page({ params }: { params: { id: string } }) {
     return "XD";
   }
 
-  const scoreParse = () => {
-    if (replay?.stage_score?.includes("+")) {
-      const scoreParts = replay.stage_score.split("+");
-      return scoreParts;
-    }
-  };
   const chara =
     replay.game === 9
       ? getCharacterFromDataWithoutType(replay.character!)
       : getCharacterFromData(replay.character!, replay.shottype!) || "";
 
-  const score = scoreParse();
+  const score = scoreParse(replay);
   console.log(replay);
   return (
     <Card>
