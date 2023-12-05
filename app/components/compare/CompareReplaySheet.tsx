@@ -13,7 +13,9 @@ import { useToast } from "@/components/ui/use-toast";
 import { useRouter } from "next/navigation";
 import { FaCodeCompare } from "react-icons/fa6";
 import CompareItem from "./CompareItem";
+import { useState } from "react";
 export default function CompareReplaySheet() {
+  const [open, setOpen] = useState(false);
   const router = useRouter();
   const { addReplay, clear, replay, selectedReplay } = currentReplay();
   const { toast } = useToast();
@@ -33,11 +35,12 @@ export default function CompareReplaySheet() {
       return;
     }
     router.push(
-      `/compare?${selectedReplay[0].replayId}&${selectedReplay[1].replayId}`
+      `/compare/0?replay1=${selectedReplay[0].replayId}&replay2=${selectedReplay[1].replayId}`
     );
+    setOpen(false);
   };
   return (
-    <Sheet>
+    <Sheet open={open} onOpenChange={setOpen}>
       <SheetTrigger>
         {replay.length > 0 ? (
           <FaCodeCompare className="h-7 w-7 fixed top-20 right-2 cursor-pointer" />
@@ -46,7 +49,6 @@ export default function CompareReplaySheet() {
       <SheetContent>
         <SheetHeader>
           <SheetTitle>Compare replays</SheetTitle>
-          <SheetDescription></SheetDescription>
           <div className="flex flex-col justify-between">
             <div className="flex flex-col gap-y-2 h-[calc(100vh-150px)] overflow-y-scroll">
               {replay?.length !== 0
