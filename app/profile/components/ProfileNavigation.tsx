@@ -6,8 +6,7 @@ import {
   FaGamepad,
   FaGear,
   FaPlus,
-  FaTableCells,
-  FaUser,
+  FaUser
 } from "react-icons/fa6";
 export default function ProfileNavigation() {
   const pathName = usePathname();
@@ -27,11 +26,6 @@ export default function ProfileNavigation() {
         label: "Replays",
         icon: FaGamepad,
         active: pathName === "/profile/replays",
-      },
-      {
-        label: "Table",
-        icon: FaTableCells,
-        active: pathName === "/profile/table",
       },
       {
         label: "Settings",
