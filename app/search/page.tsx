@@ -17,7 +17,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { games } from "@/lib/getRankingData";
 import axios from "axios";
 import { useState } from "react";
 import ButtonLoader from "../components/ButtonLoader";
@@ -25,6 +24,7 @@ import { columns } from "../components/replayTable/columns";
 import { DataTable } from "../components/replayTable/data-table";
 import {
   achievementList,
+  games,
   shotTypeList,
   touhouDifficulty,
 } from "../constants/games";

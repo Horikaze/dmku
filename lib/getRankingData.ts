@@ -96,22 +96,6 @@ export const getGameNumber = (replayName: string) => {
   return game;
 };
 
-export const games = [
-  "EOSD",
-  "PCB",
-  "IN",
-  "POFV",
-  "MOF",
-  "SA",
-  "UFO",
-  "GFW",
-  "TD",
-  "DDC",
-  "LOLK",
-  "HSIFS",
-  "WBAWC",
-  "UM",
-];
 
 export interface AchievementValuesType {
   CC: number;

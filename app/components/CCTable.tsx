@@ -8,13 +8,12 @@ import {
 } from "@/components/ui/table";
 import {
   ScoreObject,
-  games,
   getCCstring,
   parseRankingString,
 } from "@/lib/getRankingData";
 import Link from "next/link";
 
-import { touhouDifficulty } from "@/app/constants/games";
+import { games, touhouDifficulty } from "@/app/constants/games";
 import {
   Tooltip,
   TooltipContent,

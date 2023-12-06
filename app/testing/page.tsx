@@ -16,7 +16,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { games } from "@/lib/getRankingData";
 import { useEffect, useState } from "react";
 import { achievementList, touhouDifficulty } from "../constants/games";
 import { scoreWR } from "../constants/wrScores";

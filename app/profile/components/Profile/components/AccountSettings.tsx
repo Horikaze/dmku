@@ -133,7 +133,7 @@ export default function AccountSettings() {
                     />
                   </SelectTrigger>
                 </FormControl>
-                <SelectContent>
+                <SelectContent className="max-h-[300px]">
                   {gamesString.map((game) => (
                     <SelectItem key={game} value={game}>
                       {game}

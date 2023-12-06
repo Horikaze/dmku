@@ -1,6 +1,6 @@
 "use client";
 
-import { touhouDifficulty } from "@/app/constants/games";
+import { games, touhouDifficulty } from "@/app/constants/games";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -12,7 +12,6 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import {
-  games,
   getCCstring,
   getDateFromReplay,
   getGameInt,
