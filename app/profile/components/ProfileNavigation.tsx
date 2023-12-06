@@ -37,14 +37,14 @@ export default function ProfileNavigation() {
   );
   return (
     <div className="flex w-full flex-col p-3">
-      <div className="flex flex-row flex-1 justify-between border">
+      <div className="flex flex-row gap-x-1 justify-between border">
         {tabs.map(({ icon: Icon, label, active }) => {
           if (label === "Profile") {
             return (
               <Link
                 href={`/profile`}
                 key={label}
-                className={`py-3 px-4 flex flex-row gap-x-1 items-center md:px-10 cursor-pointer hover:bg-secondary rounded ${
+                className={`py-3 flex-grow px-4 flex flex-row gap-x-1 items-center justify-center md:px-10 cursor-pointer hover:bg-secondary rounded  ${
                   active && "bg-secondary"
                 }`}
               >
@@ -57,7 +57,7 @@ export default function ProfileNavigation() {
             <Link
               href={`/profile/${label.toLocaleLowerCase()}`}
               key={label}
-              className={`py-3 px-4 flex flex-row gap-x-1 items-center md:px-10 cursor-pointer hover:bg-secondary rounded ${
+              className={`py-3 flex-grow px-4 flex flex-row gap-x-1 items-center justify-center md:px-10 cursor-pointer hover:bg-secondary rounded ${
                 active && "bg-secondary"
               }`}
             >

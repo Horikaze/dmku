@@ -7,7 +7,7 @@ import AuthContext from "./context/AuthContext";
 import "./globals.css";
 import CompareReplaySheet from "./components/compare/CompareReplaySheet";
 
-const inter = Inter({ subsets: ["latin"], weight:"500" });
+const inter = Inter({ subsets: ["latin"], weight: "400" });
 
 export const metadata: Metadata = {
   title: "dmku",
@@ -27,7 +27,7 @@ export default function RootLayout({
             <Navigation>{children}</Navigation>
           </ThemeProvider>
           <Toaster />
-          <CompareReplaySheet/>
+          <CompareReplaySheet />
         </body>
       </AuthContext>
     </html>

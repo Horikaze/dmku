@@ -58,9 +58,10 @@
   }
 }
 
-body {
-  overflow: auto;
+body::-webkit-scrollbar {
+  display: none;
 }
+
 
 *::-webkit-scrollbar {
   width: 8px;

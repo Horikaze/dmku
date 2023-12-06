@@ -33,7 +33,7 @@ const RankElement = ({ user }: { user: RankingElement }) => {
         <AvatarImage src={user.imageUrl!} alt="avatar" />
         <AvatarFallback>:3</AvatarFallback>
       </Avatar>
-      <p className="font-semibold">{user.nickname}</p>
+      <p>{user.nickname}</p>
       <p className="absolute right-0 px-3">{user.points}</p>
     </Link>
   );
