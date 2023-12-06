@@ -16,7 +16,9 @@ const currentReplay = create<CurrentReplay>((set) => ({
   selectedReplay: [],
   addReplay: (replay) =>
     set((state) => ({
-      replay: state.replay.includes(replay)
+      replay: state.replay.some(
+        (currReplay) => currReplay.replayId === replay.replayId
+      )
         ? [...state.replay!]
         : [...state.replay!, replay],
     })),

@@ -37,7 +37,7 @@ export default function ProfileNavigation() {
   );
   return (
     <div className="flex w-full flex-col p-3">
-      <div className="flex flex-row justify-around border">
+      <div className="flex flex-row flex-1 justify-between border">
         {tabs.map(({ icon: Icon, label, active }) => {
           if (label === "Profile") {
             return (

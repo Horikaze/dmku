@@ -15,8 +15,10 @@ export default async function page() {
     },
   });
   return (
-    <div className="w-full flex flex-col gap-y-3 items-end">
-      <DeleteReplay />
+    <div className="w-full flex flex-col gap-y-3 overflow-x-scroll">
+      <div className="flex justify-end">
+        <DeleteReplay />
+      </div>
       <DataTable columns={columns} data={data} />
     </div>
   );

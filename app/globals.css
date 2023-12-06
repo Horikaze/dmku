@@ -59,7 +59,7 @@
 }
 
 body {
-  overflow: scroll;
+  overflow: auto;
 }
 
 *::-webkit-scrollbar {
