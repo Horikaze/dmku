@@ -162,7 +162,7 @@ export default function AccountSettings() {
             </FormItem>
           )}
         />
-        <div className="flex flex-row justify-end">
+        <div className="flex flex-row justify-end pt-2">
           <Button type="submit">
             <ButtonLoader loading={loading} />
             <p>Save</p>

@@ -36,9 +36,7 @@ export const games = [
   "WBAWC",
   "UM",
 ];
-export const gamesNumber = [
-  6, 7, 8, 9, 10, 11, 12, 128, 13, 14, 15, 16, 17, 18,
-];
+
 export const achievementList = ["CC", "NM", "NB", "NMNB", "NNN", "NNNN"];
 
 export const touhouDifficulty = [

@@ -58,7 +58,7 @@ export default function ProfileHeader({ user }: { user: Profile }) {
       {user.bio ? (
         <div className="w-full p-5">
           <p>
-            Bio: <span className="text-sm  0">{user.bio}</span>
+            <span className="text-sm bg-secondary/30 p-1 rounded-md">Bio: {user.bio}</span>
           </p>
         </div>
       ) : null}

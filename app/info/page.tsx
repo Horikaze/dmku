@@ -6,14 +6,14 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { games, gamesNumber, touhouDifficulty } from "../constants/games";
-import { gameCodeRecord, getGameInt } from "@/lib/getRankingData";
+import { getGameInt } from "@/lib/getRankingData";
+import { games, touhouDifficulty } from "../constants/games";
 import { scoreWR } from "../constants/wrScores";
 
 const Info = () => {
   return (
     <div>
-      <Table className="border">
+      <Table className="border text-xs md:text-base">
         <TableHeader>
           <TableRow>
             <TableHead className="border">Game </TableHead>
