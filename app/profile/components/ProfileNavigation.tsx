@@ -3,7 +3,7 @@ import { useSession } from "next-auth/react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useMemo } from "react";
-import { FaGamepad, FaGear, FaPlus, FaUser, FaCheck } from "react-icons/fa6";
+import { FaGamepad, FaGear, FaPlus, FaUser, FaCheck,FaQuestion  } from "react-icons/fa6";
 export default function ProfileNavigation() {
   const session = useSession();
   const pathName = usePathname();

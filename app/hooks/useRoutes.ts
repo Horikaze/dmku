@@ -1,6 +1,6 @@
 import { usePathname } from "next/navigation";
 import { useMemo } from "react";
-import { FaHome, FaInfoCircle, FaSearch, FaSignInAlt } from "react-icons/fa";
+import { FaHome, FaInfoCircle, FaSearch, FaSignInAlt, FaQuestion } from "react-icons/fa";
 import { FaRankingStar } from "react-icons/fa6";
 export const useRoutes = () => {
   const pathName = usePathname();
@@ -30,6 +30,12 @@ export const useRoutes = () => {
         href: "/info",
         icon: FaInfoCircle,
         active: pathName === "/info",
+      },
+      {
+        label: "Quiz",
+        href: "/quiz",
+        icon: FaQuestion,
+        active: pathName === "/quiz",
       },
       {
         label: "Login",

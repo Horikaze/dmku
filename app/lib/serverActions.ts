@@ -6,13 +6,14 @@ import {
   ScoreObject,
   getCharacterFromData,
   getCharacterFromDataWithoutType,
+  getGameNumber,
   getGameString,
   parseRankingString,
   stringifyRanking,
 } from "@/lib/getRankingData";
 import { UTApi } from "uploadthing/server";
 import { redirect } from "next/navigation";
-import { ReplayStatus } from "@prisma/client";
+import { Replay, ReplayStatus } from "@prisma/client";
 import { revalidatePath } from "next/cache";
 
 type deleteReplayActionReturns = {
@@ -25,30 +26,63 @@ type deleteReplayActionReturns = {
     | "Replay is not yours";
 };
 
-export const deleteReplayAction = async (
+export const deleteYourReplayAction = async (
   formData: FormData
+): Promise<deleteReplayActionReturns> => {
+  const utapi = new UTApi();
+  const session = await getServerSession(authOptions);
+  if (!session) return { status: "Unauthorized" };
+  const replayId = formData.get("replayID") as string;
+  if (!replayId || replayId === "") return { status: "No data provided" };
+  const isReplayYours = await prisma.replay.findFirst({
+    where: {
+      replayId,
+      userId: session?.user.info.id,
+    },
+  });
+  if (isReplayYours?.userId !== session.user.info.id) {
+    return { status: "Replay is not yours" };
+  }
+  await deleteReplayFunction(replayId);
+  revalidatePath("/profile/replays");
+  return { status: "Success" };
+};
+
+export const changeReplayStatus = async (formData: FormData) => {
+  const session = await getServerSession(authOptions);
+  if (session?.user.info.admin !== true) {
+    redirect("/profile");
+    return;
+  }
+  const status = formData.get("status") as ReplayStatus;
+  const replayId = formData.get("replayId") as string;
+  if (status === "REJECTED") {
+    await deleteReplayFunction(replayId);
+    revalidatePath("/profile/moderation");
+    return;
+  }
+  const updatedReplay = await prisma.replay.update({
+    where: {
+      replayId: replayId,
+    },
+    data: {
+      status: status as ReplayStatus,
+    },
+  });
+
+  revalidatePath("/profile/moderation");
+};
+
+const deleteReplayFunction = async (
+  replayId: string
 ): Promise<deleteReplayActionReturns> => {
   try {
     const utapi = new UTApi();
-    const session = await getServerSession(authOptions);
-    if (!session) return { status: "Unauthorized" };
-    const replayId = formData.get("replayID") as string;
     if (!replayId || replayId === "") return { status: "No data provided" };
-
-    const isReplayYours = await prisma.replay.findFirst({
-      where: {
-        replayId,
-        userId: session?.user.info.id,
-      },
-    });
-    if (isReplayYours?.userId !== session.user.info.id) {
-      return { status: "Replay is not yours" };
-    }
 
     const deletedReplay = await prisma.replay.delete({
       where: {
         replayId,
-        userId: session?.user.info.id,
       },
     });
 
@@ -66,7 +100,7 @@ export const deleteReplayAction = async (
       const updatedPoints = -deletedReplay.points! + sameReplay.points!;
       await prisma.profile.update({
         where: {
-          id: session.user.info.id,
+          id: deletedReplay.userId!,
         },
         data: {
           points: {
@@ -77,7 +111,7 @@ export const deleteReplayAction = async (
     } else {
       await prisma.profile.update({
         where: {
-          id: session.user.info.id,
+          id: deletedReplay.userId!,
         },
         data: {
           points: {
@@ -105,7 +139,7 @@ export const deleteReplayAction = async (
       if (CCreplacement) {
         const currenntRanking = await prisma.ranking.findFirst({
           where: {
-            userIdRankingPoints: session.user.info.id,
+            userIdRankingPoints: deletedReplay.userId!,
           },
           select: {
             [gameString]: true,
@@ -130,7 +164,7 @@ export const deleteReplayAction = async (
         const newScoreObjString = stringifyRanking(newScoreObj);
         await prisma.ranking.update({
           where: {
-            userIdRankingPoints: session.user.info.id,
+            userIdRankingPoints: deletedReplay.userId!,
           },
           data: {
             [gameString]: newScoreObjString,
@@ -139,7 +173,7 @@ export const deleteReplayAction = async (
       } else {
         const currenntRanking = await prisma.ranking.findFirst({
           where: {
-            userIdRankingPoints: session.user.info.id,
+            userIdRankingPoints: deletedReplay.userId!,
           },
           select: {
             [gameString]: true,
@@ -158,7 +192,7 @@ export const deleteReplayAction = async (
         const newScoreObjString = stringifyRanking(newScoreObj);
         await prisma.ranking.update({
           where: {
-            userIdRankingPoints: session.user.info.id,
+            userIdRankingPoints: deletedReplay.userId!,
           },
           data: {
             [gameString]: newScoreObjString,
@@ -167,7 +201,7 @@ export const deleteReplayAction = async (
 
         await prisma.profile.update({
           where: {
-            id: session.user.info.id,
+            id: deletedReplay.userId!,
           },
           data: {
             CCCount: {
@@ -178,28 +212,8 @@ export const deleteReplayAction = async (
       }
     }
     return { status: "Success" };
-  } catch (error) {
-    console.log(error);
-    return { status: "Replay dosent exists" };
+  } catch (e) {
+    console.log(e);
+    return { status: "Internal error" };
   }
-};
-
-export const changeReplayStatus = async (formData: FormData) => {
-  const session = await getServerSession(authOptions);
-  if (session?.user.info.admin !== true) {
-    redirect("/profile");
-    return;
-  }
-  const status = formData.get("status") as string;
-  const replayId = formData.get("replayId") as string;
-  console.log(status, replayId);
-  await prisma.replay.update({
-    where: {
-      replayId: replayId,
-    },
-    data: {
-      status: status as ReplayStatus,
-    },
-  });
-  revalidatePath("/profile/moderation");
 };

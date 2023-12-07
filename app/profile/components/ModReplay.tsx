@@ -36,6 +36,7 @@ export default function ModReplay({ replay }: { replay: Replay }) {
           Character: {getCharacterFromData(replay.character!, replay.shottype!)}
         </p>
         <p>Score: {replay.score?.toLocaleString()}</p>
+        <p>Points: {replay.points!}</p>
         <p>Achievement: {getCCstring(replay.achievement!)}</p>
         {replay?.comment!.length > 3 ? <p> {replay?.comment}</p> : null}
         {replay?.videoLink ? (

@@ -3,10 +3,10 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 
 import ButtonLoader from "@/app/components/ButtonLoader";
-import { deleteReplayAction } from "@/app/lib/serverActions";
 import { useToast } from "@/components/ui/use-toast";
 import { useRef } from "react";
 import { useFormStatus } from "react-dom";
+import { deleteYourReplayAction } from "@/app/lib/serverActions";
 
 const DeleteReplay = () => {
   const { toast } = useToast();
@@ -16,7 +16,7 @@ const DeleteReplay = () => {
       ref={ref}
       action={async (FormData) => {
         ref.current?.reset();
-        const { status } = await deleteReplayAction(FormData);
+        const { status } = await deleteYourReplayAction(FormData);
         return toast({
           description: `${status}`,
         });
