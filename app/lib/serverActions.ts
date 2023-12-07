@@ -1,20 +1,19 @@
 "use server";
 import { authOptions } from "@/app/api/auth/[...nextauth]/auth";
-import { getServerSession } from "next-auth";
 import prisma from "@/app/lib/prismadb";
 import {
   ScoreObject,
   getCharacterFromData,
   getCharacterFromDataWithoutType,
-  getGameNumber,
   getGameString,
   parseRankingString,
-  stringifyRanking,
+  stringifyRanking
 } from "@/lib/getRankingData";
-import { UTApi } from "uploadthing/server";
-import { redirect } from "next/navigation";
-import { Replay, ReplayStatus } from "@prisma/client";
+import { ReplayStatus } from "@prisma/client";
+import { getServerSession } from "next-auth";
 import { revalidatePath } from "next/cache";
+import { redirect } from "next/navigation";
+import { UTApi } from "uploadthing/server";
 
 type deleteReplayActionReturns = {
   status:
@@ -29,7 +28,6 @@ type deleteReplayActionReturns = {
 export const deleteYourReplayAction = async (
   formData: FormData
 ): Promise<deleteReplayActionReturns> => {
-  const utapi = new UTApi();
   const session = await getServerSession(authOptions);
   if (!session) return { status: "Unauthorized" };
   const replayId = formData.get("replayID") as string;
@@ -52,7 +50,6 @@ export const changeReplayStatus = async (formData: FormData) => {
   const session = await getServerSession(authOptions);
   if (session?.user.info.admin !== true) {
     redirect("/profile");
-    return;
   }
   const status = formData.get("status") as ReplayStatus;
   const replayId = formData.get("replayId") as string;

@@ -15,6 +15,7 @@ import { getServerSession } from "next-auth";
 import { NextRequest, NextResponse } from "next/server";
 import { UTApi } from "uploadthing/server";
 import { authOptions } from "../auth/[...nextauth]/auth";
+import { revalidatePath } from "next/cache";
 export async function POST(request: NextRequest, response: NextResponse) {
   try {
     const session = await getServerSession(authOptions);
@@ -52,6 +53,7 @@ export async function POST(request: NextRequest, response: NextResponse) {
       where: {
         game: gameNumber,
         rank: values.rank,
+        userId: session.user.info.id,
       },
       orderBy: {
         points: "desc",
@@ -81,6 +83,18 @@ export async function POST(request: NextRequest, response: NextResponse) {
       },
     });
 
+    const currenntRanking = await prisma.ranking.findFirst({
+      where: {
+        userIdRankingPoints: session.user.info.id,
+      },
+      select: {
+        [gameString]: true,
+      },
+    });
+    const rankingObject = parseRankingString(currenntRanking![gameString]);
+    const valueToUpdate =
+      rankingObject[values.rank!.toUpperCase() as keyof ScoreObject];
+
     // calc points
     if (sameReplay) {
       if (sameReplay.points! <= newReplay.points!) {
@@ -95,6 +109,28 @@ export async function POST(request: NextRequest, response: NextResponse) {
             },
           },
         });
+        const newScoreObj: ScoreObject = {
+          ...rankingObject,
+          [values.rank!.toUpperCase() as keyof ScoreObject]: {
+            score: totalScore,
+            id: newReplay.replayId,
+            CC: newCC,
+            char:
+              gameNumber === 9
+                ? getCharacterFromDataWithoutType(values.character!)
+                : getCharacterFromData(values.character!, values.type!),
+          },
+        };
+
+        const newScoreObjString = stringifyRanking(newScoreObj);
+        await prisma.ranking.update({
+          where: {
+            userIdRankingPoints: session.user.info.id,
+          },
+          data: {
+            [gameString]: newScoreObjString,
+          },
+        });
       }
     } else {
       await prisma.profile.update({
@@ -107,36 +143,6 @@ export async function POST(request: NextRequest, response: NextResponse) {
           },
         },
       });
-    }
-    //end of calc points
-
-    const currenntRanking = await prisma.ranking.findFirst({
-      where: {
-        userIdRankingPoints: session.user.info.id,
-      },
-      select: {
-        [gameString]: true,
-      },
-    });
-    const rankingObject = parseRankingString(currenntRanking![gameString]);
-    const valueToUpdate =
-      rankingObject[values.rank!.toUpperCase() as keyof ScoreObject];
-
-    if (valueToUpdate!.score! <= totalScore || valueToUpdate?.CC! <= newCC) {
-      const newScoreObj: ScoreObject = {
-        ...rankingObject,
-        [values.rank!.toUpperCase() as keyof ScoreObject]: {
-          score: totalScore,
-          id: newReplay.replayId,
-          CC: newCC,
-          char:
-            gameNumber === 9
-              ? getCharacterFromDataWithoutType(values.character!)
-              : getCharacterFromData(values.character!, values.type!),
-        },
-      };
-      console.log(newScoreObj);
-
       if (valueToUpdate?.CC === 0) {
         await prisma.profile.update({
           where: {
@@ -149,9 +155,20 @@ export async function POST(request: NextRequest, response: NextResponse) {
           },
         });
       }
+      const newScoreObj: ScoreObject = {
+        ...rankingObject,
+        [values.rank!.toUpperCase() as keyof ScoreObject]: {
+          score: totalScore,
+          id: newReplay.replayId,
+          CC: newCC,
+          char:
+            gameNumber === 9
+              ? getCharacterFromDataWithoutType(values.character!)
+              : getCharacterFromData(values.character!, values.type!),
+        },
+      };
 
       const newScoreObjString = stringifyRanking(newScoreObj);
-      console.log(newScoreObjString);
       await prisma.ranking.update({
         where: {
           userIdRankingPoints: session.user.info.id,
@@ -161,6 +178,8 @@ export async function POST(request: NextRequest, response: NextResponse) {
         },
       });
     }
+    //end of calc points
+    revalidatePath("/profile");
     return NextResponse.json(newReplay);
   } catch (error) {
     console.log(error);
