@@ -6,8 +6,8 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import AccountSettings from "../components/Profile/components/AccountSettings";
-import ImagesSettings from "../components/Profile/components/ImagesSettings";
+import AccountSettings from "../components/AccountSettings";
+import ImagesSettings from "../components/ImagesSettings";
 
 export default function Settings() {
   return (

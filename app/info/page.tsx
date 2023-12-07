@@ -19,6 +19,7 @@ const Info = () => {
             <TableHead className="border">Game </TableHead>
             {touhouDifficulty.map((diff) => {
               if (diff === "Overdrive") return null;
+              if (diff === "Phantasm") return null;
               return (
                 <TableHead className="border text-center" key={diff}>
                   {diff}
@@ -33,6 +34,22 @@ const Info = () => {
               <TableCell className="border">{game}</TableCell>
               {touhouDifficulty.map((diff) => {
                 if (diff === "Overdrive") return null;
+                if (diff === "Phantasm") return null;
+                if (diff === "Extra" && game === "PCB") {
+                  return (
+                    <TableCell
+                      key={diff}
+                      className="border text-xs flex flex-col"
+                    >
+                      E:{" "}
+                      {(scoreWR[getGameInt(game)][diff] || "").toLocaleString()}
+                      <p>
+                        {" "}
+                        P: {(scoreWR[7]["Phantasm"] || "").toLocaleString()}
+                      </p>
+                    </TableCell>
+                  );
+                }
                 return (
                   <TableCell key={diff} className="border">
                     {(scoreWR[getGameInt(game)][diff] || "").toLocaleString()}

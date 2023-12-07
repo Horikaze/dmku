@@ -11,10 +11,13 @@ import {
   stringifyRanking,
 } from "@/lib/getRankingData";
 import { UTApi } from "uploadthing/server";
+import { redirect } from "next/navigation";
+import { ReplayStatus } from "@prisma/client";
+import { revalidatePath } from "next/cache";
 
 type deleteReplayActionReturns = {
   status:
-    | "Deleted"
+    | "Success"
     | "Replay dosent exists"
     | "Unauthorized"
     | "Internal error"
@@ -174,9 +177,29 @@ export const deleteReplayAction = async (
         });
       }
     }
-    return { status: "Deleted" };
+    return { status: "Success" };
   } catch (error) {
     console.log(error);
     return { status: "Replay dosent exists" };
   }
+};
+
+export const changeReplayStatus = async (formData: FormData) => {
+  const session = await getServerSession(authOptions);
+  if (session?.user.info.admin !== true) {
+    redirect("/profile");
+    return;
+  }
+  const status = formData.get("status") as string;
+  const replayId = formData.get("replayId") as string;
+  console.log(status, replayId);
+  await prisma.replay.update({
+    where: {
+      replayId: replayId,
+    },
+    data: {
+      status: status as ReplayStatus,
+    },
+  });
+  revalidatePath("/profile/moderation");
 };

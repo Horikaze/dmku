@@ -22,7 +22,7 @@ model Profile {
   supporter      Boolean?
   joindate       DateTime @default(now())
   discord        String?
-  favoriteGame   Games?
+  favoriteGame   String?
   bio            String?  @db.VarChar(250)
   points         Int?     @default(0)
   CCTable        Ranking?
@@ -96,23 +96,4 @@ enum Achievement {
   NMNB
   NNN
   NNNN
-}
-
-enum Games {
-  EOSD
-  PCB
-  IN
-  INA
-  INB
-  POFV
-  MOF
-  SA
-  UFO
-  GFW
-  TD
-  DDC
-  LOLK
-  HSIFS
-  WBAWC
-  UM
 }

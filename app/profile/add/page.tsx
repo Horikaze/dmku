@@ -180,7 +180,7 @@ const AddReplay = () => {
                 <Label
                   className={`${buttonVariants({
                     variant: "default",
-                  })} cursor-pointer text-xs xl:text-base`}
+                  })} cursor-pointer text-xs xl:text-sm`}
                   htmlFor="selectReplay"
                 >
                   Select a replay file
@@ -200,7 +200,7 @@ const AddReplay = () => {
                 {replay && (
                   <Button
                     type="button"
-                    className="text-xs xl:text-base"
+                    className="text-xs xl:text-sm"
                     disabled={loading}
                     onClick={readReplayData}
                   >
@@ -211,7 +211,7 @@ const AddReplay = () => {
                 {replayData && (
                   <Button
                     type="button"
-                    className="text-xs xl:text-base"
+                    className="text-xs xl:text-sm"
                     onClick={checkExisting}
                     disabled={loading}
                   >

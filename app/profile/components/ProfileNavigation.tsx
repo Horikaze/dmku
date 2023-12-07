@@ -1,14 +1,11 @@
 "use client";
+import { useSession } from "next-auth/react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useMemo } from "react";
-import {
-  FaGamepad,
-  FaGear,
-  FaPlus,
-  FaUser
-} from "react-icons/fa6";
+import { FaGamepad, FaGear, FaPlus, FaUser, FaCheck } from "react-icons/fa6";
 export default function ProfileNavigation() {
+  const session = useSession();
   const pathName = usePathname();
   const tabs = useMemo(
     () => [
@@ -32,6 +29,11 @@ export default function ProfileNavigation() {
         icon: FaGear,
         active: pathName === "/profile/settings",
       },
+      {
+        label: "Moderation",
+        icon: FaCheck,
+        active: pathName === "/profile/admin",
+      },
     ],
     [pathName]
   );
@@ -39,6 +41,8 @@ export default function ProfileNavigation() {
     <div className="flex w-full flex-col p-3">
       <div className="flex flex-row gap-x-1 justify-between border">
         {tabs.map(({ icon: Icon, label, active }) => {
+          if (label === "Moderation" && session.data?.user.info.admin !== true)
+            return null;
           if (label === "Profile") {
             return (
               <Link
