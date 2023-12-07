@@ -6,6 +6,7 @@ type RankingCardData = {
   imageUrl: string | null;
   points: number | null;
   id: string;
+  admin: boolean;
 };
 
 const RankingCard = async ({
@@ -30,6 +31,7 @@ const RankingCard = async ({
                 nickname: item.nickname,
                 points: item.points,
                 id: item.id,
+                admin: item.admin,
               }}
               key={idx}
             />

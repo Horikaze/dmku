@@ -7,6 +7,7 @@ type RankingElement = {
   points: number | null;
   id: string | number;
   index: number;
+  admin:boolean
 };
 const RankElement = ({ user }: { user: RankingElement }) => {
   const color =
@@ -33,7 +34,7 @@ const RankElement = ({ user }: { user: RankingElement }) => {
         <AvatarImage src={user.imageUrl!} alt="avatar" />
         <AvatarFallback>:3</AvatarFallback>
       </Avatar>
-      <p>{user.nickname}</p>
+      <p className={`${user.admin? "bg-gradient-to-r from-pink-500 to-rose-500 bg-clip-text text-transparent" : ""}`}>{user.nickname}</p>
       <p className="absolute right-0 px-3">{user.points}</p>
     </Link>
   );

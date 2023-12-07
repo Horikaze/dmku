@@ -35,7 +35,7 @@ export default function ProfileNav({
 }: ProfileNavProps) {
   const textAndIconColor = useMemo(() => {
     const textAndIconColor = clsx(
-      "font-semibold text-sm",
+      "font-semibold",
       active ? "font-bold text-black dark:text-white" : "text-slate-500"
     );
     return textAndIconColor;

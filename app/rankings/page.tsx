@@ -12,6 +12,7 @@ const Rankings = async () => {
       nickname: true,
       id: true,
       CCCount: true,
+      admin: true,
     },
   });
 
@@ -29,6 +30,7 @@ const Rankings = async () => {
           imageUrl: true,
           nickname: true,
           points: true,
+          admin: true,
         },
       },
     },
@@ -39,6 +41,7 @@ const Rankings = async () => {
       nickname: item.nickname!,
       points: item.CCCount!,
       id: item.id!,
+      admin: item.admin!,
     };
   });
 
@@ -48,6 +51,7 @@ const Rankings = async () => {
       nickname: item.Profile?.nickname!,
       points: item.Profile?.points!,
       id: item.userIdRankingPoints!,
+      admin: item.Profile?.admin!,
     };
   });
 
