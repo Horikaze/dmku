@@ -51,4 +51,4 @@ export const touhouDifficulty = [
 
 export const shotTypeList = ["A", "B", "C"];
 
-export const replayStatus = ["NEW", "VERIFIED", "REJECTED"];
+export const replayStatus = ["UNVERIFIED", "VERIFIED", "REJECTED"];

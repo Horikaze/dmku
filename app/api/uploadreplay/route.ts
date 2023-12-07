@@ -74,7 +74,7 @@ export async function POST(request: NextRequest, response: NextResponse) {
         shottype: values.type,
         points: Number(values.points),
         videoLink: values.videoLink,
-        status: "NEW",
+        status: "UNVERIFIED",
         stage_score: values.score,
         score: totalScore,
         fileDate,

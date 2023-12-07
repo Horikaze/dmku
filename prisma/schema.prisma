@@ -84,7 +84,7 @@ model Replay {
 }
 
 enum ReplayStatus {
-  NEW
+  UNVERIFIED
   VERIFIED
   REJECTED
 }

@@ -23,6 +23,7 @@ import { useToast } from "@/components/ui/use-toast";
 import { zodResolver } from "@hookform/resolvers/zod";
 import axios from "axios";
 import { useSession } from "next-auth/react";
+import { redirect } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
@@ -46,7 +47,8 @@ export default function AccountSettings() {
     },
   });
   const [loading, setLoading] = useState(false);
-
+  const { data: session, update } = useSession();
+  console.log(session);
   function onSubmit(values: z.infer<typeof formSchema>) {
     setLoading(true);
     axios
@@ -54,8 +56,10 @@ export default function AccountSettings() {
       .then(() => {
         toast({
           title: "Updated",
-          description: "Login again to see the changes",
         });
+        if (values.nickname?.length! >= 1) {
+          update();
+        }
       })
       .catch((e) => {
         toast({
@@ -68,7 +72,6 @@ export default function AccountSettings() {
       });
   }
 
-  const session = useSession();
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-2 w-full">
@@ -80,7 +83,7 @@ export default function AccountSettings() {
               <FormLabel>Nickname</FormLabel>
               <FormControl>
                 <Input
-                  placeholder={session.data?.user.info.nickname || "Nickname"}
+                  placeholder={session?.user.info.nickname || "Nickname"}
                   {...field}
                 />
               </FormControl>
@@ -109,7 +112,7 @@ export default function AccountSettings() {
               <FormLabel>Discord</FormLabel>
               <FormControl>
                 <Input
-                  placeholder={session.data?.user.info.discord || "Discord"}
+                  placeholder={session?.user.info.discord || "Discord"}
                   {...field}
                 />
               </FormControl>
@@ -127,9 +130,7 @@ export default function AccountSettings() {
                 <FormControl>
                   <SelectTrigger>
                     <SelectValue
-                      placeholder={
-                        session.data?.user.info.favoriteGame || "Game"
-                      }
+                      placeholder={session?.user.info.favoriteGame || "Game"}
                     />
                   </SelectTrigger>
                 </FormControl>
@@ -153,7 +154,7 @@ export default function AccountSettings() {
               <FormLabel>Bio</FormLabel>
               <FormControl>
                 <Textarea
-                  placeholder={session.data?.user.info.bio || "Bio"}
+                  placeholder={session?.user.info.bio || "Bio"}
                   className="resize-none [&::-webkit-scrollbar]:hidden [-ms-overflow-style:'none'] [scrollbar-width:'none']"
                   {...field}
                 />

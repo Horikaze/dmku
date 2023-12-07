@@ -14,7 +14,7 @@ import ModReplay from "../components/ModReplay";
 export default async function Moderation() {
   const replays = await prisma.replay.findMany({
     where: {
-      status: "NEW",
+      status: "UNVERIFIED",
     },
   });
 
@@ -28,7 +28,6 @@ export default async function Moderation() {
       <Card>
         <CardHeader>
           <CardTitle>Moderate replays</CardTitle>
-          <CardDescription> </CardDescription>
         </CardHeader>
         <CardContent>
           <div className="flex flex-col gap-y-2 max-h-[800px] overflow-y-scroll">

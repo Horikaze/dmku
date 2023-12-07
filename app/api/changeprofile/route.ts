@@ -3,6 +3,7 @@ import prisma from "@/app/lib/prismadb";
 import { NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
 import { authOptions } from "../auth/[...nextauth]/auth";
+import { revalidatePath } from "next/cache";
 export const POST = async (req: Request) => {
   try {
     const session = await getServerSession(authOptions);
@@ -38,7 +39,7 @@ export const POST = async (req: Request) => {
       },
       data: fieldsToChange,
     });
-
+    revalidatePath('/profile', 'layout')
     return new NextResponse("Updated", { status: 200 });
   } catch (error) {
     console.log(error, "CHANGE PROFILE ERROR");

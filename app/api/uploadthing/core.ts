@@ -3,6 +3,7 @@ import { getServerSession } from "next-auth";
 import { createUploadthing, type FileRouter } from "uploadthing/next";
 import { UTApi } from "uploadthing/server";
 import { authOptions } from "../auth/[...nextauth]/auth";
+import { revalidatePath } from "next/cache";
 const f = createUploadthing();
 const utapi = new UTApi();
 
@@ -42,7 +43,7 @@ export const ourFileRouter = {
       } catch (error) {
         console.log(error);
       }
-
+      revalidatePath('/profile', 'layout')
       return { uploadedBy: metadata.email };
     }),
   profileBanner: f({ image: { maxFileSize: "4MB" } })
@@ -78,7 +79,7 @@ export const ourFileRouter = {
       } catch (error) {
         console.log(error);
       }
-
+      revalidatePath('/profile', 'layout')
       return { uploadedBy: metadata.email };
     }),
 } satisfies FileRouter;

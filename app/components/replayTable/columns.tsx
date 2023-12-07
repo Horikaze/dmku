@@ -212,8 +212,8 @@ export const columns: ColumnDef<Replay>[] = [
               <SelectItem className="cursor-pointer" value={"All"}>
                 Status
               </SelectItem>
-              <SelectItem className="cursor-pointer" value={"NEW"}>
-                NEW
+              <SelectItem className="cursor-pointer" value={"UNVERIFIED"}>
+              UNVERIFIED
               </SelectItem>
               <SelectItem className="cursor-pointer" value={"VERIFIED"}>
                 VERIFIED

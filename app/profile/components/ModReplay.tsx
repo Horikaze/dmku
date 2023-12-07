@@ -64,7 +64,7 @@ export default function ModReplay({ replay }: { replay: Replay }) {
         </p>
       </div>
       <div className="flex flex-col justify-between gap-y-2">
-        <Select name="status" defaultValue="NEW">
+        <Select name="status" defaultValue="UNVERIFIED">
           <SelectTrigger>
             <SelectValue placeholder="Rank" />
           </SelectTrigger>

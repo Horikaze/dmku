@@ -33,7 +33,6 @@ export default function ImagesSettings() {
           onClientUploadComplete={(res) => {
             toast({
               title: "Updated",
-              description: "Login again to see the changes",
             });
           }}
           onUploadError={(error: Error) => {
@@ -70,7 +69,6 @@ export default function ImagesSettings() {
           onClientUploadComplete={(res) => {
             toast({
               title: "Updated",
-              description: "Login again to see the changes",
             });
           }}
           onUploadError={(error: Error) => {
