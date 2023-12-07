@@ -1,12 +1,10 @@
 "use client";
-import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 
-import ButtonLoader from "@/app/components/ButtonLoader";
+import { deleteYourReplayAction } from "@/app/lib/serverActions";
 import { useToast } from "@/components/ui/use-toast";
 import { useRef } from "react";
-import { useFormStatus } from "react-dom";
-import { deleteYourReplayAction } from "@/app/lib/serverActions";
+import { SubmitButton } from "./SubmitButton";
 
 const DeleteReplay = () => {
   const { toast } = useToast();
@@ -30,20 +28,9 @@ const DeleteReplay = () => {
         placeholder="Replay ID"
       />
 
-      <SubmbitButton />
+      <SubmitButton text="Delete" variant={"destructive"} />
     </form>
   );
 };
 
 export default DeleteReplay;
-
-export const SubmbitButton = () => {
-  const { pending } = useFormStatus();
-
-  return (
-    <Button type="submit" variant={"destructive"}>
-      <ButtonLoader loading={pending} />
-      Delete
-    </Button>
-  );
-};

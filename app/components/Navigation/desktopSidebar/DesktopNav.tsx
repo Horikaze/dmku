@@ -8,7 +8,6 @@ const DesktopNav = () => {
   const routes = useRoutes();
   const session = useSession();
   const isProfileVisible = session.status === "authenticated";
-  console.log(session);
   return (
     <div className="hidden lg:flex lg:flex-row border-b px-4">
       <div>

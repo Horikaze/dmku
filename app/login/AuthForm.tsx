@@ -68,7 +68,6 @@ const AuthForm = () => {
     }
   }, [variant]);
   const onSubmit = async (data: z.infer<typeof formSchema>) => {
-    console.log("asas");
     if (variant === "LOGIN") {
       signIn("credentials", {
         ...data,

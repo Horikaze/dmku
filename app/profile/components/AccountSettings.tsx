@@ -48,7 +48,6 @@ export default function AccountSettings() {
   });
   const [loading, setLoading] = useState(false);
   const { data: session, update } = useSession();
-  console.log(session);
   function onSubmit(values: z.infer<typeof formSchema>) {
     setLoading(true);
     axios

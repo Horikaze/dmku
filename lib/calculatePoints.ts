@@ -25,7 +25,6 @@ export const calculatePoints = (
   rank: string,
   game: number
 ): number => {
-  console.log(rank);
   try {
     const CCValue = CCValueRecord[CC!];
     const rankValue = rankValueRecord[rank!];

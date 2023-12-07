@@ -27,7 +27,6 @@ export const columns: ColumnDef<Replay>[] = [
       return (
         <Select
           onValueChange={(e) => {
-            console.log(table.getColumn("game")?.getFilterValue() as string);
             if (e === "All") {
               table.getColumn("game")?.setFilterValue("");
               return;

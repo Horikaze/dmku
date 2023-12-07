@@ -16,6 +16,7 @@ import {
 } from "@/lib/getRankingData";
 import { Replay } from "@prisma/client";
 import Link from "next/link";
+import { SubmitButton } from "./SubmitButton";
 
 export default function ModReplay({ replay }: { replay: Replay }) {
   return (
@@ -89,7 +90,9 @@ export default function ModReplay({ replay }: { replay: Replay }) {
           className="hidden"
           defaultValue={replay.replayId}
         />
-        <Button type="submit">Save</Button>
+        <div className="flex justify-end">
+          <SubmitButton text="Save" />
+        </div>
       </div>
     </form>
   );
