@@ -40,7 +40,13 @@ export const authOptions: AuthOptions = {
     }),
   ],
   callbacks: {
-    async jwt({ token, user }) {
+    async jwt({ token, user, trigger, session }) {
+      if (trigger === "update" && session?.name) {
+        token.name = session.name;
+      }
+      if (trigger === "update" && session?.image) {
+        token.picture = session.image;
+      }
       if (user) {
         const isUserExists = await prisma.profile.findUnique({
           where: {
@@ -102,7 +108,7 @@ export const authOptions: AuthOptions = {
     },
   },
 
-  // debug: process.env.NODE_ENV === "development",
+  debug: process.env.NODE_ENV === "development",
   session: {
     strategy: "jwt",
   },

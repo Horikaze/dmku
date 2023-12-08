@@ -44,7 +44,7 @@ export const ourFileRouter = {
         console.log(error);
       }
       revalidatePath('/profile', 'layout')
-      return { uploadedBy: metadata.email };
+      return { image: file.url };
     }),
   profileBanner: f({ image: { maxFileSize: "4MB" } })
     .middleware(async ({ req }) => {
@@ -80,7 +80,7 @@ export const ourFileRouter = {
         console.log(error);
       }
       revalidatePath('/profile', 'layout')
-      return { uploadedBy: metadata.email };
+      return { image: file.url };
     }),
 } satisfies FileRouter;
 

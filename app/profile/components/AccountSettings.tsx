@@ -23,7 +23,6 @@ import { useToast } from "@/components/ui/use-toast";
 import { zodResolver } from "@hookform/resolvers/zod";
 import axios from "axios";
 import { useSession } from "next-auth/react";
-import { redirect } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
@@ -57,7 +56,7 @@ export default function AccountSettings() {
           title: "Updated",
         });
         if (values.nickname?.length! >= 1) {
-          update();
+          update({ name: values.nickname });
         }
       })
       .catch((e) => {

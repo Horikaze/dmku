@@ -4,8 +4,10 @@ import { UploadButton } from "@/app/ulils/uploadthing";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/components/ui/use-toast";
+import { useSession } from "next-auth/react";
 export default function ImagesSettings() {
   const { toast } = useToast();
+  const { update } = useSession();
   return (
     <div className="flex flex-row justify-evenly">
       <div>
@@ -30,7 +32,9 @@ export default function ImagesSettings() {
             },
           }}
           endpoint="profileImage"
-          onClientUploadComplete={(res) => {
+          onClientUploadComplete={async (res) => {
+            console.log(res);
+            await update({ image: res[0].url });
             toast({
               title: "Updated",
             });
@@ -66,7 +70,7 @@ export default function ImagesSettings() {
             },
           }}
           endpoint="profileBanner"
-          onClientUploadComplete={(res) => {
+          onClientUploadComplete={async (res) => {
             toast({
               title: "Updated",
             });
