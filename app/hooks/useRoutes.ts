@@ -1,6 +1,6 @@
 import { usePathname } from "next/navigation";
 import { useMemo } from "react";
-import { FaHome, FaInfoCircle, FaSearch, FaSignInAlt, FaQuestion } from "react-icons/fa";
+import { FaHome, FaInfoCircle, FaQuestion, FaSearch, FaSignInAlt } from "react-icons/fa";
 import { FaRankingStar } from "react-icons/fa6";
 export const useRoutes = () => {
   const pathName = usePathname();
@@ -48,3 +48,4 @@ export const useRoutes = () => {
   );
   return routes;
 };
+
