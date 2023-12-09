@@ -5,7 +5,7 @@ import { ThemeProvider } from "./components/theme-provider";
 import AuthContext from "./context/AuthContext";
 import "./globals.css";
 import CompareReplaySheet from "./components/compare/CompareReplaySheet";
-import Navbar from "@/app/components/navigation/Navbar";
+import Navbar from "./components/Navigation/Navbar";
 
 const inter = Inter({ subsets: ["latin"], weight: "400" });
 
