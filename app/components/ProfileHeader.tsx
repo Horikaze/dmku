@@ -10,20 +10,20 @@ export default function ProfileHeader({ user }: { user: Profile }) {
       style={{
         backgroundImage: `url(${user.profileBanner})`,
       }}
-      className="bg-cover h-full bg-center"
+      className="bg-cover bg-center"
     >
       <div className="flex transition-all text-sm md:text-base justify-around rounded-md">
         <div className="flex justify-between w-full">
-          <div className="flex w-1/3 rounded-md p-3 items-center flex-col gap-y-2 m-3">
-            <div className=" bg-secondary/60 rounded-md p-3 w-full flex flex-col items-center  gap-y-2 m-3">
+          <div className="flex w-1/3 rounded-md items-center flex-col gap-y-2 m-3">
+            <div className=" bg-secondary/60 rounded-md p-2 w-full flex flex-col items-center  gap-y-2 m-3">
               <Avatar className="h-20 w-20 md:h-24 md:w-24 ">
                 <AvatarImage src={user.imageUrl!} alt="avatar" />
                 <AvatarFallback>:3</AvatarFallback>
               </Avatar>
               <p>{user.nickname}</p>
               <div className="flex flex-col w-full items-start">
-                <p>CC amount - {user.CCCount}</p>
-                <p>Points amount - {user.points}</p>
+                <p>CC - {user.CCCount}</p>
+                <p>Points - {user.points}</p>
               </div>
             </div>
           </div>
@@ -58,7 +58,9 @@ export default function ProfileHeader({ user }: { user: Profile }) {
       {user.bio ? (
         <div className="w-full p-5">
           <p>
-            <span className="text-sm bg-secondary/30 p-1 rounded-md">Bio: {user.bio}</span>
+            <span className="text-sm bg-secondary/30 p-1 rounded-md">
+              Bio: {user.bio}
+            </span>
           </p>
         </div>
       ) : null}

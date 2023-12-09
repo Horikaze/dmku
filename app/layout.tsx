@@ -5,7 +5,7 @@ import { ThemeProvider } from "./components/theme-provider";
 import AuthContext from "./context/AuthContext";
 import "./globals.css";
 import CompareReplaySheet from "./components/compare/CompareReplaySheet";
-import Navbar from "./components/Navigation/Navbar";
+import Navbar from "./components/navigation/Navbar";
 
 const inter = Inter({ subsets: ["latin"], weight: "400" });
 
@@ -24,8 +24,8 @@ export default function RootLayout({
       <AuthContext>
         <body className={`${inter.className}`}>
           <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
+            <Navbar />
             <main className="h-full w-full px-2 md:px-4 lg:px-24 xl:px-36 2xl:px-80">
-              <Navbar />
               {children}
             </main>
           </ThemeProvider>

@@ -1,10 +1,11 @@
 "use client";
 import { useRoutes } from "@/app/hooks/useRoutes";
 import { useSession } from "next-auth/react";
-import NavProfileImage from "./NavProfileImage";
-import DesktopItem from "./DesktopItem";
 import Link from "next/link";
+import DesktopItem from "./DesktopItem";
 import MobileNav from "./MobileNav";
+import NavProfileImage from "./NavProfileImage";
+
 
 const Navbar = () => {
   const routes = useRoutes();
