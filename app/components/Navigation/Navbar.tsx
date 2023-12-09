@@ -6,8 +6,7 @@ import DesktopItem from "./DesktopItem";
 import MobileNav from "./MobileNav";
 import NavProfileImage from "./NavProfileImage";
 
-
-const Navbar = () => {
+export default function Navbar() {
   const routes = useRoutes();
   const session = useSession();
   const isAuth = session.status === "authenticated";
@@ -59,6 +58,4 @@ const Navbar = () => {
       </div>
     </div>
   );
-};
-
-export default Navbar;
+}
