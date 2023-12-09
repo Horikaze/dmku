@@ -83,6 +83,20 @@ model Replay {
   @@index([userId])
 }
 
+model MainPage {
+  id         String  @unique @default(uuid())
+  event      Event?
+  background String?
+  latestUser String?
+}
+
+model Event {
+  eventID    String   @default(uuid())
+  eventName  String
+  mainPageId String   @unique
+  page       MainPage @relation(fields: [mainPageId], references: [id])
+}
+
 enum ReplayStatus {
   UNVERIFIED
   VERIFIED
