@@ -10,21 +10,27 @@ const utapi = new UTApi();
 export const ourFileRouter = {
   profileImage: f({ image: { maxFileSize: "2MB" } })
     .middleware(async ({ req }) => {
-      const user = await getServerSession(authOptions);
-
-      if (!user) throw new Error("Unauthorized");
+      const session = await getServerSession(authOptions);
+      if (!session) throw new Error("Unauthorized");
+      const user = await prisma.profile.findFirst({
+        where: {
+          id: session?.user.info.id,
+        },
+        select: {
+          imageUrl: true,
+          email: true,
+        },
+      });
 
       return {
-        email: user.user.email!,
-        currentProfileImage: user.user.info.imageUrl!,
+        email: user?.email,
+        currentProfileImage: user?.imageUrl,
       };
     })
     .onUploadComplete(async ({ metadata, file }) => {
       if (metadata.email == undefined) {
         throw new Error("Problem with auth");
       }
-      console.log(file);
-      console.log("test");
       await prisma.profile.update({
         where: {
           email: metadata.email,
@@ -33,28 +39,36 @@ export const ourFileRouter = {
           imageUrl: file.url,
         },
       });
-
       try {
         if (metadata.currentProfileImage) {
           const parts = metadata.currentProfileImage.split("/");
           const fileName = parts[parts.length - 1];
-          await utapi.deleteFiles(fileName);
+          console.log(fileName);
+          await utapi.deleteFiles(`${fileName}`);
         }
       } catch (error) {
         console.log(error);
       }
-      revalidatePath('/profile', 'layout')
+      revalidatePath("/profile", "layout");
       return { image: file.url };
     }),
   profileBanner: f({ image: { maxFileSize: "4MB" } })
     .middleware(async ({ req }) => {
-      const user = await getServerSession(authOptions);
-
-      if (!user) throw new Error("Unauthorized");
+      const session = await getServerSession(authOptions);
+      if (!session) throw new Error("Unauthorized");
+      const user = await prisma.profile.findFirst({
+        where: {
+          id: session?.user.info.id,
+        },
+        select: {
+          profileBanner: true,
+          email: true,
+        },
+      });
 
       return {
-        email: user.user.email!,
-        currentProfileBanner: user.user.info.profileBanner!,
+        email: user?.email!,
+        currentProfileBanner: user?.profileBanner!,
       };
     })
     .onUploadComplete(async ({ metadata, file }) => {
@@ -79,7 +93,7 @@ export const ourFileRouter = {
       } catch (error) {
         console.log(error);
       }
-      revalidatePath('/profile', 'layout')
+      revalidatePath("/profile", "layout");
       return { image: file.url };
     }),
 } satisfies FileRouter;
