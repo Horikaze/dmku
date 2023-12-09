@@ -13,9 +13,9 @@ export default async function ProfileLayout({
   const session = await getServerSession(authOptions);
   if (!session) redirect("/login");
   return (
-    <main className="flex flex-col h-full items-center">
+    <div className="flex flex-col h-full items-center">
       <ProfileNavigation />
       <Suspense fallback={<LoadingState />}>{children}</Suspense>
-    </main>
+    </div>
   );
 }

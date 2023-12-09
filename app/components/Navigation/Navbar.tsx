@@ -6,10 +6,10 @@ import DesktopItem from "./DesktopItem";
 import Link from "next/link";
 import MobileNav from "./MobileNav";
 
-const DesktopNav = () => {
+const Navbar = () => {
   const routes = useRoutes();
   const session = useSession();
-  const isProfileVisible = session.status === "authenticated";
+  const isAuth = session.status === "authenticated";
   return (
     <div className="flex flex-row border-b px-4">
       <div className="flex flex-row items-center gap-x-2">
@@ -34,25 +34,24 @@ const DesktopNav = () => {
           })}
         </div>
       </div>
-
       <div className="flex flex-row w-full justify-end">
         <MobileNav />
-        {isProfileVisible && (
+        {isAuth && (
           <NavProfileImage
-            href={routes[routes.length - 1].href}
-            label={routes[routes.length - 1].label}
-            active={routes[routes.length - 1].active}
+            href={routes.at(-1)!.href}
+            label={routes.at(-1)!.label}
+            active={routes.at(-1)!.active}
             nickname={session.data.user?.name!}
             src={session.data.user?.image!}
           />
         )}
         <div className="md:block hidden">
-          {!isProfileVisible && (
+          {!isAuth && (
             <DesktopItem
-              href={routes[routes.length - 1].href}
-              label={routes[routes.length - 1].label}
-              icon={routes[routes.length - 1].icon}
-              active={routes[routes.length - 1].active}
+              href={routes.at(-1)!.href}
+              label={routes.at(-1)!.label}
+              icon={routes.at(-1)!.icon}
+              active={routes.at(-1)!.active}
             />
           )}
         </div>
@@ -61,4 +60,4 @@ const DesktopNav = () => {
   );
 };
 
-export default DesktopNav;
+export default Navbar;
