@@ -16,7 +16,7 @@ const Navbar = () => {
       <div className="flex flex-row items-center gap-x-2">
         <Link
           href={"/"}
-          className="text-3xl px-3  font-bold bg-gradient-to-r from-violet-200 to-pink-300 bg-clip-text text-transparent"
+          className="text-3xl px-3 font-bold bg-gradient-to-r from-violet-200 to-pink-300 bg-clip-text text-transparent"
         >
           Dmku
         </Link>

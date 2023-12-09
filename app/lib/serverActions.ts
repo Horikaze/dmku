@@ -7,7 +7,7 @@ import {
   getCharacterFromDataWithoutType,
   getGameString,
   parseRankingString,
-  stringifyRanking
+  stringifyRanking,
 } from "@/lib/getRankingData";
 import { ReplayStatus } from "@prisma/client";
 import { getServerSession } from "next-auth";
@@ -123,7 +123,11 @@ const deleteReplayFunction = async (
     if (deletedReplay) {
       const parts = deletedReplay.filePath!.split("/");
       const fileName = parts[parts.length - 1];
-      await utapi.deleteFiles(fileName);
+      try {
+        await utapi.deleteFiles(fileName);
+      } catch (error) {
+        console.log(error);
+      }
       const CCreplacement = await prisma.replay.findFirst({
         where: {
           game: deletedReplay.game,

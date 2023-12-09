@@ -32,15 +32,15 @@ export default function MobileNav() {
             <IoMenuOutline className="h-10 w-10 cursor-pointer" />
           </SheetTrigger>
           <SheetContent className="w-[300px]">
-            <div className="flex flex-col gap-y-2 mr-4">
+            <div className="flex flex-col gap-y-2 mr-4 mt-4">
               <Link
                 onClick={() => {
                   setOpen(false);
                 }}
                 href={"/profile"}
-                className={`rounded-md flex gap-x-2 items-center bg-secondary cursor-pointer ${
-                  routes.at(-1)?.active ? "brightness-75" : ""
-                } hover:brightness-75 p-3 transition-all`}
+                className={`rounded-md flex gap-x-2 items-center  cursor-pointer ${
+                  routes.at(-1)?.active ? "bg-secondary" : ""
+                } hover:bg-secondary p-3 transition-all`}
               >
                 <FaUser />
                 <p>Profile</p>
@@ -53,9 +53,9 @@ export default function MobileNav() {
                     onClick={() => {
                       setOpen(false);
                     }}
-                    className={`rounded-md flex gap-x-2 items-center bg-secondary cursor-pointer ${
-                      active ? "brightness-75" : ""
-                    } hover:brightness-75 p-3 transition-all`}
+                    className={`rounded-md flex gap-x-2 items-center  cursor-pointer ${
+                      active ? "bg-secondary" : ""
+                    } hover:bg-secondary p-3 transition-all`}
                     key={label}
                   >
                     <Icon />
@@ -65,7 +65,7 @@ export default function MobileNav() {
               })}
               <div
                 onClick={handleClick}
-                className={`rounded-md gap-x-2 items-center bg-secondary cursor-pointer  hover:brightness-75 p-3 transition-all`}
+                className={`rounded-md gap-x-2 items-center  cursor-pointer hover:bg-secondary p-3 transition-all`}
               >
                 <ModeToggle />
               </div>
@@ -76,7 +76,7 @@ export default function MobileNav() {
                 }}
                 className={`rounded-md ${
                   isAuth ? "flex" : "hidden"
-                } gap-x-2 items-center bg-secondary cursor-pointer hover:brightness-75 p-3 transition-all`}
+                } gap-x-2 items-center  cursor-pointer hover:bg-secondary p-3 transition-all`}
               >
                 <FaSignInAlt />
                 <p>Logout</p>

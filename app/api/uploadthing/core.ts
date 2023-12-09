@@ -43,7 +43,6 @@ export const ourFileRouter = {
         if (metadata.currentProfileImage) {
           const parts = metadata.currentProfileImage.split("/");
           const fileName = parts[parts.length - 1];
-          console.log(fileName);
           await utapi.deleteFiles(`${fileName}`);
         }
       } catch (error) {

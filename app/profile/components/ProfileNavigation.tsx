@@ -3,7 +3,14 @@ import { useSession } from "next-auth/react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useMemo } from "react";
-import { FaGamepad, FaGear, FaPlus, FaUser, FaCheck,FaQuestion  } from "react-icons/fa6";
+import {
+  FaGamepad,
+  FaGear,
+  FaPlus,
+  FaUser,
+  FaCheck,
+  FaQuestion,
+} from "react-icons/fa6";
 export default function ProfileNavigation() {
   const session = useSession();
   const pathName = usePathname();
@@ -38,8 +45,8 @@ export default function ProfileNavigation() {
     [pathName]
   );
   return (
-    <div className="flex w-full flex-col pb-2">
-      <div className="flex flex-row gap-x-1 justify-between border">
+    <div className="flex w-full flex-col pb-2 text-sm md:text-base">
+      <div className="flex flex-row gap-x-1 justify-between">
         {tabs.map(({ icon: Icon, label, active }) => {
           if (label === "Moderation" && session.data?.user.info.admin !== true)
             return null;
@@ -48,12 +55,12 @@ export default function ProfileNavigation() {
               <Link
                 href={`/profile`}
                 key={label}
-                className={`py-3 flex-grow px-4 flex flex-row gap-x-1 items-center justify-center md:px-10 cursor-pointer hover:bg-secondary rounded  ${
+                className={`py-2 flex-grow px-4 flex flex-col md:flex-row gap-x-1 items-center justify-center md:px-10 cursor-pointer hover:bg-secondary rounded  ${
                   active && "bg-secondary"
                 }`}
               >
                 <Icon />
-                <p className="hidden md:block">{label}</p>
+                {label}
               </Link>
             );
           }
@@ -61,12 +68,12 @@ export default function ProfileNavigation() {
             <Link
               href={`/profile/${label.toLocaleLowerCase()}`}
               key={label}
-              className={`py-3 flex-grow px-4 flex flex-row gap-x-1 items-center justify-center md:px-10 cursor-pointer hover:bg-secondary rounded ${
+              className={`py-2 flex-grow px-4 flex flex-col md:flex-row gap-x-1 items-center justify-center md:px-10 cursor-pointer hover:bg-secondary rounded ${
                 active && "bg-secondary"
               }`}
             >
               <Icon />
-              <p className="hidden md:block">{label}</p>
+              {label}
             </Link>
           );
         })}
