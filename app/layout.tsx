@@ -6,6 +6,7 @@ import AuthContext from "./context/AuthContext";
 import "./globals.css";
 import CompareReplaySheet from "./components/compare/CompareReplaySheet";
 import Navbar from "./components/Navigation/Navbar";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 const inter = Inter({ subsets: ["latin"], weight: "400" });
 
@@ -32,6 +33,7 @@ export default function RootLayout({
           <CompareReplaySheet />
           <Toaster />
         </body>
+        <SpeedInsights />
       </AuthContext>
     </html>
   );

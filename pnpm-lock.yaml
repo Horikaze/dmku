@@ -68,6 +68,9 @@ dependencies:
   '@uploadthing/react':
     specifier: ^6.0.2
     version: 6.0.2(next@14.0.3)(react@18.2.0)(uploadthing@6.0.4)
+  '@vercel/speed-insights':
+    specifier: ^1.0.1
+    version: 1.0.1
   axios:
     specifier: ^1.6.2
     version: 1.6.2
@@ -1483,6 +1486,11 @@ packages:
         optional: true
     dependencies:
       '@uploadthing/mime-types': 0.2.2
+    dev: false
+
+  /@vercel/speed-insights@1.0.1:
+    resolution: {integrity: sha512-cm8KTTsDgS1AbWsgIEZuMoyPUjclzeqJihyLp0tnA21B/x9iTE8hu2S5zM+/DBzihuHxWL1dx9pCWk22ctMFWQ==}
+    requiresBuild: true
     dev: false
 
   /abbrev@1.1.1:
