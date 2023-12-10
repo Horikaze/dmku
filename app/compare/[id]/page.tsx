@@ -65,8 +65,8 @@ export default async function Page({
             <p className="w-1/3 flex justify-center">
               {Number(replay1.score).toLocaleString()}
             </p>
-            <p className="w-1/3 flex border-l py-1 border-r justify-center">
-              {Number(replay1.score! - replay2.score!).toLocaleString()}
+            <p className="w-1/3 flex text-center border-l py-1 border-r justify-center">
+              Difference: {Number(replay1.score! - replay2.score!).toLocaleString()}
             </p>
             <p className="w-1/3 flex justify-center">
               {Number(replay2.score).toLocaleString()}

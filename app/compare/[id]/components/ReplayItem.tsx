@@ -31,78 +31,72 @@ export default function ReplayItem({ replay }: { replay: Replay }) {
         Player -{" "}
         <Link
           href={`/user/${replay.userId}`}
-          className="font-normal underline text-gray-400"
+          className="font-normal underline "
         >
           {replay?.player}
         </Link>
       </div>
       <div className="font-semibold">
         Game -{" "}
-        <span className="font-normal text-gray-400">
+        <span className="font-normal ">
           Touhou: {getGameString(replay.game!)}
         </span>
       </div>
       <div>
-        Character - <span className="font-normal text-gray-400">{chara}</span>
+        Character - <span className="font-normal ">{chara}</span>
       </div>
       <div>
-        Rank - <span className="font-normal text-gray-400">{replay?.rank}</span>
+        Rank - <span className="font-normal ">{replay?.rank}</span>
       </div>
       <div>
-        Slow rate -{" "}
-        <span className="font-normal text-gray-400">{replay?.slowRate}</span>
+        Slow rate - <span className="font-normal ">{replay?.slowRate}</span>
       </div>
       <div>
         Achievement -{" "}
-        <span className="font-normal text-gray-400">
+        <span className="font-normal ">
           {getCCstring(replay?.achievement!)}
         </span>
       </div>
       <div>
         Stage -{" "}
-        <span className="font-normal text-gray-400">
-          {replay.stage || "Not supported"}
-        </span>
+        <span className="font-normal ">{replay.stage || "Not supported"}</span>
       </div>
       <div>
         Added -{" "}
-        <span className="font-normal text-gray-400">
+        <span className="font-normal ">
           {getDateFromReplay(replay.uploadedDate!)}
         </span>
       </div>
       <div>
         Replay Date -{" "}
-        <span className="font-normal text-gray-400">
+        <span className="font-normal ">
           {getDateFromReplay(replay.fileDate!)}
         </span>
       </div>
       <div>
-        Points -{" "}
-        <span className="font-normal text-gray-400">{replay?.points}</span>
+        Points - <span className="font-normal ">{replay?.points}</span>
       </div>
       <div>
-        Status -{" "}
-        <span className="font-normal text-gray-400">{replay?.status}</span>
+        Status - <span className="font-normal ">{replay?.status}</span>
       </div>
       <div className="flex flex-col gap-y-2">
         <div>
           Score -{" "}
-          <span className="font-normal text-gray-400">
+          <span className="font-normal ">
             {Number(replay.score).toLocaleString()}
           </span>
         </div>
       </div>
       {replay?.comment!.length > 3 ? (
         <div>
-          Comment -{" "}
-          <span className="font-normal text-gray-400">{replay?.comment}</span>
+          Comment - <span className="font-normal ">{replay?.comment}</span>
         </div>
       ) : null}
       {replay?.videoLink ? (
         <div>
           Video -{" "}
           <Link
-            className="font-normal text-gray-400 underline"
+            className="font-normal  underline"
             href={replay?.videoLink}
             target="_blank"
           >
