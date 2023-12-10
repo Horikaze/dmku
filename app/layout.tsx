@@ -28,12 +28,12 @@ export default function RootLayout({
             <Navbar />
             <main className="h-full w-full px-2 md:px-4 lg:px-24 xl:px-36 2xl:px-80 pt-3">
               {children}
+              <SpeedInsights />
             </main>
           </ThemeProvider>
           <CompareReplaySheet />
           <Toaster />
         </body>
-        <SpeedInsights />
       </AuthContext>
     </html>
   );

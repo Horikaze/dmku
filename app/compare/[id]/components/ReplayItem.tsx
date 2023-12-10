@@ -67,7 +67,7 @@ export default function ReplayItem({ replay }: { replay: Replay }) {
           {getDateFromReplay(replay.uploadedDate!)}
         </span>
       </div>
-      <div>
+      <div> 
         Replay Date -{" "}
         <span className="font-normal ">
           {getDateFromReplay(replay.fileDate!)}
