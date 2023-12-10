@@ -3,8 +3,6 @@ import prisma from "@/app/lib/prismadb";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { scoreParse } from "@/lib/calculatePoints";
 import ReplayItem from "./components/ReplayItem";
-import { ReplayScores } from "./components/ReplayScores";
-import { max } from "date-fns";
 
 export default async function Page({
   searchParams,
@@ -57,30 +55,46 @@ export default async function Page({
         </div>
       </CardHeader>
       <CardContent className="flex flex-col gap-y-2">
-        <div className=" flex flex-row justify-around h-full w-full">
+        <div className=" flex flex-row justify-between h-full w-full">
           <ReplayItem replay={replay1!} />
-          <div className=" gap-y-2 flex items-center flex-col justify-between">
-            <div>Difference</div>
-            <div className="mb-7 md:mb-8 flex flex-col items-center">
-              <p className="py-7">
-                {(replay1.points! - replay2.points!).toLocaleString()}
-              </p>
-              <p>{(replay1.score! - replay2.score!).toLocaleString()}</p>
-            </div>
-          </div>
           <ReplayItem replay={replay2!} />
         </div>
-
-        <div className=" flex justify-around">
-          <ReplayScores replay={replay1} score={score1!} />
-          <div className="p-2 items-center text-sm flex flex-col gap-y-1">
-            {diffArray.map((diff) => (
-              <div key={diff} className="py-[18px]">
-                <p>{diff.toLocaleString()}</p>
-              </div>
-            ))}
+        <div className="flex relative flex-col w-full border">
+          <div className="flex w-full border-b relative  items-center justify-evenly">
+            <p className="absolute left-0 ml-2 hidden md:block">Total</p>
+            <p className="w-1/3 flex justify-center">
+              {Number(replay1.score).toLocaleString()}
+            </p>
+            <p className="w-1/3 flex border-l py-1 border-r justify-center">
+              {Number(replay1.score! - replay2.score!).toLocaleString()}
+            </p>
+            <p className="w-1/3 flex justify-center">
+              {Number(replay2.score).toLocaleString()}
+            </p>
           </div>
-          <ReplayScores replay={replay2} score={score2!} />
+          {filledArray1.map((score, idx) => {
+            return (
+              <div
+                key={score}
+                className={`flex relative w-full items-center ${
+                  idx === filledArray1.length - 1 ? "" : "border-b"
+                } justify-evenly `}
+              >
+                <p className="absolute left-0 ml-2 hidden md:block">
+                  Stage {idx + 1}
+                </p>
+                <p className="w-1/3 flex justify-center">
+                  {Number(score).toLocaleString()}
+                </p>
+                <p className="w-1/3 flex border-r py-1 border-l justify-center">
+                  {Number(diffArray[idx]).toLocaleString()}
+                </p>
+                <p className="w-1/3 flex justify-center">
+                  {Number(filledArray2[idx]).toLocaleString()}
+                </p>
+              </div>
+            );
+          })}
         </div>
       </CardContent>
     </Card>
