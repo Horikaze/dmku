@@ -1,9 +1,19 @@
-import Image from "next/image";
+import prisma from "@/app/lib/prismadb";
 
-export default function Home() {
+export default async function Home() {
+  const mainPage = await prisma.mainPage.findFirst({
+    include: {
+      latestUser: {
+        select: {
+          nickname: true,
+        },
+      },
+    },
+  });
+
   return (
     <div>
-      <p>Home</p>
+      Latest user: <p>{mainPage?.latestUser?.nickname}</p>
     </div>
   );
 }

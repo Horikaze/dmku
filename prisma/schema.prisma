@@ -12,24 +12,25 @@ generator client {
 }
 
 model Profile {
-  id             String   @id @unique @default(uuid())
+  id             String     @id @unique @default(uuid())
   nickname       String?
   name           String?
-  email          String   @unique
+  email          String     @unique
   imageUrl       String?
-  CCCount        Int?     @default(0)
+  CCCount        Int?       @default(0)
   admin          Boolean?
   supporter      Boolean?
-  joindate       DateTime @default(now())
+  joindate       DateTime   @default(now())
   discord        String?
   favoriteGame   String?
-  bio            String?  @db.VarChar(250)
-  points         Int?     @default(0)
+  bio            String?    @db.VarChar(250)
+  points         Int?       @default(0)
   CCTable        Ranking?
-  event          Int?     @default(0)
+  event          Int?       @default(0)
   hashedPassword String?
   profileBanner  String?
   Replays        Replay[]
+  MainPage       MainPage[]
 }
 
 // example:  "EASY/9999.9999.9999/123+NORMAL/9999.9999.9999/345+HARD/9999.9999.9999/677+LUNATIC/9999.9999.9999/444";
@@ -84,10 +85,13 @@ model Replay {
 }
 
 model MainPage {
-  id         String  @unique @default(uuid())
+  id         String   @unique @default(uuid())
   event      Event?
   background String?
-  latestUser String?
+  latestUser Profile? @relation(fields: [profileId], references: [id])
+  profileId  String?
+
+  @@index([profileId])
 }
 
 model Event {
