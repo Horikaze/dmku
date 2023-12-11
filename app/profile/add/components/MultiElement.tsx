@@ -37,7 +37,7 @@ export default function MultiElement({
               Score:{" "}
               {getLastScore(replayData.stage_score.join("+")).toLocaleString()}
             </p>
-            <p>Stage: {replayData.stage}</p>
+            <p>Stage: {replayData.stage || "Not supported"}</p>
           </div>
           <div className="flex flex-col">
             <p>Rank: {replayData.rank}</p>

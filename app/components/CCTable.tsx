@@ -126,22 +126,23 @@ export default function CCTable({ tableData }: { tableData: Ranking }) {
                     : phanCC === 6
                     ? "bg-yellow-400"
                     : "";
-
                 return (
                   <TableCell
                     key={difficulty}
-                    className={`border p-0 flex justify-center min-h-[1px] items-center w-full h-full`}
+                    className={`border p-0 flex justify-center min-h-[1px] items-center w-full h-full `}
                   >
-                    <div
-                      className={`w-full h-[34px] flex justify-between invalid:justify-center`}
-                    >
+                    <div className={`w-full h-[34px] flex justify-between`}>
                       <TooltipProvider>
                         <Tooltip delayDuration={0}>
                           <TooltipTrigger asChild>
                             <Link
                               href={`/replay/${id}`}
                               prefetch={false}
-                              className="block w-1/2 border-r hover:brightness-110"
+                              className={`block w-1/2 border-r hover:brightness-110 ${
+                                score
+                                  ? "pointer-events-auto"
+                                  : "pointer-events-none"
+                              }`}
                             >
                               <div
                                 className={`flex w-full h-full items-center justify-center ${cellClassName}`}
@@ -163,7 +164,11 @@ export default function CCTable({ tableData }: { tableData: Ranking }) {
                             <Link
                               href={`/replay/${phanId}`}
                               prefetch={false}
-                              className={`block w-1/2 hover:brightness-110 ${phanCellClassName}`}
+                              className={`block w-1/2 hover:brightness-110 ${phanCellClassName} ${
+                                phanScore
+                                  ? "pointer-events-auto"
+                                  : "pointer-events-none"
+                              }`}
                             >
                               <div
                                 className={`flex w-full h-full items-center justify-center`}
@@ -186,7 +191,9 @@ export default function CCTable({ tableData }: { tableData: Ranking }) {
               return (
                 <TableCell
                   key={"phan"}
-                  className={`text-center ${cellClassName} border cursor-pointer hover:brightness-110`}
+                  className={`text-center ${cellClassName} border cursor-pointer hover:brightness-110 ${
+                    score ? "pointer-events-auto" : "pointer-events-none"
+                  }`}
                 >
                   <Link href={`/replay/${id}`} prefetch={false}>
                     <TooltipProvider>
