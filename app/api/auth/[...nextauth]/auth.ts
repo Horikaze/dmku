@@ -70,14 +70,6 @@ export const authOptions: AuthOptions = {
               imageUrl: user.image || null,
             },
           });
-          await prisma.mainPage.update({
-            where: {
-              id: "0",
-            },
-            data: {
-              profileId: newUser.id,
-            },
-          });
           const userRanking = await prisma.ranking.create({
             data: {
               DDC: "EASY/0/0/0/char+NORMAL/0/0/0/char+HARD/0/0/0/char+LUNATIC/0/0/0/char+EXTRA/0/0/0/char+PHANTASM/0/0/0/char+OVERDRIVE/0/0/0/char",
@@ -97,6 +89,14 @@ export const authOptions: AuthOptions = {
               WBAWC:
                 "EASY/0/0/0/char+NORMAL/0/0/0/char+HARD/0/0/0/char+LUNATIC/0/0/0/char+EXTRA/0/0/0/char+PHANTASM/0/0/0/char+OVERDRIVE/0/0/0/char",
               userIdRankingPoints: newUser.id,
+            },
+          });
+          await prisma.mainPage.update({
+            where: {
+              id: "0",
+            },
+            data: {
+              profileId: newUser.id,
             },
           });
 

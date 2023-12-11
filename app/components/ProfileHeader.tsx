@@ -17,7 +17,10 @@ export default function ProfileHeader({ user }: { user: Profile }) {
           <div className="flex w-1/3 rounded-md items-center flex-col gap-y-2 m-3">
             <div className=" bg-secondary/60 rounded-md p-2 w-full flex flex-col items-center  gap-y-2 m-3">
               <Avatar className="h-20 w-20 md:h-24 md:w-24 ">
-                <AvatarImage src={user.imageUrl!} alt="avatar" />
+                <AvatarImage
+                  src={user.imageUrl || "/images/placeholder.jpg"}
+                  alt="avatar"
+                />
                 <AvatarFallback>:3</AvatarFallback>
               </Avatar>
               <p>{user.nickname}</p>

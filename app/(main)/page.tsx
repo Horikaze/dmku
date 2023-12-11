@@ -10,7 +10,13 @@ export default async function Home() {
       },
     },
   });
-
+  if (!mainPage) {
+    await prisma.mainPage.create({
+      data: {
+        id: "0",
+      },
+    });
+  }
   return (
     <div>
       Latest user: <p>{mainPage?.latestUser?.nickname}</p>
