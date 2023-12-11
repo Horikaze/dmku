@@ -135,7 +135,7 @@ export default async function page({ params }: { params: { id: string } }) {
                 : null}
             </div>
           </div>
-          {replay?.comment!.length > 3 ? (
+          {replay.comment == null || replay?.comment!.length > 3 ? (
             <div>
               Comment -{" "}
               <span className="font-normal text-gray-400">

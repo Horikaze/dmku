@@ -3,14 +3,17 @@ import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { signOut, useSession } from "next-auth/react";
 import { useTheme } from "next-themes";
 import Link from "next/link";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { FaSignInAlt, FaUser } from "react-icons/fa";
 import { IoMenuOutline } from "react-icons/io5";
 import { ModeToggle } from "../ModeToggle";
 
 export default function MobileNav() {
   const session = useSession();
-  const isAuth = session.status === "authenticated";
+  const isAuth = useMemo(
+    () => session.status === "authenticated",
+    [session.status]
+  );
   const routes = useRoutes();
   const [open, setOpen] = useState(false);
 

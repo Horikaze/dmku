@@ -49,7 +49,6 @@ export async function POST(request: NextRequest, response: NextResponse) {
       return new NextResponse("Problem with file upload", { status: 500 });
     }
 
-    console.log(values.rank);
     const sameReplay = await prisma.replay.findFirst({
       where: {
         game: gameNumber,
@@ -64,7 +63,7 @@ export async function POST(request: NextRequest, response: NextResponse) {
       data: {
         achievement: newCC,
         character: values.character,
-        comment: values.comment,
+        comment: values.comment || "",
         date: values.date,
         filePath: res.data?.url,
         game: gameNumber,
@@ -76,7 +75,7 @@ export async function POST(request: NextRequest, response: NextResponse) {
         stage: values.stage,
         shottype: values.type,
         points: Number(values.points),
-        videoLink: values.videoLink,
+        videoLink: values.videoLink || "",
         status: "UNVERIFIED",
         stage_score: values.score,
         score: totalScore,

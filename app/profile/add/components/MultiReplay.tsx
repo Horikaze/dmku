@@ -19,16 +19,27 @@ import {
 import { calculatePoints } from "@/lib/calculatePoints";
 import { getLastScore } from "@/app/components/replayTable/forrmatScore";
 
+type ReplayDataWithLastMod = {
+  data?: ReplayInfo;
+  last?: number;
+  points?: number;
+};
+
 export default function MultiReplay() {
   const [files, setFiles] = useState<File[]>([]);
-  const [loadingButton, setLoadingButton] = useState(false);
+  const [filesData, setFilesData] = useState<ReplayDataWithLastMod[]>([]);
+  const [loading, setLoading] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
   const { toast } = useToast();
+
   const isDuplicateFile = (files: File[], newFile: File): boolean => {
     return files.some((file) => file.lastModified === newFile.lastModified);
   };
 
   const handleDrop = (e: React.DragEvent) => {
+    if (loading) {
+      return;
+    }
     e.preventDefault();
     if (files.length >= 5) {
       toast({
@@ -44,6 +55,9 @@ export default function MultiReplay() {
   };
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (loading) {
+      return;
+    }
     const fileList: FileList | null = e.target.files;
     if (files.length >= 5) {
       toast({
@@ -69,7 +83,7 @@ export default function MultiReplay() {
     );
   };
 
-  const readReplayData = async (file: File) => {
+  const threp = async (file: File) => {
     if (!file) {
       throw new Error("File is corrupted.");
     }
@@ -80,11 +94,20 @@ export default function MultiReplay() {
     return data;
   };
 
-  const sendReplayData = async (
-    replayData: ReplayInfo,
-    file: File,
-    points: number
-  ) => {
+  const sendReplayData = async (file: File) => {
+    const replayData = filesData.find(
+      (data) => data.last === file.lastModified
+    )?.data;
+    const points = filesData.find(
+      (data) => data.last === file.lastModified
+    )?.points;
+    if (!replayData || !points) {
+      toast({
+        title: "Click Read all first",
+      });
+      return;
+    }
+
     const formData = new FormData();
     formData.append("CC", "CC");
     formData.append("score", replayData.stage_score.join("+"));
@@ -97,7 +120,6 @@ export default function MultiReplay() {
       getCharacterFromDataWithoutType(replayData.character)
     );
     formData.append("type", replayData.shottype);
-    //ADDITIONAL
 
     formData.append("player", replayData.player);
     formData.append("selectReplay", file);
@@ -114,31 +136,47 @@ export default function MultiReplay() {
           title: "Error",
           description: `${e.response.data}`,
         });
+      })
+      .finally(() => {
+        setFiles((prev) =>
+          prev.filter(
+            (arrayFile) => arrayFile.lastModified !== file.lastModified
+          )
+        );
       });
   };
 
-  const sendReplays = async () => {
-    setLoadingButton(true);
+  const sentAllReplays = async () => {
+    setLoading(true);
+    for (const fileToSend of files) {
+      await sendReplayData(fileToSend);
+    }
+    setLoading(false);
+  };
+
+  const readReplaysData = async () => {
+    setLoading(true);
     try {
       for (const element of files) {
-        const replayData = await readReplayData(element);
+        const replayData = await threp(element);
         const points = calculatePoints(
           getLastScore(replayData ? replayData!.stage_score.join("+") : "0"),
           "CC",
           replayData?.rank!,
           getGameNumber(element?.name!)
         );
-        await sendReplayData(replayData, element, points);
-        setFiles((prev) =>
-          prev.filter((file) => file.lastModified !== element.lastModified)
-        );
+
+        setFilesData((prev) => [
+          ...prev,
+          { data: replayData, last: element.lastModified, points: points },
+        ]);
       }
     } catch (error) {
       toast({
         title: `${error}`,
       });
     } finally {
-      setLoadingButton(false);
+      setLoading(false);
     }
   };
 
@@ -171,12 +209,21 @@ export default function MultiReplay() {
                   file={file}
                   key={file.lastModified}
                   remove={removeElement}
+                  replayData={
+                    filesData.find((data) => data.last === file.lastModified)
+                      ?.data
+                  }
+                  points={
+                    filesData.find((data) => data.last === file.lastModified)
+                      ?.points!
+                  }
                 />
               ))}
             </div>
           ) : null}
           <div className="w-full flex justify-between px-1">
             <Button
+              disabled={loading}
               variant={"outline"}
               onClick={() => {
                 setFiles([]);
@@ -184,8 +231,15 @@ export default function MultiReplay() {
             >
               Clear
             </Button>
-            <Button onClick={sendReplays}>
-              <ButtonLoader loading={loadingButton} />
+            <Button
+              variant={"outline"}
+              disabled={loading}
+              onClick={readReplaysData}
+            >
+              Read all
+            </Button>
+            <Button onClick={sentAllReplays} disabled={loading}>
+              <ButtonLoader loading={loading} />
               Send
             </Button>
           </div>
