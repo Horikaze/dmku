@@ -87,6 +87,13 @@ export default function MultiReplay() {
     if (!file) {
       throw new Error("File is corrupted.");
     }
+    const existingData = filesData.find(
+      (data) => data.last === file.lastModified
+    )?.data
+    if (existingData) {
+      return existingData;
+    }
+    console.log(existingData);
     const formData = new FormData();
     formData.append("replay", file);
     const res = await axios.post("/api/threp", formData);
@@ -146,7 +153,7 @@ export default function MultiReplay() {
       });
   };
 
-  const sentAllReplays = async () => {
+  const sendAllReplays = async () => {
     setLoading(true);
     for (const fileToSend of files) {
       await sendReplayData(fileToSend);
@@ -238,7 +245,7 @@ export default function MultiReplay() {
             >
               Read all
             </Button>
-            <Button onClick={sentAllReplays} disabled={loading}>
+            <Button onClick={sendAllReplays} disabled={loading}>
               <ButtonLoader loading={loading} />
               Send
             </Button>
