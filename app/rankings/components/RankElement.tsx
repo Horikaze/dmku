@@ -22,7 +22,7 @@ const RankElement = ({ user }: { user: RankingElement }) => {
     <Link
       href={`/user/${user.id}`}
       prefetch={false}
-      className="w-full gap-x-3 border flex relative p-2 items-center rounded-md hover:bg-secondary"
+      className="w-full gap-x-3 border flex relative p-2 items-center rounded-md hover:bg-secondary transition-all"
     >
       {user.index === 0 || user.index === 1 || user.index === 2 ? (
         <FaMedal className={color} />

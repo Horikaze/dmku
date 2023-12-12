@@ -1,15 +1,10 @@
 import prisma from "@/app/lib/prismadb";
+import AllUsers from "./components/AllUsers";
+import WeeklyChallenge from "./components/WeeklyChallenge";
+import Image from "next/image";
 
 export default async function Home() {
-  const mainPage = await prisma.mainPage.findFirst({
-    include: {
-      latestUser: {
-        select: {
-          nickname: true,
-        },
-      },
-    },
-  });
+  const mainPage = await prisma.mainPage.findFirst();
   if (!mainPage) {
     await prisma.mainPage.create({
       data: {
@@ -18,8 +13,11 @@ export default async function Home() {
     });
   }
   return (
-    <div>
-      Latest user: <p>{mainPage?.latestUser?.nickname}</p>
+    <div className="flex flex-col w-full">
+      <div className="flex justify-between">
+        <AllUsers />
+        <WeeklyChallenge />
+      </div>
     </div>
   );
 }

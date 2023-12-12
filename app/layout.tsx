@@ -14,7 +14,7 @@ export const metadata: Metadata = {
   title: "dmku",
   description: "aha super",
 };
-
+export const revalidate = 3600;
 export default function RootLayout({
   children,
 }: {

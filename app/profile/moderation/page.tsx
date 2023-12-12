@@ -18,7 +18,6 @@ export default async function Moderation() {
     },
   });
 
-  console.log(replays);
   const session = await getServerSession(authOptions);
   if (session?.user.info.admin !== true) {
     redirect("/profile");

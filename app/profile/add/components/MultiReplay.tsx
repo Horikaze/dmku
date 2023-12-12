@@ -93,7 +93,6 @@ export default function MultiReplay() {
     if (existingData) {
       return existingData;
     }
-    console.log(existingData);
     const formData = new FormData();
     formData.append("replay", file);
     const res = await axios.post("/api/threp", formData);
