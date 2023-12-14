@@ -31,16 +31,17 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <AuthContext>
-        <body className={`${inter.className} relative`}>
+        <body className={`${inter.className}`}>
           <Image
             src={mainPage?.background || ""}
             alt="bg"
             fill
-            className="-z-20 opacity-10 absolute object-cover object-center"
+            className="-z-20 opacity-10 object-cover object-center"
           />
           <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
             <Navbar />
-            <main className="h-full w-full px-2 md:px-4 lg:px-24 xl:px-36 2xl:px-72 pt-3">
+            <main className="px-2 md:px-4 lg:px-24 xl:px-36 2xl:px-72 pt-3 overflow-y-auto h-[calc(100vh)] -z-10">
+            <div className="h-16" />
               {children}
               <SpeedInsights />
             </main>
