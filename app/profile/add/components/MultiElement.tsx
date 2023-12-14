@@ -17,7 +17,7 @@ export default function MultiElement({
   points,
 }: MultiElementProps) {
   return (
-    <div className="flex w-full rounded-md border p-2 justify-between overflow-x-scroll">
+    <div className="flex w-full rounded-md border p-2 justify-between">
       <div className="flex flex-col justify-center">
         <p>
           File name: <span>{file.name}</span>

@@ -89,7 +89,7 @@ export default function MultiReplay() {
     }
     const existingData = filesData.find(
       (data) => data.last === file.lastModified
-    )?.data
+    )?.data;
     if (existingData) {
       return existingData;
     }
@@ -192,7 +192,7 @@ export default function MultiReplay() {
         <CardTitle>Add multiple replays</CardTitle>
         <CardDescription>
           Use this only if the replays are 1cc, and do not require any
-          additional information. Max 5 replays per sending
+          additional information. Max 5 replays
         </CardDescription>
       </CardHeader>
       <CardContent>
@@ -208,25 +208,23 @@ export default function MultiReplay() {
             <p className="font-semibold">Drop or select .rpy here</p>
           </div>
 
-          {files.length ? (
-            <div className="flex w-full flex-col gap-y-2 overflow-y-scroll max-h-[32rem]">
-              {Array.from(files!).map((file) => (
-                <MultiElement
-                  file={file}
-                  key={file.lastModified}
-                  remove={removeElement}
-                  replayData={
-                    filesData.find((data) => data.last === file.lastModified)
-                      ?.data
-                  }
-                  points={
-                    filesData.find((data) => data.last === file.lastModified)
-                      ?.points!
-                  }
-                />
-              ))}
-            </div>
-          ) : null}
+          <div className="flex w-full flex-col gap-y-2 overflow-y-scroll h-[32rem]">
+            {files.map((file) => (
+              <MultiElement
+                file={file}
+                key={file.lastModified}
+                remove={removeElement}
+                replayData={
+                  filesData.find((data) => data.last === file.lastModified)
+                    ?.data
+                }
+                points={
+                  filesData.find((data) => data.last === file.lastModified)
+                    ?.points!
+                }
+              />
+            ))}
+          </div>
           <div className="w-full flex justify-between px-1">
             <Button
               disabled={loading}
