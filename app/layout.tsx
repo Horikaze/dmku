@@ -36,7 +36,7 @@ export default async function RootLayout({
             src={mainPage?.background || ""}
             alt="bg"
             fill
-            className="-z-20 opacity-10 object-cover object-center"
+            className="-z-20 opacity-10 object-cover object-center h-full"
           />
           <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
             <Navbar />

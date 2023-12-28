@@ -11,7 +11,7 @@ export default function Navbar() {
   const session = useSession();
   const isAuth = session.status === "authenticated";
   return (
-    <div className="flex flex-row border-b px-4 fixed top-0 w-full backdrop-blur-sm">
+    <div className="flex flex-row border-b px-4 fixed top-0 w-full backdrop-blur-sm z-20">
       <div className="flex flex-row items-center gap-x-2">
         <Link
           href={"/"}
