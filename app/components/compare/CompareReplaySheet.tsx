@@ -43,7 +43,7 @@ export default function CompareReplaySheet() {
     <Sheet open={open} onOpenChange={setOpen}>
       <SheetTrigger>
         {replay.length > 0 ? (
-          <FaCodeCompare className="h-7 w-7 fixed top-20 right-2 cursor-pointer" />
+          <FaCodeCompare className="h-7 w-7 fixed top-20 right-2 cursor-pointer z-20" />
         ) : null}
       </SheetTrigger>
       <SheetContent>

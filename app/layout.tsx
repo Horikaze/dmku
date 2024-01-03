@@ -36,12 +36,12 @@ export default async function RootLayout({
             src={mainPage?.background || ""}
             alt="bg"
             fill
-            className="-z-20 opacity-10 object-cover object-center h-full"
+            className="-z-30 opacity-10 object-cover object-center h-full"
           />
           <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
             <Navbar />
-            <main className="px-2 md:px-4 lg:px-24 xl:px-36 2xl:px-72 pt-3 overflow-y-auto h-[calc(100vh)] -z-10">
-            <div className="h-16" />
+            <main className="px-2 md:px-4 lg:px-24 xl:px-36 2xl:px-72 overflow-y-scroll absolute w-full h-full z-10">
+              <div className="h-20" />
               {children}
               <SpeedInsights />
             </main>

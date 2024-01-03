@@ -46,7 +46,6 @@ export default function NavProfileImage({
       setTheme("dark");
     }
   };
-
   return (
     <div
       className="
