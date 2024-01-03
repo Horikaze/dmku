@@ -43,7 +43,10 @@ export default function CompareReplaySheet() {
     <Sheet open={open} onOpenChange={setOpen}>
       <SheetTrigger>
         {replay.length > 0 ? (
-          <FaCodeCompare className="h-7 w-7 fixed top-20 right-2 cursor-pointer z-20" />
+          <div className="flex hover:bg-secondary py-1 px-3 bg-card gap-x-1 items-center justify-center fixed top-20 right-2 cursor-pointer z-20 border rounded-md">
+            <p className="text-lg">{replay.length}</p>
+            <FaCodeCompare className="h-5 w-5" />
+          </div>
         ) : null}
       </SheetTrigger>
       <SheetContent>
