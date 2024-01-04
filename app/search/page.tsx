@@ -252,7 +252,7 @@ const Search = () => {
                     type="text"
                     id="userId"
                     name="userId"
-                    placeholder="ex. 566578758912311306"
+                    placeholder="ex. e2449575-2089-4882-b4e3-700a173b2c89"
                   />
                 </div>
               </div>

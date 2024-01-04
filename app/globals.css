@@ -74,3 +74,13 @@ body {
   background-color: #262626;
   border-radius: 7px;
 }
+
+.gradImage {
+  -webkit-mask-image: -webkit-gradient(
+    linear,
+    right top,
+    left top,
+    from(rgba(0, 0, 0, 1)),
+    to(rgba(0, 0, 0, 0))
+  );
+}

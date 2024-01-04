@@ -202,7 +202,7 @@ export default function MultiReplay() {
           onDragOver={handleDragOver}
         >
           <div
-            className="w-full flex justify-center border py-5 cursor-pointer"
+            className="w-full flex justify-center border py-5 cursor-pointer border-dashed"
             onClick={() => inputRef.current?.click()}
           >
             <p className="font-semibold">Drop or select .rpy here</p>

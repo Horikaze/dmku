@@ -42,7 +42,7 @@ export default async function page({ params }: { params: { id: string } }) {
         src={bgImages[replay.game!]}
         alt="gameBg"
         fill
-        className="absolute opacity-100 z-0 object-cover object-center h-full"
+        className="absolute opacity-100 z-0 object-cover object-center h-full gradImage"
       />
       <div className="relative z-10 bg-secondary/60">
         <CardHeader>
