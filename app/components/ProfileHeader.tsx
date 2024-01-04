@@ -7,7 +7,7 @@ import Image from "next/image";
 
 export default function ProfileHeader({ user }: { user: Profile }) {
   return (
-    <Card className="relative">
+    <Card className="relative font-semibold">
       <Image
         src={user.profileBanner!}
         alt="profileBanner"
@@ -26,7 +26,7 @@ export default function ProfileHeader({ user }: { user: Profile }) {
                   />
                   <AvatarFallback>:3</AvatarFallback>
                 </Avatar>
-                <p>{user.nickname}</p>
+                <p className="text-lg">{user.nickname}</p>
                 <div className="flex flex-col w-full items-start">
                   <p>CC - {user.CCCount}</p>
                   <p>Points - {user.points}</p>
