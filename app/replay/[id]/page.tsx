@@ -17,6 +17,8 @@ import {
 } from "@/lib/getRankingData";
 import Link from "next/link";
 import CompareButton from "./CompareButton";
+import Image from "next/image";
+import { bgImages } from "@/app/constants/bg-images";
 
 export default async function page({ params }: { params: { id: string } }) {
   const replay = await prisma.replay.findFirst({
@@ -35,133 +37,132 @@ export default async function page({ params }: { params: { id: string } }) {
 
   const score = scoreParse(replay);
   return (
-    <Card>
-      <CardHeader>
-        <div className="flex flex-row justify-between">
-          <div className="space-y-1">
-            <CardTitle>{replay?.rpy_name}</CardTitle>
-            <CardDescription>Replay ID: {params.id}</CardDescription>
-            <CardDescription>
-              <Link href={`/user/${replay.userId}`} prefetch={false}>
-                User ID: {replay.userId}
-              </Link>
-            </CardDescription>
-          </div>
-          <div className="flex flex-col gap-y-1">
-            <div className="flex justify-end">
-              <RouterBack />
+    <Card className="relative">
+      <Image
+        src={bgImages[replay.game!]}
+        alt="gameBg"
+        fill
+        className="absolute opacity-100 z-0 object-cover object-center h-full"
+      />
+      <div className="relative z-10 bg-secondary/60">
+        <CardHeader>
+          <div className="flex flex-row justify-between">
+            <div className="space-y-1">
+              <CardTitle>{replay?.rpy_name}</CardTitle>
+              <CardDescription>Replay ID: {params.id}</CardDescription>
+              <CardDescription>
+                <Link href={`/user/${replay.userId}`} prefetch={false}>
+                  User ID: {replay.userId}
+                </Link>
+              </CardDescription>
             </div>
-            <CompareButton replay={replay} />
+            <div className="flex flex-col gap-y-1">
+              <div className="flex justify-end">
+                <RouterBack />
+              </div>
+              <CompareButton replay={replay} />
+            </div>
           </div>
-        </div>
-      </CardHeader>
+        </CardHeader>
 
-      <CardContent className="flex flex-col">
-        <div className="flex flex-col gap-y-2">
-          <div className="font-semibold">
-            Player -{" "}
-            <span className="font-normal text-gray-400">{replay?.player}</span>
-          </div>
-          <div className="font-semibold">
-            Game -{" "}
-            <span className="font-normal text-gray-400">
-              Touhou: {getGameString(replay.game!)}
-            </span>
-          </div>
-          <div>
-            Character -{" "}
-            <span className="font-normal text-gray-400">{chara}</span>
-          </div>
-          <div>
-            Rank -{" "}
-            <span className="font-normal text-gray-400">{replay?.rank}</span>
-          </div>
-          <div>
-            Slow rate -{" "}
-            <span className="font-normal text-gray-400">
-              {replay?.slowRate}
-            </span>
-          </div>
-          <div>
-            Achievement -{" "}
-            <span className="font-normal text-gray-400">
-              {getCCstring(replay?.achievement!)}
-            </span>
-          </div>
-          <div>
-            Stage -{" "}
-            <span className="font-normal text-gray-400">
-              {replay.stage || "Not supported"}
-            </span>
-          </div>
-          <div>
-            Added -{" "}
-            <span className="font-normal text-gray-400">
-              {getDateFromReplay(replay.uploadedDate!)}
-            </span>
-          </div>
-          <div>
-            Replay Date -{" "}
-            <span className="font-normal text-gray-400">
-              {getDateFromReplay(replay.fileDate!)}
-            </span>
-          </div>
-          <div>
-            Points -{" "}
-            <span className="font-normal text-gray-400">{replay?.points}</span>
-          </div>
-          <div>
-            Status -{" "}
-            <span className="font-normal text-gray-400">{replay?.status}</span>
-          </div>
+        <CardContent className="flex flex-col">
           <div className="flex flex-col gap-y-2">
             <div>
-              Score -{" "}
-              <span className="font-normal text-gray-400">
-                {Number(replay.score).toLocaleString()}{" "}
-                {replay?.stage_score?.includes("+") ? ":" : null}
+              Player - <span className="text-gray-400">{replay?.player}</span>
+            </div>
+            <div>
+              Game -{" "}
+              <span className=" text-gray-400">
+                Touhou: {getGameString(replay.game!)}
               </span>
             </div>
-            <div className="flex flex-wrap">
-              {replay?.stage_score?.includes("+")
-                ? score?.map((score, index) => (
-                    <div key={score}>
-                      <div className="p-2 items-center text-sm flex flex-col gap-y-1">
-                        <p>{`Stage ${index + 1}`}</p>
-                        <p>{Number(score).toLocaleString()}</p>
+            <div>
+              Character - <span className=" text-gray-400">{chara}</span>
+            </div>
+            <div>
+              Rank - <span className=" text-gray-400">{replay?.rank}</span>
+            </div>
+            <div>
+              Slow rate -{" "}
+              <span className=" text-gray-400">{replay?.slowRate}</span>
+            </div>
+            <div>
+              Achievement -{" "}
+              <span className=" text-gray-400">
+                {getCCstring(replay?.achievement!)}
+              </span>
+            </div>
+            <div>
+              Stage -{" "}
+              <span className=" text-gray-400">
+                {replay.stage || "Not supported"}
+              </span>
+            </div>
+            <div>
+              Added -{" "}
+              <span className=" text-gray-400">
+                {getDateFromReplay(replay.uploadedDate!)}
+              </span>
+            </div>
+            <div>
+              Replay Date -{" "}
+              <span className=" text-gray-400">
+                {getDateFromReplay(replay.fileDate!)}
+              </span>
+            </div>
+            <div>
+              Points - <span className=" text-gray-400">{replay?.points}</span>
+            </div>
+            <div>
+              Status - <span className=" text-gray-400">{replay?.status}</span>
+            </div>
+            <div className="flex flex-col gap-y-2">
+              <div>
+                Score -{" "}
+                <span className=" text-gray-400">
+                  {Number(replay.score).toLocaleString()}{" "}
+                  {replay?.stage_score?.includes("+") ? ":" : null}
+                </span>
+              </div>
+              <div className="flex flex-wrap">
+                {replay?.stage_score?.includes("+")
+                  ? score?.map((score, index) => (
+                      <div key={score}>
+                        <div className="p-2 items-center text-sm flex flex-col gap-y-1">
+                          <p>{`Stage ${index + 1}`}</p>
+                          <p>{Number(score).toLocaleString()}</p>
+                        </div>
                       </div>
-                    </div>
-                  ))
-                : null}
+                    ))
+                  : null}
+              </div>
+            </div>
+            {replay.comment == null || replay?.comment!.length > 3 ? (
+              <div>
+                Comment -{" "}
+                <span className=" text-gray-400">{replay?.comment}</span>
+              </div>
+            ) : null}
+            {replay?.videoLink ? (
+              <div>
+                Video -{" "}
+                <Link
+                  className=" text-gray-400 underline"
+                  href={replay?.videoLink}
+                  target="_blank"
+                >
+                  {replay?.videoLink}
+                </Link>
+              </div>
+            ) : null}
+            <div>
+              <Link className="underline" href={replay.filePath!} download>
+                Download rpy
+              </Link>{" "}
             </div>
           </div>
-          {replay.comment == null || replay?.comment!.length > 3 ? (
-            <div>
-              Comment -{" "}
-              <span className="font-normal text-gray-400">
-                {replay?.comment}
-              </span>
-            </div>
-          ) : null}
-          {replay?.videoLink ? (
-            <div>
-              Video -{" "}
-              <Link
-                className="font-normal text-gray-400 underline"
-                href={replay?.videoLink}
-                target="_blank"
-              >
-                {replay?.videoLink}
-              </Link>
-            </div>
-          ) : null}
-          <div>
-            <Link className="underline" href={replay.filePath!} download>
-              Download rpy
-            </Link>{" "}
-          </div>
-        </div>
-      </CardContent>
+        </CardContent>
+      </div>
     </Card>
   );
 }

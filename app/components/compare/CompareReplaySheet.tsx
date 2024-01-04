@@ -4,16 +4,15 @@ import { Button } from "@/components/ui/button";
 import {
   Sheet,
   SheetContent,
-  SheetDescription,
   SheetHeader,
   SheetTitle,
-  SheetTrigger,
+  SheetTrigger
 } from "@/components/ui/sheet";
 import { useToast } from "@/components/ui/use-toast";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 import { FaCodeCompare } from "react-icons/fa6";
 import CompareItem from "./CompareItem";
-import { useState } from "react";
 export default function CompareReplaySheet() {
   const [open, setOpen] = useState(false);
   const router = useRouter();
