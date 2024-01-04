@@ -37,7 +37,7 @@ export default async function page({ params }: { params: { id: string } }) {
 
   const score = scoreParse(replay);
   return (
-    <Card className="relative">
+    <Card className="relative font-semibold">
       <Image
         src={bgImages[replay.game!]}
         alt="gameBg"
@@ -67,62 +67,33 @@ export default async function page({ params }: { params: { id: string } }) {
 
         <CardContent className="flex flex-col">
           <div className="flex flex-col gap-y-2">
-            <div>
-              Player - <span className="text-gray-400">{replay?.player}</span>
+            <div className="flex gap-y-2 flex-col self-start p-2 bg-secondary/60 rounded-md">
+              <div className="self-start">Player - {replay?.player}</div>
+              <div className="self-start">
+                Game - Touhou: {getGameString(replay.game!)}
+              </div>
+              <div className="self-start">Character - {chara}</div>
+              <div className="self-start">Rank - {replay?.rank}</div>
+              <div className="self-start">Slow rate - {replay?.slowRate}</div>
+              <div className="self-start">
+                Achievement - {getCCstring(replay?.achievement!)}
+              </div>
+              <div className="self-start">
+                Stage - {replay.stage || "Not supported"}
+              </div>
+              <div className="self-start">
+                Added - {getDateFromReplay(replay.uploadedDate!)}
+              </div>
+              <div className="self-start">
+                Replay Date - {getDateFromReplay(replay.fileDate!)}
+              </div>
+              <div className="self-start">Points - {replay?.points}</div>
+              <div className="self-start">Status - {replay?.status}</div>
             </div>
-            <div>
-              Game -{" "}
-              <span className=" text-gray-400">
-                Touhou: {getGameString(replay.game!)}
-              </span>
-            </div>
-            <div>
-              Character - <span className=" text-gray-400">{chara}</span>
-            </div>
-            <div>
-              Rank - <span className=" text-gray-400">{replay?.rank}</span>
-            </div>
-            <div>
-              Slow rate -{" "}
-              <span className=" text-gray-400">{replay?.slowRate}</span>
-            </div>
-            <div>
-              Achievement -{" "}
-              <span className=" text-gray-400">
-                {getCCstring(replay?.achievement!)}
-              </span>
-            </div>
-            <div>
-              Stage -{" "}
-              <span className=" text-gray-400">
-                {replay.stage || "Not supported"}
-              </span>
-            </div>
-            <div>
-              Added -{" "}
-              <span className=" text-gray-400">
-                {getDateFromReplay(replay.uploadedDate!)}
-              </span>
-            </div>
-            <div>
-              Replay Date -{" "}
-              <span className=" text-gray-400">
-                {getDateFromReplay(replay.fileDate!)}
-              </span>
-            </div>
-            <div>
-              Points - <span className=" text-gray-400">{replay?.points}</span>
-            </div>
-            <div>
-              Status - <span className=" text-gray-400">{replay?.status}</span>
-            </div>
-            <div className="flex flex-col gap-y-2">
+            <div className="flex flex-col gap-y-2 self-start p-2 bg-secondary/60 rounded-md">
               <div>
-                Score -{" "}
-                <span className=" text-gray-400">
-                  {Number(replay.score).toLocaleString()}{" "}
-                  {replay?.stage_score?.includes("+") ? ":" : null}
-                </span>
+                Score - {Number(replay.score).toLocaleString()}{" "}
+                {replay?.stage_score?.includes("+") ? ":" : null}
               </div>
               <div className="flex flex-wrap">
                 {replay?.stage_score?.includes("+")
@@ -138,10 +109,7 @@ export default async function page({ params }: { params: { id: string } }) {
               </div>
             </div>
             {replay.comment == null || replay?.comment!.length > 3 ? (
-              <div>
-                Comment -{" "}
-                <span className=" text-gray-400">{replay?.comment}</span>
-              </div>
+              <div>Comment - {replay?.comment}</div>
             ) : null}
             {replay?.videoLink ? (
               <div>
