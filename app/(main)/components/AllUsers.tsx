@@ -12,7 +12,7 @@ export default async function AllUsers() {
     },
   });
   return (
-    <Card className="w-96">
+    <Card className="md:w-96 w-full">
       <CardHeader>
         <CardTitle>All users</CardTitle>
       </CardHeader>

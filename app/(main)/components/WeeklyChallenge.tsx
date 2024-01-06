@@ -16,7 +16,7 @@ export default async function WeeklyChallenge() {
     },
   });
   return (
-    <Card className="w-80 h-48 relative font-semibold">
+    <Card className="w-96 h-48 relative font-semibold hover:scale-105 transition-all cursor-pointer">
       <Image
         src={bgImages[Number(mainPageData?.WeeklyChallenge?.game!)]}
         fill

@@ -13,8 +13,8 @@ export default async function Home() {
     });
   }
   return (
-    <div className="flex flex-col w-full">
-      <div className="flex justify-between">
+    <div className="flex flex-row md:flex-col w-full items-center justify-center">
+      <div className="flex-col md:flex-row flex justify-between w-full items-center md:items-start">
         <AllUsers />
         <WeeklyChallenge />
       </div>
