@@ -14,7 +14,7 @@ export default async function ProfileLayout({
   if (!session) redirect("/login");
   return (
     <div className="flex flex-col h-full items-center">
-      <ProfileNavigation />
+      <ProfileNavigation session={session} />
       <Suspense fallback={<LoadingState />}>{children}</Suspense>
     </div>
   );
