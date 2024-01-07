@@ -16,12 +16,12 @@ export default async function WeeklyChallenge() {
     },
   });
   return (
-    <Card className="w-96 h-48 relative font-semibold hover:scale-105 transition-all cursor-pointer">
+    <Card className="w-full md:w-96 h-48 relative font-semibold cursor-pointer group">
       <Image
         src={bgImages[Number(mainPageData?.WeeklyChallenge?.game!)]}
         fill
         alt="game bg"
-        className="absolute z-0 object-cover object-center h-full opacity-20 rounded-xl"
+        className="absolute z-0 object-cover object-center h-full opacity-40 group-hover:opacity-30 transition-all rounded-xl"
       />
       <div className="relative">
         <CardHeader>
