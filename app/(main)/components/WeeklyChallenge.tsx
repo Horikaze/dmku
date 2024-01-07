@@ -8,6 +8,16 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import Image from "next/image";
+import Link from "next/link";
+
+const blankChall = {
+  challengeID: "",
+  challengeName: "",
+  game: "",
+  rank: "",
+  desc: "",
+  mainPageId: "",
+};
 
 export default async function WeeklyChallenge() {
   const mainPageData = await prisma.mainPage.findFirst({
@@ -15,8 +25,13 @@ export default async function WeeklyChallenge() {
       WeeklyChallenge: true,
     },
   });
+  const chall = mainPageData?.WeeklyChallenge || blankChall;
   return (
-    <Card className="w-full md:w-96 h-48 relative font-semibold cursor-pointer group">
+    <Link
+      className="w-full md:w-96 h-48 relative font-semibold cursor-pointer group"
+      href={`/weekly/${chall?.challengeID}`}
+      prefetch={false}
+    >
       <Image
         src={bgImages[Number(mainPageData?.WeeklyChallenge?.game!)]}
         fill
@@ -31,11 +46,11 @@ export default async function WeeklyChallenge() {
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <p>Name: {mainPageData?.WeeklyChallenge?.challengeName}</p>
-          <p>Game: {mainPageData?.WeeklyChallenge?.game}</p>
-          <p>Rank: {mainPageData?.WeeklyChallenge?.rank}</p>
+          <p>Name: {chall.challengeName}</p>
+          <p>Game: {chall.game}</p>
+          <p>Rank: {chall.rank}</p>
         </CardContent>
       </div>
-    </Card>
+    </Link>
   );
 }
