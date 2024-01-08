@@ -9,7 +9,6 @@ import {
   parseRankingString,
   stringifyRanking,
 } from "@/lib/getRankingData";
-import { ReplayStatus } from "@prisma/client";
 import { getServerSession } from "next-auth";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
@@ -51,11 +50,10 @@ export const changeReplayStatus = async (formData: FormData) => {
   if (session?.user.info.admin !== true) {
     redirect("/profile");
   }
-  const status = formData.get("status") as ReplayStatus;
+  const status = formData.get("status") as string;
   const replayId = formData.get("replayId") as string;
-  if (status === "REJECTED") {
-    await deleteReplayFunction(replayId);
-    revalidatePath("/profile/moderation");
+  console.log(status);
+  if (status !== "on") {
     return;
   }
   const updatedReplay = await prisma.replay.update({
@@ -63,7 +61,7 @@ export const changeReplayStatus = async (formData: FormData) => {
       replayId: replayId,
     },
     data: {
-      status: status as ReplayStatus,
+      status: true,
     },
   });
 

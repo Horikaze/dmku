@@ -8,12 +8,14 @@ import Image from "next/image";
 export default function ProfileHeader({ user }: { user: Profile }) {
   return (
     <Card className="relative font-semibold">
-      <Image
-        src={user.profileBanner!}
-        alt="profileBanner"
-        fill
-        className="absolute z-0 object-cover object-center h-full"
-      />
+      {user.profileBanner ? (
+        <Image
+          src={user.profileBanner!}
+          alt="profileBanner"
+          fill
+          className="absolute z-0 object-cover object-center h-full"
+        />
+      ) : null}
       <div className="relative z-10">
         <div className="flex transition-all text-sm md:text-base justify-around rounded-md">
           <div className="flex justify-between w-full">
@@ -51,15 +53,17 @@ export default function ProfileHeader({ user }: { user: Profile }) {
               </div>
             </div>
           </div>
-          <div
-            style={{
-              textOrientation: "sideways",
-              writingMode: "vertical-rl",
-            }}
-            className="px-1 select-none bg-secondary/30 text-center text-xs md:hover:py-32 xl:hover:py-44 2xl:hover:py-56 transition-all"
-          >
-            Expand image
-          </div>
+          {user.profileBanner ? (
+            <div
+              style={{
+                textOrientation: "sideways",
+                writingMode: "vertical-rl",
+              }}
+              className="px-1 select-none bg-secondary/30 text-center text-xs md:hover:py-32 xl:hover:py-44 2xl:hover:py-56 transition-all"
+            >
+              Expand image
+            </div>
+          ) : null}
         </div>
         {user.bio ? (
           <div className="w-full p-5">

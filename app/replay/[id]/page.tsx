@@ -88,7 +88,9 @@ export default async function page({ params }: { params: { id: string } }) {
                 Replay Date - {getDateFromReplay(replay.fileDate!)}
               </div>
               <div className="self-start">Points - {replay?.points}</div>
-              <div className="self-start">Status - {replay?.status}</div>
+              <div className="self-start">
+                Verified - {replay?.status === true ? "True" : "False"}
+              </div>
             </div>
             <div className="flex flex-col gap-y-2 self-start p-2 bg-secondary/60 rounded-md">
               <div>

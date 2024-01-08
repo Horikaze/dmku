@@ -33,7 +33,7 @@ export default async function WeeklyChallenge() {
       prefetch={false}
     >
       <Image
-        src={bgImages[Number(mainPageData?.WeeklyChallenge?.game!)]}
+        src={bgImages[mainPageData?.WeeklyChallenge?.game!] || bgImages[6]}
         fill
         alt="game bg"
         className="absolute z-0 object-cover object-center h-full opacity-40 group-hover:opacity-30 transition-all rounded-xl"

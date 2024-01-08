@@ -67,7 +67,7 @@ export default function ReplayItem({ replay }: { replay: Replay }) {
           {getDateFromReplay(replay.uploadedDate!)}
         </span>
       </div>
-      <div> 
+      <div>
         Replay Date -{" "}
         <span className="font-normal ">
           {getDateFromReplay(replay.fileDate!)}
@@ -76,9 +76,7 @@ export default function ReplayItem({ replay }: { replay: Replay }) {
       <div>
         Points - <span className="font-normal ">{replay?.points}</span>
       </div>
-      <div>
-        Status - <span className="font-normal ">{replay?.status}</span>
-      </div>
+      <div>Verified - {replay?.status === true ? "True" : "False"}</div>
       <div className="flex flex-col gap-y-2">
         <div>
           Score -{" "}

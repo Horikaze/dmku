@@ -14,7 +14,7 @@ import ModReplay from "../components/ModReplay";
 export default async function Moderation() {
   const replays = await prisma.replay.findMany({
     where: {
-      status: "UNVERIFIED",
+      status: false,
     },
   });
 

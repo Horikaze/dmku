@@ -37,7 +37,6 @@ export default function ProfileNavigation({ session }: { session: Session }) {
     ],
     [pathName]
   );
-  console.log(session.user);
   return (
     <div className="flex w-full flex-col pb-2 text-sm md:text-base">
       <div className="flex flex-row gap-x-1 justify-between">

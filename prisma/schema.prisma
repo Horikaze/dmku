@@ -56,7 +56,7 @@ model Ranking {
 }
 
 model Replay {
-  replayId     String        @id @default(cuid())
+  replayId     String    @id @default(cuid())
   player       String?
   character    String?
   rank         String?
@@ -73,10 +73,10 @@ model Replay {
   acceptedBy   String?
   filePath     String?
   comment      String?
-  uploadedDate DateTime?     @default(now())
+  uploadedDate DateTime? @default(now())
   fileDate     DateTime?
   achievement  Int?
-  status       ReplayStatus?
+  status       Boolean   @default(false)
 
   userId  String?
   Profile Profile? @relation(fields: [userId], references: [id])
@@ -95,19 +95,15 @@ model MainPage {
 }
 
 model WeeklyChallenge {
-  challengeID   String   @default(uuid())
+  challengeID   String    @default(uuid())
   challengeName String?
-  game          String?
+  game          Int?
   rank          String?
-  desc          String?  @db.Text
-  mainPageId    String   @unique
-  page          MainPage @relation(fields: [mainPageId], references: [id])
-}
-
-enum ReplayStatus {
-  UNVERIFIED
-  VERIFIED
-  REJECTED
+  desc          String?   @db.Text
+  dateStart     DateTime  @default(now())
+  dateEnd       DateTime?
+  mainPageId    String    @unique
+  page          MainPage  @relation(fields: [mainPageId], references: [id])
 }
 
 enum Achievement {

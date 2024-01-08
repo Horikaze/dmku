@@ -1,4 +1,3 @@
-import { replayStatus } from "@/app/constants/games";
 import { changeReplayStatus } from "@/app/lib/serverActions";
 import {
   Select,
@@ -16,6 +15,7 @@ import {
 import { Replay } from "@prisma/client";
 import Link from "next/link";
 import { SubmitButton } from "./SubmitButton";
+import { Checkbox } from "@/components/ui/checkbox";
 
 export default function ModReplay({ replay }: { replay: Replay }) {
   return (
@@ -65,24 +65,15 @@ export default function ModReplay({ replay }: { replay: Replay }) {
         </p>
       </div>
       <div className="flex flex-col justify-between gap-y-2">
-        <Select name="status" defaultValue="UNVERIFIED">
-          <SelectTrigger>
-            <SelectValue placeholder="Rank" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectGroup>
-              {replayStatus.map((status) => (
-                <SelectItem
-                  className="cursor-pointer"
-                  key={status}
-                  value={status}
-                >
-                  {status}
-                </SelectItem>
-              ))}
-            </SelectGroup>
-          </SelectContent>
-        </Select>
+        <div className="flex items-center space-x-2">
+          <Checkbox id="terms" name="status" />
+          <label
+            htmlFor="terms"
+            className="text-sm font-semibold leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+          >
+            Verified
+          </label>
+        </div>
         <input
           type="text"
           name="replayId"

@@ -190,44 +190,4 @@ export const columns: ColumnDef<Replay>[] = [
       return <div className="text-center">{points}</div>;
     },
   },
-  {
-    accessorKey: "status",
-    header: ({ table }) => {
-      return (
-        <Select
-          onValueChange={(e) => {
-            if (e === "All") {
-              table.getColumn("status")?.setFilterValue("");
-              return;
-            }
-            table.getColumn("status")?.setFilterValue(e);
-          }}
-        >
-          <SelectTrigger className="border-none">
-            <SelectValue placeholder="Status" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectGroup>
-              <SelectItem className="cursor-pointer" value={"All"}>
-                Status
-              </SelectItem>
-              <SelectItem className="cursor-pointer" value={"UNVERIFIED"}>
-              UNVERIFIED
-              </SelectItem>
-              <SelectItem className="cursor-pointer" value={"VERIFIED"}>
-                VERIFIED
-              </SelectItem>
-              <SelectItem className="cursor-pointer" value={"REJECTED"}>
-                REJECTED
-              </SelectItem>
-            </SelectGroup>
-          </SelectContent>
-        </Select>
-      );
-    },
-    cell({ row }) {
-      const status = row.getValue("status") as string;
-      return <div className="font-medium text-center">{status}</div>;
-    },
-  },
 ];
