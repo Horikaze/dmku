@@ -33,9 +33,6 @@ model Profile {
   MainPage       MainPage[]
 }
 
-// example:  "EASY/9999.9999.9999/123+NORMAL/9999.9999.9999/345+HARD/9999.9999.9999/677+LUNATIC/9999.9999.9999/444";
-// use parseScoreString function to get ScoreObject type
-// DIFF/SCORE/ID/CC
 model Ranking {
   EOSD                String?  @db.Text
   PCB                 String?  @db.Text
@@ -85,7 +82,7 @@ model Replay {
 }
 
 model MainPage {
-  id              String           @unique @default(uuid())
+  id              String           @unique @default("0")
   WeeklyChallenge WeeklyChallenge?
   background      String?
   latestUser      Profile?         @relation(fields: [profileId], references: [id])
@@ -103,6 +100,7 @@ model WeeklyChallenge {
   dateStart     DateTime  @default(now())
   dateEnd       DateTime?
   mainPageId    String    @unique
+  users         String?   @db.Text
   page          MainPage  @relation(fields: [mainPageId], references: [id])
 }
 
