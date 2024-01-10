@@ -21,7 +21,6 @@ export default function WrTable() {
           <TableRow>
             <TableHead className="border">Game </TableHead>
             {touhouDifficulty.map((diff) => {
-              if (diff === "Overdrive") return null;
               if (diff === "Phantasm") return null;
               return (
                 <TableHead
@@ -39,7 +38,6 @@ export default function WrTable() {
             <TableRow key={game}>
               <TableCell className="border">{game}</TableCell>
               {touhouDifficulty.map((diff) => {
-                if (diff === "Overdrive") return null;
                 if (diff === "Phantasm") return null;
                 if (diff === "Extra" && game === "PCB") {
                   return (

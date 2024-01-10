@@ -65,7 +65,6 @@ export default function CCTable({ tableData }: { tableData: Ranking }) {
         <TableRow>
           <TableHead>Game</TableHead>
           {touhouDifficulty.map((dif) => {
-            if (dif === "Overdrive") return null;
             if (dif === "Phantasm") return null;
             return (
               <TableHead className="text-center border" key={dif}>

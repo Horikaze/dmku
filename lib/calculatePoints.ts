@@ -8,7 +8,6 @@ export const rankValueRecord: { [key: string]: number } = {
   Extra: 4,
   Lunatic: 7,
   Phantasm: 4,
-  overdrive: 3,
 };
 export const CCValueRecord: { [key: string]: number } = {
   CC: 1,

@@ -105,5 +105,6 @@ export const endWeekly = async (formData: FormData) => {
     };
     results.push(res);
   });
+  JSON.stringify(results);
   
 };

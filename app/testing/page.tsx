@@ -42,7 +42,6 @@ export default function Search() {
     Extra: 4,
     Lunatic: 7,
     Phantasm: 4,
-    overdrive: 3,
   });
 
   const [CCValueRecord, setCCValueRecord] = useState<CCValueRecord>({

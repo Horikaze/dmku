@@ -46,7 +46,6 @@ export const touhouDifficulty = [
   "Lunatic",
   "Extra",
   "Phantasm",
-  "Overdrive",
 ];
 
 export const shotTypeList = ["A", "B", "C"];
