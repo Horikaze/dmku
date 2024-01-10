@@ -10,7 +10,7 @@ import {
 import Image from "next/image";
 import Link from "next/link";
 
-const blankChall = {
+export const blankChall = {
   challengeID: "",
   challengeName: "",
   game: "",
@@ -25,11 +25,13 @@ export default async function WeeklyChallenge() {
       weeklyChallenge: true,
     },
   });
+  console.log(mainPageData);
   const weeklyChallenge = await prisma.weeklyChallenge.findFirst({
     where: {
-      challengeID: mainPageData?.weeklyChallenge!,
+      challengeID: mainPageData?.weeklyChallenge! || "0",
     },
   });
+  console.log(weeklyChallenge);
   const chall = weeklyChallenge || blankChall;
   return (
     <Link

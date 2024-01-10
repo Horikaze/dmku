@@ -1,5 +1,5 @@
 import { touhouDifficulty } from "@/app/constants/games";
-import { createNewWeekly } from "@/app/lib/weeklyChallActions";
+import { createNewWeekly, endWeekly } from "@/app/lib/weeklyChallActions";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -14,7 +14,7 @@ import {
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { gameCodeRecord } from "@/lib/getRankingData";
-export default function ChangeWeekly() {
+export default async function ChangeWeekly() {
   return (
     <Card>
       <CardHeader>
@@ -85,11 +85,17 @@ export default function ChangeWeekly() {
               <Textarea id="desc" form="weekly" name="desc" />
             </div>
           </div>
-          <div className="flex justify-end">
-            <Button className="Save">Save</Button>
-          </div>
         </form>
+        <div className="flex items-center justify-between pt-2">
+          <Button type="submit" form="end">
+            End
+          </Button>
+          <Button type="submit" form="weekly">
+            Save
+          </Button>
+        </div>
       </CardContent>
+      <form action={endWeekly} hidden id="end" />
     </Card>
   );
 }

@@ -32,6 +32,7 @@ export default function ProfileHeader({ user }: { user: Profile }) {
                 <div className="flex flex-col w-full items-start">
                   <p>CC - {user.CCCount}</p>
                   <p>Points - {user.points}</p>
+                  <p>Weekly - {user.event}</p>
                 </div>
               </div>
             </div>

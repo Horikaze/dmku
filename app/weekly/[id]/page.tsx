@@ -6,5 +6,5 @@ export default async function Weekly({ params }: { params: { id: string } }) {
       challengeID: params.id,
     },
   });
-  return <div>{JSON.stringify(weeklyChallenge?.results)}</div>;
+  return <div>{JSON.stringify(weeklyChallenge)}</div>;
 }

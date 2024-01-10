@@ -73,63 +73,37 @@ type resultsElement = {
 };
 export const endWeekly = async (formData: FormData) => {
   try {
-    const weeklyId = formData.get("weeklyId") as string;
-    const weeklyChallenge = await prisma.weeklyChallenge.findFirst({
+    const currentPage = await prisma.mainPage.findFirst({
       where: {
-        challengeID: weeklyId,
+        id: "0",
+      },
+      select: {
+        weeklyChallenge: true,
       },
     });
-    if (!weeklyChallenge) return;
-    const weeklyReplays = await prisma.replay.findMany({
+    if (!currentPage) return;
+    const currentWeekly = await prisma.weeklyChallenge.update({
       where: {
-        uploadedDate: {
-          gte: weeklyChallenge?.dateStart,
-          lte: weeklyChallenge?.dateEnd!,
-        },
-      },
-      include: {
-        Profile: {
-          select: {
-            nickname: true,
-            id: true,
-            imageUrl: true,
-          },
-        },
-      },
-      orderBy: {
-        points: "desc",
-      },
-    });
-    let results: resultsElement[] = [];
-    weeklyReplays.forEach((element, idx) => {
-      const res: resultsElement = {
-        replay: element.replayId,
-        replayPoints: element.points,
-        userImg: element.Profile?.imageUrl,
-        userID: element.Profile?.id,
-        userNickname: element.Profile?.nickname,
-      };
-      results.push(res);
-    });
-
-    await prisma.weeklyChallenge.update({
-      where: {
-        challengeID: weeklyId,
+        challengeID: currentPage.weeklyChallenge!,
       },
       data: {
-        results: JSON.stringify(results),
         ended: true,
       },
     });
+    if (!currentWeekly) return;
+
+    const results: resultsElement[] = JSON.parse(currentWeekly.results!);
+
     const sortedReplays = [...results].sort(
       (a, b) => b.replayPoints! - a.replayPoints!
     );
+    console.log(sortedReplays);
     for (const replay of sortedReplays) {
       const userIndex = sortedReplays.indexOf(replay);
       const pointsToAdd = userIndex <= 11 ? weeklyPoints[userIndex + 1] : 0;
       await prisma.profile.update({
         where: {
-          id: replay.replay,
+          id: replay.userID,
         },
         data: {
           event: {
@@ -138,6 +112,15 @@ export const endWeekly = async (formData: FormData) => {
         },
       });
     }
+    await prisma.mainPage.update({
+      where: {
+        id: "0",
+      },
+      data: {
+        weeklyChallenge: "0",
+      },
+    });
+    revalidatePath("/");
   } catch (error) {
     console.log(error);
   }
