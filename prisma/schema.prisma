@@ -83,7 +83,7 @@ model Replay {
 
 model MainPage {
   id              String           @unique @default("0")
-  WeeklyChallenge WeeklyChallenge?
+  weeklyChallenge WeeklyChallenge?
   background      String?
   latestUser      Profile?         @relation(fields: [profileId], references: [id])
   profileId       String?
@@ -100,7 +100,7 @@ model WeeklyChallenge {
   dateStart     DateTime  @default(now())
   dateEnd       DateTime?
   mainPageId    String    @unique
-  users         String?   @db.Text
+  results         String?   @db.Text
   page          MainPage  @relation(fields: [mainPageId], references: [id])
 }
 

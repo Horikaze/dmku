@@ -1,4 +1,5 @@
 import prisma from "@/app/lib/prismadb";
+import { emptyScoreObject, emptyScoreObjectString } from "@/lib/getRankingData";
 import bcrypt from "bcrypt";
 import { AuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
@@ -72,22 +73,20 @@ export const authOptions: AuthOptions = {
           });
           const userRanking = await prisma.ranking.create({
             data: {
-              DDC: "EASY/0/0/0/char+NORMAL/0/0/0/char+HARD/0/0/0/char+LUNATIC/0/0/0/char+EXTRA/0/0/0/char+PHANTASM/0/0/0/char+OVERDRIVE/0/0/0/char",
-              EOSD: "EASY/0/0/0/char+NORMAL/0/0/0/char+HARD/0/0/0/char+LUNATIC/0/0/0/char+EXTRA/0/0/0/char+PHANTASM/0/0/0/char+OVERDRIVE/0/0/0/char",
-              GFW: "EASY/0/0/0/char+NORMAL/0/0/0/char+HARD/0/0/0/char+LUNATIC/0/0/0/char+EXTRA/0/0/0/char+PHANTASM/0/0/0/char+OVERDRIVE/0/0/0/char",
-              HSIFS:
-                "EASY/0/0/0/char+NORMAL/0/0/0/char+HARD/0/0/0/char+LUNATIC/0/0/0/char+EXTRA/0/0/0/char+PHANTASM/0/0/0/char+OVERDRIVE/0/0/0/char",
-              IN: "EASY/0/0/0/char+NORMAL/0/0/0/char+HARD/0/0/0/char+LUNATIC/0/0/0/char+EXTRA/0/0/0/char+PHANTASM/0/0/0/char+OVERDRIVE/0/0/0/char",
-              LOLK: "EASY/0/0/0/char+NORMAL/0/0/0/char+HARD/0/0/0/char+LUNATIC/0/0/0/char+EXTRA/0/0/0/char+PHANTASM/0/0/0/char+OVERDRIVE/0/0/0/char",
-              MOF: "EASY/0/0/0/char+NORMAL/0/0/0/char+HARD/0/0/0/char+LUNATIC/0/0/0/char+EXTRA/0/0/0/char+PHANTASM/0/0/0/char+OVERDRIVE/0/0/0/char",
-              PCB: "EASY/0/0/0/char+NORMAL/0/0/0/char+HARD/0/0/0/char+LUNATIC/0/0/0/char+EXTRA/0/0/0/char+PHANTASM/0/0/0/char+OVERDRIVE/0/0/0/char",
-              POFV: "EASY/0/0/0/char+NORMAL/0/0/0/char+HARD/0/0/0/char+LUNATIC/0/0/0/char+EXTRA/0/0/0/char+PHANTASM/0/0/0/char+OVERDRIVE/0/0/0/char",
-              SA: "EASY/0/0/0/char+NORMAL/0/0/0/char+HARD/0/0/0/char+LUNATIC/0/0/0/char+EXTRA/0/0/0/char+PHANTASM/0/0/0/char+OVERDRIVE/0/0/0/char",
-              TD: "EASY/0/0/0/char+NORMAL/0/0/0/char+HARD/0/0/0/char+LUNATIC/0/0/0/char+EXTRA/0/0/0/char+PHANTASM/0/0/0/char+OVERDRIVE/0/0/0/char",
-              UM: "EASY/0/0/0/char+NORMAL/0/0/0/char+HARD/0/0/0/char+LUNATIC/0/0/0/char+EXTRA/0/0/0/char+PHANTASM/0/0/0/char+OVERDRIVE/0/0/0/char",
-              UFO: "EASY/0/0/0/char+NORMAL/0/0/0/char+HARD/0/0/0/char+LUNATIC/0/0/0/char+EXTRA/0/0/0/char+PHANTASM/0/0/0/char+OVERDRIVE/0/0/0/char",
-              WBAWC:
-                "EASY/0/0/0/char+NORMAL/0/0/0/char+HARD/0/0/0/char+LUNATIC/0/0/0/char+EXTRA/0/0/0/char+PHANTASM/0/0/0/char+OVERDRIVE/0/0/0/char",
+              DDC: emptyScoreObjectString,
+              EOSD: emptyScoreObjectString,
+              GFW: emptyScoreObjectString,
+              HSIFS: emptyScoreObjectString,
+              IN: emptyScoreObjectString,
+              LOLK: emptyScoreObjectString,
+              MOF: emptyScoreObjectString,
+              PCB: emptyScoreObjectString,
+              POFV: emptyScoreObjectString,
+              SA: emptyScoreObjectString,
+              TD: emptyScoreObjectString,
+              UM: emptyScoreObjectString,
+              UFO: emptyScoreObjectString,
+              WBAWC: emptyScoreObjectString,
               userIdRankingPoints: newUser.id,
             },
           });

@@ -7,50 +7,22 @@ export type ScoreObject = {
   LUNATIC: { score?: number; id?: string; CC?: number; char?: string };
   EXTRA: { score?: number; id?: string; CC?: number; char?: string };
   PHANTASM?: { score?: number; id?: string; CC?: number; char?: string };
-  OVERDRIVE?: { score?: number; id?: string; CC?: number; char?: string };
-  [key: string]:
-    | { score?: number; id?: string; CC?: number; char?: string }
-    | undefined;
 };
 
+export const emptyScoreObject: ScoreObject = {
+  EASY: { score: 0, id: "", CC: 0, char: "" },
+  NORMAL: { score: 0, id: "", CC: 0, char: "" },
+  HARD: { score: 0, id: "", CC: 0, char: "" },
+  LUNATIC: { score: 0, id: "", CC: 0, char: "" },
+  EXTRA: { score: 0, id: "", CC: 0, char: "" },
+  PHANTASM: { score: 0, id: "", CC: 0, char: "" },
+};
+export const emptyScoreObjectString = JSON.stringify(emptyScoreObject);
 export const parseRankingString = (scoreString: string): ScoreObject => {
-  const scoreObject: ScoreObject = {
-    EASY: {},
-    NORMAL: {},
-    HARD: {},
-    LUNATIC: {},
-    EXTRA: {},
-    PHANTASM: {},
-    OVERDRIVE: {},
-  };
-  const scoreParts = scoreString.split("+");
-  scoreParts.forEach((part) => {
-    const [difficulty, scoreStr, idStr, CCStr, char] = part
-      .split("/")
-      .map((item) => (isNaN(Number(item)) ? item.trim() : item));
-
-    const score = parseFloat(scoreStr);
-    const id = idStr.trim();
-    const CC = Number(CCStr);
-    if (difficulty && !isNaN(score)) {
-      scoreObject[difficulty as keyof ScoreObject] = { score, id, CC, char };
-    }
-  });
-
-  return scoreObject;
+  return JSON.parse(scoreString);
 };
-
 export const stringifyRanking = (scoreObject: ScoreObject): string => {
-  const scoreStrings: string[] = [];
-
-  for (const difficulty in scoreObject) {
-    if (scoreObject.hasOwnProperty(difficulty)) {
-      const { score, id, CC, char } =
-        scoreObject[difficulty as keyof ScoreObject]!;
-      scoreStrings.push(`${difficulty}/${score}/${id}/${CC}/${char}`);
-    }
-  }
-  return scoreStrings.join("+");
+  return JSON.stringify(scoreObject);
 };
 
 export const getCharacterFromData = (
@@ -95,7 +67,6 @@ export const getGameNumber = (replayName: string) => {
   const game = parseInt(replayName.split("_")[0].substring(2));
   return game;
 };
-
 
 export interface AchievementValuesType {
   CC: number;

@@ -22,10 +22,10 @@ const blankChall = {
 export default async function WeeklyChallenge() {
   const mainPageData = await prisma.mainPage.findFirst({
     select: {
-      WeeklyChallenge: true,
+      weeklyChallenge: true,
     },
   });
-  const chall = mainPageData?.WeeklyChallenge || blankChall;
+  const chall = mainPageData?.weeklyChallenge || blankChall;
   return (
     <Link
       className="w-full md:w-96 h-48 relative font-semibold cursor-pointer group"
@@ -33,7 +33,7 @@ export default async function WeeklyChallenge() {
       prefetch={false}
     >
       <Image
-        src={bgImages[mainPageData?.WeeklyChallenge?.game!] || bgImages[6]}
+        src={bgImages[mainPageData?.weeklyChallenge?.game!] || bgImages[6]}
         fill
         alt="game bg"
         className="absolute z-0 object-cover object-center h-full opacity-40 group-hover:opacity-30 transition-all rounded-xl"
@@ -42,7 +42,7 @@ export default async function WeeklyChallenge() {
         <CardHeader>
           <CardTitle>Weekly Challenge</CardTitle>
           <CardDescription>
-            {mainPageData?.WeeklyChallenge?.desc?.slice(0, 15) + "..."}
+            {mainPageData?.weeklyChallenge?.desc?.slice(0, 15) + "..."}
           </CardDescription>
         </CardHeader>
         <CardContent>
