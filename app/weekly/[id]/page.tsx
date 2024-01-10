@@ -1,14 +1,10 @@
 import prisma from "@/app/lib/prismadb";
 
-export default async function Weekly() {
-  const chall = await prisma.mainPage.findFirst({
+export default async function Weekly({ params }: { params: { id: string } }) {
+  const weeklyChallenge = await prisma.weeklyChallenge.findFirst({
     where: {
-      id: "0",
-    },
-    select: {
-      weeklyChallenge: true,
+      challengeID: params.id,
     },
   });
-  console.log(chall);
-  return <div>{JSON.stringify(chall)}</div>;
+  return <div>{JSON.stringify(weeklyChallenge?.results)}</div>;
 }

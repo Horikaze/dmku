@@ -35,7 +35,7 @@ export const createNewWeekly = async (formData: FormData) => {
         game,
         desc,
         dateEnd: getNextSunday(),
-        results: "{}",
+        results: "[]",
         ended: false,
       },
     });
@@ -164,6 +164,7 @@ export const addToWeekly = async (replay: Replay, user: Profile) => {
       return;
     }
     const currentRes: resultsElement[] = JSON.parse(currentWeekly.results!);
+    console.log(currentRes);
     const userParticipation = currentRes.find((ele) => ele.userID);
     if (!userParticipation) {
       const newParticipation: resultsElement = {
