@@ -38,7 +38,7 @@ export default function ProfileNavigation({ session }: { session: Session }) {
     [pathName]
   );
   return (
-    <div className="flex w-full flex-col pb-2 text-sm md:text-base">
+    <div className="flex w-full flex-col text-sm md:text-base">
       <div className="flex flex-row gap-x-1 justify-between">
         {tabs.map(({ icon: Icon, label, active }) => {
           if (label === "Moderation" && session.user.info.admin !== true)

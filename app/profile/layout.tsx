@@ -13,7 +13,7 @@ export default async function ProfileLayout({
   const session = await getServerSession(authOptions);
   if (!session) redirect("/login");
   return (
-    <div className="flex flex-col h-full items-center">
+    <div className="flex flex-col h-full items-center gap-y-2">
       <ProfileNavigation session={session} />
       <Suspense fallback={<LoadingState />}>{children}</Suspense>
     </div>
