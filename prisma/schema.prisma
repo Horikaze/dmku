@@ -82,26 +82,25 @@ model Replay {
 }
 
 model MainPage {
-  id              String           @unique @default("0")
-  weeklyChallenge WeeklyChallenge?
+  id              String   @id @default(uuid())
+  weeklyChallenge String?
   background      String?
-  latestUser      Profile?         @relation(fields: [profileId], references: [id])
+  latestUser      Profile? @relation(fields: [profileId], references: [id])
   profileId       String?
 
   @@index([profileId])
 }
 
 model WeeklyChallenge {
-  challengeID   String    @default(uuid())
+  challengeID   String    @id @default(cuid())
   challengeName String?
   game          Int?
   rank          String?
   desc          String?   @db.Text
   dateStart     DateTime  @default(now())
   dateEnd       DateTime?
-  mainPageId    String    @unique
-  results         String?   @db.Text
-  page          MainPage  @relation(fields: [mainPageId], references: [id])
+  results       String?   @db.Text
+  ended         Boolean   @default(false)
 }
 
 enum Achievement {

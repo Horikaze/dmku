@@ -6,7 +6,7 @@ export default async function Weekly() {
       id: "0",
     },
     select: {
-      WeeklyChallenge: true,
+      weeklyChallenge: true,
     },
   });
   console.log(chall);

@@ -16,6 +16,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { UTApi } from "uploadthing/server";
 import { authOptions } from "../auth/[...nextauth]/auth";
 import { revalidatePath } from "next/cache";
+import { addToWeekly } from "@/app/lib/weeklyChallActions";
 export async function POST(request: NextRequest, response: NextResponse) {
   try {
     const session = await getServerSession(authOptions);
@@ -81,7 +82,11 @@ export async function POST(request: NextRequest, response: NextResponse) {
         score: totalScore,
         fileDate: fileDate,
       },
+      include: {
+        Profile: true,
+      },
     });
+    await addToWeekly(newReplay, newReplay.Profile!);
     const currenntRanking = await prisma.ranking.findFirst({
       where: {
         userIdRankingPoints: session.user.info.id,
