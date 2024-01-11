@@ -32,7 +32,7 @@ export default function ProfileNavigation({ session }: { session: Session }) {
       {
         label: "Moderation",
         icon: FaCheck,
-        active: pathName === "/profile/admin",
+        active: pathName === "/profile/moderation",
       },
     ],
     [pathName]

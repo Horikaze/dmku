@@ -1,12 +1,5 @@
 import { changeReplayStatus } from "@/app/lib/serverActions";
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+import { Checkbox } from "@/components/ui/checkbox";
 import {
   getCCstring,
   getCharacterFromData,
@@ -15,7 +8,6 @@ import {
 import { Replay } from "@prisma/client";
 import Link from "next/link";
 import { SubmitButton } from "./SubmitButton";
-import { Checkbox } from "@/components/ui/checkbox";
 
 export default function ModReplay({ replay }: { replay: Replay }) {
   return (

@@ -3,6 +3,18 @@ import prisma from "@/app/lib/prismadb";
 import { Profile, Replay } from "@prisma/client";
 import { revalidatePath } from "next/cache";
 
+type resultsElement = {
+  replay: string;
+  replayPoints: number | null;
+  userImg: string | null | undefined;
+  userID: string | undefined;
+  userNickname: string | null | undefined;
+};
+type weeklyRes = {
+  status: boolean;
+  message?: string;
+};
+
 function getNextSunday(): Date {
   const now: Date = new Date();
   now.setHours(now.getHours() + 2);
@@ -18,7 +30,9 @@ function getNextSunday(): Date {
   return nextSunday;
 }
 
-export const createNewWeekly = async (formData: FormData) => {
+export const createNewWeekly = async (
+  formData: FormData
+): Promise<weeklyRes> => {
   try {
     const rank = formData.get("rank") as string;
     const challengeName = formData.get("challengeName") as string;
@@ -48,8 +62,10 @@ export const createNewWeekly = async (formData: FormData) => {
       },
     });
     revalidatePath("/");
+    return { status: true, message: "Success" };
   } catch (error) {
     console.log(error);
+    return { status: false, message: `${error}` };
   }
 };
 const weeklyPoints: Record<number, number> = {
@@ -64,33 +80,11 @@ const weeklyPoints: Record<number, number> = {
   9: 40,
   10: 36,
 };
-type resultsElement = {
-  replay: string;
-  replayPoints: number | null;
-  userImg: string | null | undefined;
-  userID: string | undefined;
-  userNickname: string | null | undefined;
-};
-export const endWeekly = async (formData: FormData) => {
+export const endWeekly = async (formData: FormData): Promise<weeklyRes> => {
   try {
-    const currentPage = await prisma.mainPage.findFirst({
-      where: {
-        id: "0",
-      },
-      select: {
-        weeklyChallenge: true,
-      },
-    });
-    if (!currentPage) return;
-    const currentWeekly = await prisma.weeklyChallenge.update({
-      where: {
-        challengeID: currentPage.weeklyChallenge!,
-      },
-      data: {
-        ended: true,
-      },
-    });
-    if (!currentWeekly) return;
+    const currentWeekly = await getCurrentWeekly();
+    if (!currentWeekly)
+      return { status: false, message: "No weekly is currently running" };
 
     const results: resultsElement[] = JSON.parse(currentWeekly.results!);
 
@@ -121,43 +115,32 @@ export const endWeekly = async (formData: FormData) => {
       },
     });
     revalidatePath("/");
+    revalidatePath(`/profile/moderation`);
+    return { status: true, message: "Success" };
   } catch (error) {
     console.log(error);
+    return { status: false, message: `${error}` };
   }
 };
 // for uploadreplay endpoint
 export const addToWeekly = async (replay: Replay, user: Profile) => {
   try {
     const { rank, game, points, replayId, userId } = replay;
-    const currentPage = await prisma.mainPage.findFirst({
-      where: {
-        id: "0",
-      },
-      select: {
-        weeklyChallenge: true,
-      },
-    });
-    if (!currentPage) return;
-    const currentWeekly = await prisma.weeklyChallenge.findFirst({
-      where: {
-        challengeID: currentPage.weeklyChallenge!,
-      },
-    });
+    const currentWeekly = await getCurrentWeekly();
     if (rank !== currentWeekly?.rank && game !== currentWeekly?.game) {
       return;
     }
     const currentRes: resultsElement[] = JSON.parse(currentWeekly.results!);
     console.log(currentRes);
     const userParticipation = currentRes.find((ele) => ele.userID);
+    const newParticipation: resultsElement = {
+      replay: replayId,
+      replayPoints: points,
+      userID: userId!,
+      userImg: user.imageUrl,
+      userNickname: user.nickname,
+    };
     if (!userParticipation) {
-      const newParticipation: resultsElement = {
-        replay: replayId,
-        replayPoints: points,
-        userID: userId!,
-        userImg: user.imageUrl,
-        userNickname: user.nickname,
-      };
-
       const newRes = [...currentRes, newParticipation];
       await prisma.weeklyChallenge.update({
         where: {
@@ -167,17 +150,11 @@ export const addToWeekly = async (replay: Replay, user: Profile) => {
           results: JSON.stringify(newRes),
         },
       });
-      revalidatePath(`weekly/${currentWeekly.challengeID}`);
+      revalidatePath(`/weekly/${currentWeekly.challengeID}`);
+      revalidatePath(`/profile/moderation`);
       return;
     }
     if (userParticipation?.replayPoints! <= points!) {
-      const newParticipation: resultsElement = {
-        replay: replayId,
-        replayPoints: points,
-        userID: userId!,
-        userImg: user.imageUrl,
-        userNickname: user.nickname,
-      };
       const newResWithoutUserParticipation = currentRes.filter(
         (ele) => ele.userID !== userParticipation.userID
       );
@@ -191,9 +168,24 @@ export const addToWeekly = async (replay: Replay, user: Profile) => {
           results: JSON.stringify(newRes),
         },
       });
-      revalidatePath(`weekly/${currentWeekly.challengeID}`);
+      revalidatePath(`/weekly/${currentWeekly.challengeID}`);
+      revalidatePath(`/profile/moderation`);
     }
   } catch (error) {
     console.log(error);
   }
+};
+
+export const getCurrentWeekly = async () => {
+  const mainPageData = await prisma.mainPage.findFirst({
+    select: {
+      weeklyChallenge: true,
+    },
+  });
+  const weeklyChallenge = await prisma.weeklyChallenge.findFirst({
+    where: {
+      challengeID: mainPageData?.weeklyChallenge! || "0",
+    },
+  });
+  return weeklyChallenge;
 };

@@ -1,5 +1,6 @@
 import { bgImages } from "@/app/constants/bg-images";
 import prisma from "@/app/lib/prismadb";
+import { getCurrentWeekly } from "@/app/lib/weeklyChallActions";
 import {
   Card,
   CardContent,
@@ -20,16 +21,7 @@ export const blankChall = {
 };
 
 export default async function WeeklyChallenge() {
-  const mainPageData = await prisma.mainPage.findFirst({
-    select: {
-      weeklyChallenge: true,
-    },
-  });
-  const weeklyChallenge = await prisma.weeklyChallenge.findFirst({
-    where: {
-      challengeID: mainPageData?.weeklyChallenge! || "0",
-    },
-  });
+  const weeklyChallenge = await getCurrentWeekly();
   const chall = weeklyChallenge || blankChall;
   return (
     <>
