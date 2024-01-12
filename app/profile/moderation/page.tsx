@@ -5,6 +5,7 @@ import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
 import ModReplay from "../components/ModReplay";
 import ChangeWeekly from "../components/ChangeWeekly";
+import ChangeSiteBg from "../components/ChangeSiteBg";
 
 export default async function Moderation() {
   const replays = await prisma.replay.findMany({
@@ -19,7 +20,7 @@ export default async function Moderation() {
   }
   return (
     <div className="w-full flex flex-col gap-y-2">
-      {/* <Card>
+      <Card>
         <CardHeader>
           <CardTitle>Moderate replays</CardTitle>
         </CardHeader>
@@ -30,8 +31,9 @@ export default async function Moderation() {
             ))}
           </div>
         </CardContent>
-      </Card> */}
+      </Card>
       <ChangeWeekly />
+      <ChangeSiteBg />
     </div>
   );
 }

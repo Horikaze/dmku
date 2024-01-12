@@ -40,7 +40,7 @@ export default async function RootLayout({
           />
           <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
             <Navbar />
-            <main className="px-2 md:px-4 lg:px-24 xl:px-36 2xl:px-72 overflow-y-scroll absolute w-full h-full z-10 pb-10">
+            <main className="px-2 md:px-4 lg:px-24 xl:px-36 2xl:px-72 overflow-y-scroll absolute w-full h-full z-10">
               <div className="h-20" />
               {children}
               <SpeedInsights />

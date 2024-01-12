@@ -12,6 +12,7 @@ export const ourFileRouter = {
     .middleware(async ({ req }) => {
       const session = await getServerSession(authOptions);
       if (!session) throw new Error("Unauthorized");
+
       const user = await prisma.profile.findFirst({
         where: {
           id: session?.user.info.id,
@@ -93,6 +94,37 @@ export const ourFileRouter = {
         console.log(error);
       }
       revalidatePath("/profile", "layout");
+      return { image: file.url };
+    }),
+  siteBG: f({ image: { maxFileSize: "4MB" } })
+    .middleware(async ({ req }) => {
+      const session = await getServerSession(authOptions);
+      if (!session) throw new Error("Unauthorized");
+      if (session.user.info.admin !== true) throw new Error("Unauthorized");
+      const mainPage = await prisma.mainPage.findFirst();
+      return {
+        currentBG: mainPage?.background!,
+      };
+    })
+    .onUploadComplete(async ({ metadata, file }) => {
+      await prisma.mainPage.update({
+        where: {
+          id: "0",
+        },
+        data: {
+          background: file.url,
+        },
+      });
+      try {
+        if (metadata.currentBG) {
+          const parts = metadata.currentBG.split("/");
+          const fileName = parts[parts.length - 1];
+          await utapi.deleteFiles(fileName);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+      revalidatePath("/", "layout");
       return { image: file.url };
     }),
 } satisfies FileRouter;

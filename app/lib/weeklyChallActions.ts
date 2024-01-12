@@ -55,10 +55,6 @@ export const createNewWeekly = async (
     const challengeName = formData.get("challengeName") as string;
     const game = Number(formData.get("game") as string);
     const desc = formData.get("desc") as string;
-    console.log(rank);
-    console.log(challengeName);
-    console.log(game);
-    console.log(desc);
     const newWeekly = await prisma.weeklyChallenge.create({
       data: {
         rank,
