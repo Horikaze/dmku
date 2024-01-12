@@ -1,34 +1,52 @@
+import { authOptions } from "@/app/api/auth/[...nextauth]/auth";
 import { bgImages } from "@/app/constants/bg-images";
-import prisma from "@/app/lib/prismadb";
-import { getCurrentWeekly } from "@/app/lib/weeklyChallActions";
+import { getCurrentWeekly, resultsElement } from "@/app/lib/weeklyChallActions";
 import {
-  Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { getServerSession } from "next-auth";
 import Image from "next/image";
 import Link from "next/link";
 
 export const blankChall = {
   challengeID: "",
   challengeName: "",
-  game: "",
+  game: 6,
   rank: "",
   desc: "",
-  mainPageId: "",
+  dateStart: "",
+  dateEnd: "",
+  results: "",
+  ended: false,
 };
 
 export default async function WeeklyChallenge() {
+  const session = await getServerSession(authOptions);
+  const getYourReplay = (results: string) => {
+    if (!results) return null;
+    const data: resultsElement[] = JSON.parse(results);
+    const userParticipation = data.find(
+      (ele) => ele.userID === session?.user.info.id
+    );
+    if (!userParticipation) return null;
+    const userPlace = data
+      .sort((a, b) => b.replayPoints! - a.replayPoints!)
+      .indexOf(userParticipation);
+    return { userParticipation: userParticipation, place: userPlace + 1 };
+  };
   const weeklyChallenge = await getCurrentWeekly();
-  const chall = weeklyChallenge || blankChall;
+  const yourReplay = weeklyChallenge
+    ? getYourReplay(weeklyChallenge!.results!)
+    : null;
   return (
     <>
       {weeklyChallenge ? (
         <Link
           className="w-full md:w-96 h-48 relative font-semibold cursor-pointer group"
-          href={`/weekly/${chall?.challengeID}`}
+          href={`/weekly/${weeklyChallenge?.challengeID}`}
           prefetch={false}
         >
           <Image
@@ -37,18 +55,29 @@ export default async function WeeklyChallenge() {
             alt="game bg"
             className="absolute z-0 object-cover object-center h-full opacity-40 group-hover:opacity-30 transition-all rounded-xl"
           />
-          <div className="relative">
+          <div className="relative h-full flex flex-col">
             <CardHeader>
               <CardTitle>Weekly Challenge</CardTitle>
-              <CardDescription>
-                {weeklyChallenge?.desc?.slice(0, 15) + "..."}
-              </CardDescription>
+              {weeklyChallenge?.desc ? (
+                <CardDescription>
+                  {weeklyChallenge?.desc?.slice(0, 15) + "..."}
+                </CardDescription>
+              ) : null}
             </CardHeader>
             <CardContent>
-              <p>Name: {chall.challengeName}</p>
-              <p>Game: {chall.game}</p>
-              <p>Rank: {chall.rank}</p>
+              {weeklyChallenge.challengeName ? (
+                <p>Name: {weeklyChallenge.challengeName}</p>
+              ) : null}
+              <p>Game: {weeklyChallenge.game}</p>
+              <p>Rank: {weeklyChallenge.rank}</p>
             </CardContent>
+            {yourReplay ? (
+              <div className="flex h-full items-end">
+                <div className="opacity-60 w-full text-sm flex justify-end">
+                  <p>This weekly rank:&nbsp; </p> <p>{yourReplay.place}</p>
+                </div>
+              </div>
+            ) : null}
           </div>
         </Link>
       ) : (

@@ -3,7 +3,7 @@ import prisma from "@/app/lib/prismadb";
 import { Profile, Replay } from "@prisma/client";
 import { revalidatePath } from "next/cache";
 
-type resultsElement = {
+export type resultsElement = {
   replay: string;
   replayPoints: number | null;
   userImg: string | null | undefined;
@@ -13,6 +13,18 @@ type resultsElement = {
 type weeklyRes = {
   status: boolean;
   message?: string;
+};
+const weeklyPoints: Record<number, number> = {
+  1: 360,
+  2: 180,
+  3: 120,
+  4: 90,
+  5: 72,
+  6: 60,
+  7: 52,
+  8: 45,
+  9: 40,
+  10: 36,
 };
 
 function getNextSunday(): Date {
@@ -68,18 +80,6 @@ export const createNewWeekly = async (
     return { status: false, message: `${error}` };
   }
 };
-const weeklyPoints: Record<number, number> = {
-  1: 360,
-  2: 180,
-  3: 120,
-  4: 90,
-  5: 72,
-  6: 60,
-  7: 52,
-  8: 45,
-  9: 40,
-  10: 36,
-};
 export const endWeekly = async (formData: FormData): Promise<weeklyRes> => {
   try {
     const currentWeekly = await getCurrentWeekly();
@@ -132,7 +132,7 @@ export const addToWeekly = async (replay: Replay, user: Profile) => {
     }
     const currentRes: resultsElement[] = JSON.parse(currentWeekly.results!);
     console.log(currentRes);
-    const userParticipation = currentRes.find((ele) => ele.userID);
+    const userParticipation = currentRes.find((ele) => ele.userID === userId);
     const newParticipation: resultsElement = {
       replay: replayId,
       replayPoints: points,
