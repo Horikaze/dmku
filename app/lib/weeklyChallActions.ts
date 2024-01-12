@@ -2,6 +2,8 @@
 import prisma from "@/app/lib/prismadb";
 import { Profile, Replay } from "@prisma/client";
 import { revalidatePath } from "next/cache";
+import { authOptions } from "../api/auth/[...nextauth]/auth";
+import { getServerSession } from "next-auth";
 
 export type resultsElement = {
   replay: string;
@@ -46,6 +48,9 @@ export const createNewWeekly = async (
   formData: FormData
 ): Promise<weeklyRes> => {
   try {
+    const session = await getServerSession(authOptions);
+    if (session?.user.info.admin !== true)
+      return { status: false, message: "Unauthorized" };
     const rank = formData.get("rank") as string;
     const challengeName = formData.get("challengeName") as string;
     const game = Number(formData.get("game") as string);
@@ -82,6 +87,9 @@ export const createNewWeekly = async (
 };
 export const endWeekly = async (formData: FormData): Promise<weeklyRes> => {
   try {
+    const session = await getServerSession(authOptions);
+    if (session?.user.info.admin !== true)
+      return { status: false, message: "Unauthorized" };
     const currentWeekly = await getCurrentWeekly();
     if (!currentWeekly)
       return { status: false, message: "No weekly is currently running" };
@@ -125,6 +133,9 @@ export const endWeekly = async (formData: FormData): Promise<weeklyRes> => {
 // for uploadreplay endpoint
 export const addToWeekly = async (replay: Replay, user: Profile) => {
   try {
+    const session = await getServerSession(authOptions);
+    if (session?.user.info.admin !== true)
+      return { status: false, message: "Unauthorized" };
     const { rank, game, points, replayId, userId } = replay;
     const currentWeekly = await getCurrentWeekly();
     if (rank !== currentWeekly?.rank && game !== currentWeekly?.game) {

@@ -9,9 +9,9 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { convertUnixDate } from "@/lib/getRankingData";
+import { convertUnixDateHours } from "@/lib/getRankingData";
 import Link from "next/link";
-
+const weeklyPoints = [360, 180, 120, 90, 72, 60, 52, 45, 40, 36];
 export default async function Weekly({ params }: { params: { id: string } }) {
   const weekly = await prisma.weeklyChallenge.findFirst({
     where: {
@@ -43,11 +43,14 @@ export default async function Weekly({ params }: { params: { id: string } }) {
       <CardContent>
         <div className="flex justify-between font-semibold">
           <div className="gap-y-2 flex-grow">
-            <p>Start: {convertUnixDate(weekly.dateStart as any)}</p>
-            <p>End: {convertUnixDate(weekly.dateEnd as any)}</p>
+            <p>Start: {convertUnixDateHours(weekly.dateStart as any)}</p>
+            <p>End: {convertUnixDateHours(weekly.dateEnd as any)}</p>
             <p>Game: {weekly.game}</p>
             <p>Rank: {weekly.rank}</p>
             <p>Ended: {weekly.ended ? "True" : "False"}</p>
+            <Link className="underline" prefetch={false} href={"/info#weekly"}>
+              Rewards
+            </Link>
           </div>
           <div className="space-y-2 flex-grow">
             <p className="text-center">Current ranking:</p>

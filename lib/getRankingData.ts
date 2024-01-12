@@ -50,6 +50,16 @@ export const convertUnixDate = (date: number) => {
     console.log(error);
   }
 };
+export const convertUnixDateHours = (date: number) => {
+  try {
+    if (!date) {
+      return "";
+    }
+    return format(fromUnixTime(date / 1000), "HH:mm-dd-MM-yyyy");
+  } catch (error) {
+    console.log(error);
+  }
+};
 
 export const getCharacterFromDataWithoutType = (
   characters: string | string[]
