@@ -19,7 +19,7 @@ export default async function Weekly({ params }: { params: { id: string } }) {
     },
   });
   if (!weekly) {
-    return <div>xD</div>;
+    notFound();
   }
   const results: resultsElement[] = JSON.parse(weekly.results!);
   const sortedReplays = [...results].sort(

@@ -3,6 +3,7 @@ import prisma from "@/app/lib/prismadb";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { scoreParse } from "@/lib/calculatePoints";
 import ReplayItem from "./components/ReplayItem";
+import { notFound } from "next/navigation";
 
 export default async function Page({
   searchParams,
@@ -20,11 +21,7 @@ export default async function Page({
     },
   });
   if (!replay1 || !replay2) {
-    return (
-      <div>
-        <p>xD</p>
-      </div>
-    );
+    notFound();
   }
 
   const score1 = scoreParse(replay1);
@@ -66,7 +63,8 @@ export default async function Page({
               {Number(replay1.score).toLocaleString()}
             </p>
             <p className="w-1/3 flex text-center border-l py-1 border-r justify-center">
-              Difference: {Number(replay1.score! - replay2.score!).toLocaleString()}
+              Difference:{" "}
+              {Number(replay1.score! - replay2.score!).toLocaleString()}
             </p>
             <p className="w-1/3 flex justify-center">
               {Number(replay2.score).toLocaleString()}

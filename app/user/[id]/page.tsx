@@ -7,6 +7,7 @@ import prisma from "@/app/lib/prismadb";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Card } from "@/components/ui/card";
 import { getDateFromReplay } from "@/lib/getRankingData";
+import { notFound } from "next/navigation";
 
 export default async function User({ params }: { params: { id: string } }) {
   const user = await prisma.profile.findFirst({
@@ -25,11 +26,7 @@ export default async function User({ params }: { params: { id: string } }) {
   });
 
   if (!user) {
-    return (
-      <div>
-        <p>xD</p>
-      </div>
-    );
+    notFound();
   }
   return (
     <div className="flex flex-col gap-y-4">

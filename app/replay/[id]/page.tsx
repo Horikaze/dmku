@@ -19,6 +19,7 @@ import Link from "next/link";
 import CompareButton from "./CompareButton";
 import Image from "next/image";
 import { bgImages } from "@/app/constants/bg-images";
+import { notFound } from "next/navigation";
 
 export default async function page({ params }: { params: { id: string } }) {
   const replay = await prisma.replay.findFirst({
@@ -27,7 +28,7 @@ export default async function page({ params }: { params: { id: string } }) {
     },
   });
   if (!replay) {
-    return "XD";
+    notFound();
   }
 
   const chara =
