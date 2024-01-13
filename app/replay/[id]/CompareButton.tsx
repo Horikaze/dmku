@@ -3,7 +3,7 @@ import currentReplay from "@/app/zustand/currentReplay";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/components/ui/use-toast";
 import { Replay } from "@prisma/client";
-import { FaCodeCompare } from "react-icons/fa6";
+import { MdOutlineCompareArrows } from "react-icons/md";
 
 export default function CompareButton({ replay }: { replay: Replay }) {
   const { addReplay } = currentReplay();
@@ -17,7 +17,7 @@ export default function CompareButton({ replay }: { replay: Replay }) {
         addReplay(replay);
       }}
     >
-      <FaCodeCompare />
+      <MdOutlineCompareArrows />
       Add to compare
     </Button>
   );

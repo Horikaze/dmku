@@ -11,7 +11,7 @@ import {
 import { useToast } from "@/components/ui/use-toast";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { FaCodeCompare } from "react-icons/fa6";
+import { MdOutlineCompareArrows } from "react-icons/md";
 import CompareItem from "./CompareItem";
 export default function CompareReplaySheet() {
   const [open, setOpen] = useState(false);
@@ -44,7 +44,7 @@ export default function CompareReplaySheet() {
         {replay.length > 0 ? (
           <div className="flex hover:bg-secondary py-1 px-3 bg-card gap-x-1 items-center justify-center fixed top-20 right-2 cursor-pointer z-20 border rounded-md">
             <p className="text-lg">{replay.length}</p>
-            <FaCodeCompare className="h-5 w-5" />
+            <MdOutlineCompareArrows className="h-5 w-5" />
           </div>
         ) : null}
       </SheetTrigger>

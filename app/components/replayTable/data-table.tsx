@@ -12,6 +12,7 @@ import {
   useReactTable,
 } from "@tanstack/react-table";
 
+import currentReplay from "@/app/zustand/currentReplay";
 import {
   Table,
   TableBody,
@@ -26,17 +27,16 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { FaCodeCompare } from "react-icons/fa6";
+import { useToast } from "@/components/ui/use-toast";
 import {
   getCharacterFromData,
   getCharacterFromDataWithoutType,
 } from "@/lib/getRankingData";
-import { useState } from "react";
-import { FaCopy, FaInfo, FaTrash, FaWindowClose } from "react-icons/fa";
-import Link from "next/link";
-import { useToast } from "@/components/ui/use-toast";
-import currentReplay from "@/app/zustand/currentReplay";
 import { Replay } from "@prisma/client";
+import Link from "next/link";
+import { useState } from "react";
+import { FaCopy, FaInfo, FaWindowClose } from "react-icons/fa";
+import { MdOutlineCompareArrows } from "react-icons/md";
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
@@ -151,7 +151,7 @@ export function DataTable<TData, TValue>({
                     }}
                   >
                     <div className="h-8 w-full flex items-center justify-center px-3">
-                      <FaCodeCompare />
+                      <MdOutlineCompareArrows />
                     </div>
                   </div>
                 </TableCell>
