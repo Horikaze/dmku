@@ -12,6 +12,7 @@ const Rankings = async () => {
       id: true,
       CCCount: true,
       admin: true,
+      event: true,
     },
   });
 
@@ -53,11 +54,21 @@ const Rankings = async () => {
       admin: item.Profile?.admin!,
     };
   });
+  const updatedEventData = CCData.map((item) => {
+    return {
+      imageUrl: item.imageUrl!,
+      nickname: item.nickname!,
+      points: item.event!,
+      id: item.id!,
+      admin: item.admin!,
+    };
+  });
 
   return (
     <div className="flex flex-col gap-3 xl:flex-row">
       <RankingCard title="CC ranking" data={updatedCCData} />
       <RankingCard title="Points ranking" data={updatedPointsData} />
+      <RankingCard title="Event ranking" data={updatedEventData} />
     </div>
   );
 };

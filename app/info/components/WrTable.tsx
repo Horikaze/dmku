@@ -68,7 +68,7 @@ export default function WrTable() {
         <Link
           href="https://maribelhearn.com/wr"
           target="_blank"
-          className="text-end text-sm underline"
+          className="self-end text-sm underline"
         >
           Source: https://maribelhearn.com/wr
         </Link>
