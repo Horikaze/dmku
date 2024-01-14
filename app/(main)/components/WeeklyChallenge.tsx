@@ -1,13 +1,12 @@
-import { authOptions } from "@/app/api/auth/[...nextauth]/auth";
 import { bgImages } from "@/app/constants/bg-images";
-import { getCurrentWeekly, resultsElement } from "@/app/lib/weeklyChallActions";
+import { getCurrentWeekly } from "@/app/lib/weeklyChallActions";
 import {
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { getServerSession } from "next-auth";
+import { convertUnixDateHours } from "@/lib/getRankingData";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -24,23 +23,8 @@ export const blankChall = {
 };
 
 export default async function WeeklyChallenge() {
-  const session = await getServerSession(authOptions);
-  const getYourReplay = (results: string) => {
-    if (!results) return null;
-    const data: resultsElement[] = JSON.parse(results);
-    const userParticipation = data.find(
-      (ele) => ele.userID === session?.user.info.id
-    );
-    if (!userParticipation) return null;
-    const userPlace = data
-      .sort((a, b) => b.replayPoints! - a.replayPoints!)
-      .indexOf(userParticipation);
-    return { userParticipation: userParticipation, place: userPlace + 1 };
-  };
   const weeklyChallenge = await getCurrentWeekly();
-  const yourReplay = weeklyChallenge
-    ? getYourReplay(weeklyChallenge!.results!)
-    : null;
+
   return (
     <>
       {weeklyChallenge ? (
@@ -70,14 +54,10 @@ export default async function WeeklyChallenge() {
               ) : null}
               <p>Game: {weeklyChallenge.game}</p>
               <p>Rank: {weeklyChallenge.rank}</p>
+              <p>
+                End date: {convertUnixDateHours(weeklyChallenge.dateEnd as any)}
+              </p>
             </CardContent>
-            {yourReplay ? (
-              <div className="flex h-full items-end">
-                <div className="opacity-60 w-full text-sm flex justify-end">
-                  <p>This weekly rank:&nbsp; </p> <p>{yourReplay.place}</p>
-                </div>
-              </div>
-            ) : null}
           </div>
         </Link>
       ) : (

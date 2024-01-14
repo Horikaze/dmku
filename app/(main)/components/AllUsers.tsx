@@ -1,16 +1,16 @@
 import prisma from "@/app/lib/prismadb";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { getDateFromReplay } from "@/lib/getRankingData";
 import Link from "next/link";
 
 export default async function AllUsers() {
   const users = await prisma.profile.findMany({
     take: 20,
     orderBy: {
-      joindate: "desc",
+      nickname: "desc",
     },
   });
+
   return (
     <Card className="md:w-96 w-full">
       <CardHeader>
@@ -35,7 +35,6 @@ export default async function AllUsers() {
                 </Avatar>
                 <p>{user.nickname}</p>
               </div>
-              <p>{getDateFromReplay(user.joindate as any)}</p>
             </Link>
           ))}
         </div>
