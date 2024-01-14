@@ -129,11 +129,10 @@ export const endWeekly = async (formData: FormData): Promise<weeklyRes> => {
 // for uploadreplay endpoint
 export const addToWeekly = async (replay: Replay, user: Profile) => {
   try {
-    const session = await getServerSession(authOptions);
-    if (session?.user.info.admin !== true)
-      return { status: false, message: "Unauthorized" };
     const { rank, game, points, replayId, userId } = replay;
     const currentWeekly = await getCurrentWeekly();
+    console.log(currentWeekly);
+    console.log(replay);
     if (rank !== currentWeekly?.rank && game !== currentWeekly?.game) {
       return;
     }
@@ -142,9 +141,9 @@ export const addToWeekly = async (replay: Replay, user: Profile) => {
     const userParticipation = currentRes.find((ele) => ele.userID === userId);
     const newParticipation: resultsElement = {
       replay: replayId,
-      replayPoints: points,
+      replayPoints: points || 0,
       userID: userId!,
-      userImg: user.imageUrl,
+      userImg: user.imageUrl || "",
       userNickname: user.nickname,
     };
     if (!userParticipation) {

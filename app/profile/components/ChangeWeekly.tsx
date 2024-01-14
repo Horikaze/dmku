@@ -1,11 +1,12 @@
-import { getCurrentWeekly } from "@/app/lib/weeklyChallActions";
-import { Button } from "@/components/ui/button";
+import { getCurrentWeekly, resultsElement } from "@/app/lib/weeklyChallActions";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { convertUnixDate } from "@/lib/getRankingData";
 import WeeklyForm from "./WeeklyForm";
-import { useRef } from "react";
 export default async function ChangeWeekly() {
   const weeklyChallenge = await getCurrentWeekly();
+  const playersLenght: resultsElement[] = weeklyChallenge
+    ? JSON.parse(weeklyChallenge?.results!)
+    : "";
   return (
     <Card>
       <CardHeader>
@@ -30,6 +31,7 @@ export default async function ChangeWeekly() {
               <div className="flex-grow">
                 <p>Game: {weeklyChallenge.game}</p>
                 <p>Rank: {weeklyChallenge.rank}</p>
+                <p>Players: {playersLenght.length}</p>
               </div>
             </div>
           ) : null}

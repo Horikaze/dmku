@@ -138,13 +138,10 @@ const AuthForm = () => {
           name="password"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Username</FormLabel>
+              <FormLabel>Password</FormLabel>
               <FormControl>
                 <Input placeholder="Password" {...field} />
               </FormControl>
-              <FormDescription>
-                This is your nickname and login.
-              </FormDescription>
               <FormMessage />
             </FormItem>
           )}
@@ -155,13 +152,10 @@ const AuthForm = () => {
             name="confirmPassword"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Username</FormLabel>
+                <FormLabel>Confirm password</FormLabel>
                 <FormControl>
                   <Input placeholder="Confirm password" {...field} />
                 </FormControl>
-                <FormDescription>
-                  This is your nickname and login.
-                </FormDescription>
                 <FormMessage />
               </FormItem>
             )}

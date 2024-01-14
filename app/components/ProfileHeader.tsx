@@ -60,7 +60,7 @@ export default function ProfileHeader({ user }: { user: Profile }) {
                 textOrientation: "sideways",
                 writingMode: "vertical-rl",
               }}
-              className="px-1 select-none bg-secondary/30 text-center text-xs md:hover:py-32 xl:hover:py-44 2xl:hover:py-56 transition-all"
+              className="px-1 select-none text-center text-xs md:hover:py-32 xl:hover:py-44 2xl:hover:py-56 transition-all"
             >
               Expand image
             </div>

@@ -12,7 +12,6 @@ import {
 import { convertUnixDateHours } from "@/lib/getRankingData";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-const weeklyPoints = [360, 180, 120, 90, 72, 60, 52, 45, 40, 36];
 export default async function Weekly({ params }: { params: { id: string } }) {
   const weekly = await prisma.weeklyChallenge.findFirst({
     where: {

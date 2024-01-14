@@ -37,6 +37,9 @@ export const deleteYourReplayAction = async (
       userId: session?.user.info.id,
     },
   });
+  if (!isReplayYours) {
+    return { status: "Replay dosent exists" };
+  }
   if (isReplayYours?.userId !== session.user.info.id) {
     return { status: "Replay is not yours" };
   }
