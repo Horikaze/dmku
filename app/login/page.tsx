@@ -1,12 +1,18 @@
-"use client";
-import React from "react";
-import AuthForm from "./AuthForm";
-import { useSession } from "next-auth/react";
+import prisma from "@/app/lib/prismadb";
+import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
+import { authOptions } from "../api/auth/[...nextauth]/auth";
+import AuthForm from "./AuthForm";
 
-export default function Page() {
-  const session = useSession();
-  if (session.status === "authenticated") {
+export default async function Page() {
+  const session = await getServerSession(authOptions);
+  const user = await prisma.profile.findFirst({
+    where: {
+      id: session?.user.info.id,
+    },
+  });
+  console.log(user);
+  if (session && user) {
     redirect("/profile");
   }
   return (

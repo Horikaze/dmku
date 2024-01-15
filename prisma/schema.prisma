@@ -83,7 +83,7 @@ model Replay {
 
 model MainPage {
   id              String   @id @default("0")
-  weeklyChallenge String?
+  weeklyChallenge Int?
   background      String?
   latestUser      Profile? @relation(fields: [profileId], references: [id])
   profileId       String?
@@ -92,7 +92,7 @@ model MainPage {
 }
 
 model WeeklyChallenge {
-  challengeID   String    @id @default(cuid())
+  challengeID   Int       @id @default(autoincrement())
   challengeName String?
   game          Int?
   rank          String?

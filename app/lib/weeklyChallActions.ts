@@ -115,7 +115,7 @@ export const endWeekly = async (formData: FormData): Promise<weeklyRes> => {
         id: "0",
       },
       data: {
-        weeklyChallenge: "0",
+        weeklyChallenge: 0,
       },
     });
     revalidatePath("/");
@@ -190,7 +190,7 @@ export const getCurrentWeekly = async () => {
   });
   const weeklyChallenge = await prisma.weeklyChallenge.findFirst({
     where: {
-      challengeID: mainPageData?.weeklyChallenge! || "0",
+      challengeID: mainPageData?.weeklyChallenge! || 0,
     },
   });
   return weeklyChallenge;
