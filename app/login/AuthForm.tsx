@@ -14,21 +14,15 @@ import { Separator } from "@/components/ui/separator";
 import { useToast } from "@/components/ui/use-toast";
 import { zodResolver } from "@hookform/resolvers/zod";
 import axios from "axios";
-import { signIn, signOut, useSession } from "next-auth/react";
+import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useState } from "react";
 import { useForm } from "react-hook-form";
 import { FaDiscord } from "react-icons/fa6";
 import * as z from "zod";
 type Variant = "LOGIN" | "REGISER";
 
 const AuthForm = () => {
-  const session = useSession();
-  const isAuth = useMemo(
-    () => session.status === "authenticated",
-    [session.status]
-  );
-  if (isAuth) signOut();
   const { toast } = useToast();
   const [variant, setVariant] = useState<Variant>("LOGIN");
   const router = useRouter();

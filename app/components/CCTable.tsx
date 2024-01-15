@@ -52,7 +52,7 @@ export default function CCTable({ tableData }: { tableData: Ranking }) {
 
   let mappedArray: MappedArrayType = {};
   Object.entries(tableData!).forEach(([key, value]) => {
-    if (key === "userIdRankingPoints" || key === "total") return;
+    if (key === "userIdRankingPoints") return;
 
     if (value && key) {
       const objGameData = parseRankingString(value as string);

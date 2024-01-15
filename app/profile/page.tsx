@@ -13,7 +13,7 @@ export default async function MainPage() {
       CCTable: true,
     },
   });
-
+console.log(user?.CCTable);
   return (
     <div className="w-full flex flex-col gap-y-3">
       <ProfileHeader user={user!} />

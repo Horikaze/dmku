@@ -3,9 +3,8 @@ import { redirect } from "next/navigation";
 import { Suspense } from "react";
 import { authOptions } from "../api/auth/[...nextauth]/auth";
 import LoadingState from "../components/LoadingState";
-import prisma from "@/app/lib/prismadb";
 import ProfileNavigation from "./components/ProfileNavigation";
-
+import prisma from "@/app/lib/prismadb";
 export default async function ProfileLayout({
   children,
 }: {
@@ -17,7 +16,6 @@ export default async function ProfileLayout({
       id: session?.user.info.id,
     },
   });
-  console.log(user);
   if (!session || !user) redirect("/login");
   return (
     <div className="flex flex-col h-full items-center gap-y-2">

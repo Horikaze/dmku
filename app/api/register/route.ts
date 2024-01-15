@@ -21,14 +21,7 @@ export const POST = async (req: Request) => {
         name: nickname,
       },
     });
-    await prisma.mainPage.update({
-      where: {
-        id: "0",
-      },
-      data: {
-        profileId: user.id,
-      },
-    });
+
     const userRanking = await prisma.ranking.create({
       data: {
         DDC: emptyScoreObjectString,

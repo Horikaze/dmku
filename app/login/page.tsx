@@ -1,8 +1,8 @@
 import prisma from "@/app/lib/prismadb";
 import { getServerSession } from "next-auth";
-import { redirect } from "next/navigation";
 import { authOptions } from "../api/auth/[...nextauth]/auth";
 import AuthForm from "./AuthForm";
+import { redirect } from "next/navigation";
 
 export default async function Page() {
   const session = await getServerSession(authOptions);
@@ -11,10 +11,7 @@ export default async function Page() {
       id: session?.user.info.id,
     },
   });
-  console.log(user);
-  if (session && user) {
-    redirect("/profile");
-  }
+  if (session && user) redirect("/profile");
   return (
     <div className="flex flex-col justify-center items-center pt-4 lg:pt-8">
       <AuthForm />

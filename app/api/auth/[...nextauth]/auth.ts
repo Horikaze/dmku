@@ -90,14 +90,6 @@ export const authOptions: AuthOptions = {
               userIdRankingPoints: newUser.id,
             },
           });
-          await prisma.mainPage.update({
-            where: {
-              id: "0",
-            },
-            data: {
-              profileId: newUser.id,
-            },
-          });
 
           token.picture = newUser?.imageUrl;
           token.name = newUser?.nickname;

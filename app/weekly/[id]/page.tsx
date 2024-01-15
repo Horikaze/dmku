@@ -15,11 +15,11 @@ import { notFound } from "next/navigation";
 export default async function Weekly({ params }: { params: { id: string } }) {
   const weekly = await prisma.weeklyChallenge.findFirst({
     where: {
-      challengeID: params.id,
+      challengeID: Number(params.id),
     },
   });
   if (!weekly) {
-    notFound()
+    notFound();
   }
   const results: resultsElement[] = JSON.parse(weekly.results!);
   const sortedReplays = [...results].sort(
