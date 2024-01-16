@@ -20,7 +20,6 @@ export default async function MiddleComp() {
       nickname: true,
     },
   });
-  console.log(latestReplay);
   return (
     <div className="flex md:flex-col gap-y-2 flex-grow px-6 max-w-[400px] w-full">
       {latestUser ? (
