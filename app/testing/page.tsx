@@ -2,9 +2,8 @@
 import {
   Card,
   CardContent,
-  CardDescription,
   CardHeader,
-  CardTitle,
+  CardTitle
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -16,7 +15,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { achievementList, touhouDifficulty } from "../constants/games";
 import { scoreWR } from "../constants/wrScores";
 
@@ -46,11 +45,11 @@ export default function Search() {
 
   const [CCValueRecord, setCCValueRecord] = useState<CCValueRecord>({
     CC: 1,
-    NM: 3,
-    NB: 3,
-    NMNB: 6,
-    NNN: 8,
-    NNNN: 10,
+    NM: 7,
+    NB: 7,
+    NMNB: 14,
+    NNN: 28,
+    NNNN: 36,
   });
   const updateRankValue = (key: string, value: number) => {
     setRankValueRecord((prevRankValueRecord) => ({

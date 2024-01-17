@@ -14,7 +14,7 @@ import Link from "next/link";
 
 export default function WrTable() {
   return (
-    <div className="flex flex-col gap-y-2">
+    <div className="flex flex-col gap-y-2" id="wr">
       <h2 className="text-center text-xl font-semibold">WR Scores</h2>
       <Table className="border text-xs md:text-base">
         <TableHeader>
