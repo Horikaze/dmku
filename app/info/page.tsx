@@ -24,7 +24,7 @@ const Info = () => {
         <div className="flex flex-col">
           <p className="text-center">Rank</p>
           {Object.values(rankValueRecord).map((ele, idx) => (
-            <div key={ele} className="flex">
+            <div key={ele + idx} className="flex">
               <p className="w-24">{Object.keys(rankValueRecord)[idx]}</p>
               <p>{ele}</p>
             </div>
@@ -33,7 +33,7 @@ const Info = () => {
         <div className="flex flex-col">
           <p className="text-center">Achievement</p>
           {Object.values(CCValueRecord).map((ele, idx) => (
-            <div key={ele} className="flex">
+            <div key={ele.toString() + "CC" + idx.toString()} className="flex">
               <p className="w-24">{Object.keys(CCValueRecord)[idx]}</p>
               <p>{ele}</p>
             </div>
