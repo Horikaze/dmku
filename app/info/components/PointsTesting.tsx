@@ -123,7 +123,7 @@ export default function PointsTesting() {
       </div>
       <div className="flex items-end pb-2 font-semibold gap-x-2">
         <p>=</p>
-        <p>{calculatePoints() || 0} pkt.</p>
+        <p>{calculatePoints() || 0} p</p>
       </div>
     </div>
   );

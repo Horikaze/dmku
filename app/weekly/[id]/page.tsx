@@ -48,7 +48,7 @@ export default async function Weekly({ params }: { params: { id: string } }) {
             <p>Game: {weekly.game}</p>
             <p>Rank: {weekly.rank}</p>
             <p>Ended: {weekly.ended ? "True" : "False"}</p>
-            <Link className="underline" prefetch={false} href={"/info#weekly"}>
+            <Link className="underline" prefetch={false} href={"/info"}>
               Rewards
             </Link>
           </div>
